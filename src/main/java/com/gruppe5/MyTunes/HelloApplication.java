@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.gruppe5.MyTunes;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
