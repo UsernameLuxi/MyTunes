@@ -1,0 +1,1 @@
+-- SQL file containing the structure of the database. This file is for recreating the database only

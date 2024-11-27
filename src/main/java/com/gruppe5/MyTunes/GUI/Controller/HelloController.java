@@ -1,4 +1,4 @@
-package com.gruppe5.MyTunes;
+package com.gruppe5.MyTunes.GUI.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
