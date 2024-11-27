@@ -38,4 +38,4 @@ build/
 .DS_Store
 
 ### config ###
-/Config/
+Config/config.settings
