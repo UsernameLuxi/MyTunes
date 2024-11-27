@@ -1,5 +1,6 @@
 package com.gruppe5.MyTunes.GUI;
 
+import com.gruppe5.MyTunes.BLL.MyTunesLogic;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        MyTunesLogic logic = new MyTunesLogic();
+        logic.playSong("song");
         launch();
     }
 }
