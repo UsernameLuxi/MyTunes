@@ -1,5 +1,6 @@
 package com.gruppe5.MyTunes.GUI;
 
+import com.gruppe5.MyTunes.BLL.MyTunesLogic;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
