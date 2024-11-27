@@ -31,6 +31,15 @@ public class MyTunesLogic {
         return true;
     }
 
+    public boolean nextSong() {
+        String
+        playSong();
+    }
+
+    public boolean previousSong() {
+
+    }
+
     public boolean pauseSong() {
         if (mediaPlayer == null) {
             return false;
