@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="btnBack" layoutX="51.0" layoutY="48.0" mnemonicParsing="false" text="⏮" />
+      <Button fx:id="btnPlay" layoutX="97.0" layoutY="45.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="37.0" text="▶" />
+      <Button fx:id="btnSkip" layoutX="151.0" layoutY="48.0" mnemonicParsing="false" text="⏭" />
+      <Label fx:id="lblCurrentSong" layoutX="361.0" layoutY="45.0" text="(none) ... is playing">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="625.0" layoutY="39.0" text="Filter:" />
+      <TextField fx:id="txtFilter" layoutX="657.0" layoutY="35.0" />
+      <Button fx:id="btnFilter" layoutX="815.0" layoutY="34.0" mnemonicParsing="false" text="🔍" />
+      <VBox layoutX="12.0" layoutY="130.0" prefHeight="446.0" prefWidth="227.0">
+         <children>
+            <Label text="Playlists" />
+            <TableView fx:id="tblPlaylists" prefHeight="450.0" prefWidth="227.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Navn" />
+                  <TableColumn prefWidth="75.0" text="Sange" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <VBox layoutX="247.0" layoutY="129.0" prefHeight="446.0" prefWidth="140.0">
+         <children>
+            <Label text="Songs in playlist" />
+            <ListView fx:id="lstSongsInPlaylist" prefHeight="430.0" prefWidth="140.0" />
+         </children>
+      </VBox>
+      <Button fx:id="btnTransferSongs" layoutX="395.0" layoutY="147.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="←" />
+      <VBox layoutX="456.0" layoutY="129.0" prefHeight="446.0" prefWidth="417.0">
+         <children>
+            <Label text="Songs" />
+            <TableView fx:id="tblSongs" prefHeight="426.0" prefWidth="418.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="C1" />
+                  <TableColumn prefWidth="75.0" text="C2" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+      <Label layoutX="10.0" layoutY="70.0" prefHeight="18.0" prefWidth="28.0" text="🔊">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnPlaylistNew" layoutX="14.0" layoutY="582.0" mnemonicParsing="false" text="New..." />
+      <Button fx:id="btnPlaylistEdit" layoutX="74.0" layoutY="582.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="btnPlaylistDel" layoutX="126.0" layoutY="582.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="btnSongInPlaylistUp" layoutX="247.0" layoutY="582.0" mnemonicParsing="false" text="↑" />
+      <Button fx:id="btnSongInPlaylistDown" layoutX="278.0" layoutY="582.0" mnemonicParsing="false" text="↓" />
+      <Button fx:id="btnSongInPlaylistDel" layoutX="330.0" layoutY="582.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="btnSongsNew" layoutX="464.0" layoutY="582.0" mnemonicParsing="false" text="New..." />
+      <Button fx:id="btnSongsEdit" layoutX="524.0" layoutY="582.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="btnSongsDel" layoutX="575.0" layoutY="582.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="btnClose" layoutX="829.0" layoutY="582.0" mnemonicParsing="false" text="Close" />
+      <Slider fx:id="sliderVol" layoutX="41.0" layoutY="75.0" prefHeight="18.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
