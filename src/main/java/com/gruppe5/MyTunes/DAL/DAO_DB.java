@@ -49,17 +49,56 @@ public class DAO_DB  implements IDataAccess{
 
     @Override
     public List<Song> getSongByName(String name) throws Exception{
-        return null;
+        List<Song> songs = new ArrayList<>();
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
+                "FROM Songs" +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
+                "WHERE Songs.Title LIKE ?";
+        try (Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, "%"+name+"%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                songs.add(createSong(rs));
+            }
+        }
+        return songs;
     }
 
     @Override
     public List<Song> getSongByArtist(String artist) throws Exception{
-        return null;
+        List<Song> songs = new ArrayList<>();
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
+                "FROM Songs" +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
+                "WHERE Artist.ArtistName LIKE ?";
+        try (Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, "%"+artist+"%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                songs.add(createSong(rs));
+            }
+        }
+        return songs;
     }
 
     @Override
     public List<Song> getSongByArtist(int artistID) throws Exception{
-        return null;
+        List<Song> songs = new ArrayList<>();
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
+                "FROM Songs" +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
+                "WHERE Artist.Id LIKE ?";
+        try (Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, artistID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                songs.add(createSong(rs));
+            }
+        }
+        return songs;
     }
 
     @Override
