@@ -19,8 +19,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        MyTunesLogic logic = new MyTunesLogic();
-        logic.playSong("song");
         launch();
     }
 }
