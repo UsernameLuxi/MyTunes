@@ -3,7 +3,6 @@ package com.gruppe5.MyTunes.DAL;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.BE.Playlist;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public interface IDataAccess {
