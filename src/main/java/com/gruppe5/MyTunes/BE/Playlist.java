@@ -13,6 +13,11 @@ public class Playlist {
         this.songs = songs;
     }
 
+    public Playlist(String name, List<Song> songs) {
+        this.name = name;
+        this.songs = songs;
+    }
+
     public List<Song> getSongs() {
         return songs;
     }

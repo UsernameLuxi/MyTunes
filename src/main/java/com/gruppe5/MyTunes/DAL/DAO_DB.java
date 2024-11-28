@@ -366,7 +366,32 @@ public class DAO_DB  implements IDataAccess{
 
     @Override
     public Playlist addPlaylist(Playlist playlist) throws Exception{
-        return null;
+        String sql = "INSERT INTO Playlists (PlaylistName) VALUES (?)";
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            // insert the playlist in the Playlist table
+            ps.setString(1, playlist.getName());
+            ps.executeUpdate();
+
+            // get the playlist id from the auto-generation
+            ResultSet keys = ps.getGeneratedKeys();
+            keys.next();
+            int playlistID = keys.getInt("Id");
+
+            // add the songs to the playlistContainer
+            PreparedStatement addSong = conn.prepareStatement("INSERT INTO PlaylistContainer (PlaylistID, SongID) VALUES (?, ?)");
+            addSong.setInt(1, playlistID); // set the playlist id - we don't need to touch this again
+            List<Song> songs = playlist.getSongs();
+            for (int i = 0; i < songs.size(); i++) {
+                int songID = songs.get(i).getId(); // get the id
+                addSong.setInt(2, songID); // set the id in the query
+                addSong.executeUpdate(); // execute the update
+            }
+
+            return new Playlist(playlistID, playlist.getName(), songs);
+        }
+        catch (Exception e) {
+            throw new Exception("Unable to add playlist " + playlist.getName().trim(), e);
+        }
     }
 
     @Override
