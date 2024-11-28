@@ -158,7 +158,15 @@ public class DAO_DB  implements IDataAccess{
 
     @Override
     public void deleteSong(Song song) throws Exception{
-        String sql = "";
+        String sql = "DELETE FROM Songs WHERE Songs.Id = ?";
+
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, song.getId());
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            throw new Exception("Unable to delete song " + song.getTitle().trim(), e);
+        }
 
     }
 
@@ -260,20 +268,100 @@ public class DAO_DB  implements IDataAccess{
         return rs.getInt("Id");
     }
 
+    /**
+     * This method returns a search query in SQL language. This was made into a method because of the size.
+     * You could argue that it could be a private final string, but this was made to lessen confusion -
+     * because by reading the name of the method you understand what it's trying to communicate,
+     * and if one was curious you could simply navigate to the method.
+     * @return Returns the search query described by the name.
+     */
+    private String getSQL_SearchSongsInPlaylistContainerByPlaylistID(){
+        return "SELECT PlaylistContainer.SongID, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL "+
+                "FROM PlaylistContainer "+
+                "INNER JOIN Songs ON PlaylistContainer.SongID = Songs.Id "+
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id "+
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
+                "WHERE PlaylistContainer.PlaylistID = ?;";
+    }
+
+    /**
+     * Gets all the songs in a playlist. It searches through the playlistContainer and adds the songs to the list.
+     * @param playlistID The id of the playlist which songs should be returned.
+     * @param conn The connection to the database.
+     * @return Returns a list of songs.
+     * @throws Exception If something goes wrong.
+     */
+    private List<Song> getSongsInPlaylist(int playlistID, Connection conn) throws Exception{
+        List<Song> songs = new ArrayList<>();
+        String sql = getSQL_SearchSongsInPlaylistContainerByPlaylistID();
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, playlistID);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            Song s = new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTime(4), rs.getString(5), rs.getString(6));
+            songs.add(s);
+        }
+        return songs;
+    }
 
     @Override
     public List<Playlist> getAllPlaylists() throws Exception{
-        return null;
+        String sql = "SELECT Playlists.Id, Playlists.PlaylistName FROM Playlists";
+        List<Playlist> playlists = new ArrayList<>();
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
+
+            // loops through the playlists to add the all to the list
+            while(rs.next()){
+                Playlist p = new Playlist(rs.getInt("Id"), rs.getString("PlaylistName"), getSongsInPlaylist(rs.getInt("Id"), conn));
+                playlists.add(p);
+            }
+
+            return playlists;
+        }
+        catch (Exception e) {
+            throw new Exception("Unable to get all playlists", e);
+        }
     }
 
     @Override
     public Playlist getPlaylist(int id) throws Exception{
-        return null;
+        String sql = "SELECT Playlists.Id, Playlists.PlaylistName FROM Playlists WHERE Playlists.Id = ?";
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                // returns the playlist
+                return new Playlist(id, rs.getString("PlaylistName"), getSongsInPlaylist(id, conn));
+
+            }
+            else{
+                return null;
+            }
+        }
+        catch (Exception e) {
+            throw new Exception("Unable to get playlist with id: " + id, e);
+        }
     }
 
     @Override
     public Playlist getPlaylist(String name) throws Exception{
-        return null;
+        String sql = "SELECT Playlists.Id, Playlists.PlaylistName FROM Playlists WHERE Playlists.PlaylistName = ?";
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, name.trim());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                // returns the playlist
+                return new Playlist(rs.getInt("Id"), name.trim(), getSongsInPlaylist(rs.getInt("Id"), conn));
+
+            }
+            else{
+                return null;
+            }
+        }
+        catch (Exception e) {
+            throw new Exception("Unable to get playlist with name: " + name, e);
+        }
     }
 
     @Override

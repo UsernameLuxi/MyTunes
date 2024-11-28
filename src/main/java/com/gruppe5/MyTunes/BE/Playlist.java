@@ -1,13 +1,27 @@
 package com.gruppe5.MyTunes.BE;
 
-public class Playlist {
-    Song[] songs;
+import java.util.List;
 
-    public Playlist(Song[] songs) {
+public class Playlist {
+    private int id;
+    private String name;
+    private List<Song> songs;
+
+    public Playlist(int id, String name, List<Song> songs) {
+        this.id = id;
+        this.name = name;
         this.songs = songs;
     }
 
-    public Song[] getSongs() {
+    public List<Song> getSongs() {
         return songs;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
     }
 }
