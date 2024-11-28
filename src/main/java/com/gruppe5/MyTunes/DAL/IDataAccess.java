@@ -2,8 +2,6 @@ package com.gruppe5.MyTunes.DAL;
 
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.BE.Playlist;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public interface IDataAccess {
