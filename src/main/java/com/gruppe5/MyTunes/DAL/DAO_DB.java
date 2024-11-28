@@ -3,6 +3,7 @@ package com.gruppe5.MyTunes.DAL;
 import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 
+import javax.print.DocFlavor;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,69 +102,32 @@ public class DAO_DB  implements IDataAccess{
     @Override
     public Song addSong(Song song) throws Exception{
         String sql_insert = "INSERT INTO Songs (Title, ArtistID, Duration, GenreID, URL) VALUES (?, ?, ?, ?, ?)";
-        String sql_artist = "SELECT Artist.Id, Artist.ArtistName FROM Artist WHERE Artist.Name = ?";
-        String sql_genre = "SELECT Genre.Id, Genre.GenreName FROM Genre WHERE Genre.Name = ?";
 
-        try(Connection conn = new DBConnector().getConnection();
-            PreparedStatement ps_insert = conn.prepareStatement(sql_insert);
-            PreparedStatement ps_searchA = conn.prepareStatement(sql_artist);
-            PreparedStatement ps_searchG = conn.prepareStatement(sql_genre)){
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps_insert = conn.prepareStatement(sql_insert);){
 
-            // search the artist
-            ps_searchA.setString(1, song.getArtist().trim());
-            ResultSet aSearch = ps_searchA.executeQuery();
-            if (aSearch.next()){
-                ps_insert.setInt(2, aSearch.getInt("ArtistID"));
-            }
-            else{
-                // create the artist in the database and give id
-                PreparedStatement cArtist = conn.prepareStatement("INSERT INTO Artist (ArtistName) VALUES (?)");
-                cArtist.setString(1, song.getArtist().trim());
-                cArtist.executeUpdate();
+            // fill out the information
+            ps_insert.setString(1, song.getTitle().trim());
 
-                // get the artist id
-                PreparedStatement gArtist = conn.prepareStatement("SELECT Artist.Id FROM Artist WHERE Artist.ArtistName = ?");
-                gArtist.setString(1, song.getArtist().trim());
-                ResultSet rs = gArtist.executeQuery();
-                rs.next();
-                ps_insert.setInt(2, rs.getInt("Id"));
-            }
+            // search the artist - and if the artist don't exist, the artist is created
+            int artistID = getAritstID(song.getArtist(), conn);
+            ps_insert.setInt(2, artistID);
+
+            ps_insert.setTime(3, song.getDuration());
 
             // search the genre
-            ps_searchG.setString(1, song.getGenre().trim());
-            ResultSet gSearch = ps_searchG.executeQuery();
-            if (gSearch.next()){
-                ps_insert.setInt(4, gSearch.getInt("Id"));
-            }
-            else{
-                // create the genre in the database
-                PreparedStatement cGenre = conn.prepareStatement("INSERT INTO Genre (GenreName) VALUES (?)");
-                cGenre.setString(1, song.getGenre().trim());
-                cGenre.executeUpdate();
+            int genreID = getGenreID(song.getGenre(), conn);
+            ps_insert.setInt(4, genreID);
 
-                // get the artist id
-                PreparedStatement gGenre = conn.prepareStatement("SELECT Genre.Id FROM Genre WHERE Genre.GenreName = ?");
-                gGenre.setString(1, song.getArtist().trim());
-                ResultSet rs = gGenre.executeQuery();
-                rs.next();
-                ps_insert.setInt(4, rs.getInt("Id"));
-            }
-
-            // fill out the rest of the information
-            ps_insert.setString(1, song.getTitle().trim());
-            ps_insert.setTime(3, song.getDuration());
             ps_insert.setString(5, song.getURL());
 
+            // execute
             ps_insert.executeUpdate();
 
-            // get the id
-            PreparedStatement ps = conn.prepareStatement("SELECT Songs.Id FROM Songs WHERE Songs.Title = ? AND Songs.Duration = ? AND Songs.URL = ?");
-            ps.setString(1, song.getTitle().trim());
-            ps.setTime(2, song.getDuration());
-            ps.setString(3, song.getURL());
-            ResultSet rs = ps.executeQuery();
+            // get the id - redundant
+            ResultSet rs = ps_insert.getGeneratedKeys();
             rs.next();
-            return new Song(rs.getInt("Id"), song.getTitle(), song.getArtist(), song.getDuration(), song.getGenre(), song.getURL());
+            int songID = rs.getInt("Id");
+            return new Song(songID, song.getTitle(), song.getArtist(), song.getDuration(), song.getGenre(), song.getURL());
 
         }
         catch(Exception e){
@@ -173,11 +137,28 @@ public class DAO_DB  implements IDataAccess{
 
     @Override
     public Song updateSong(Song song) throws Exception{
-        return null;
+        String sql = "UPDATE Songs SET Title = ?, ArtistID = ?, Duration = ?, GenreID = ?, URL = ? WHERE Songs.Id = ?";
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            // get the ids for from the database
+            int artistId = getAritstID(song.getArtist(), conn);
+            int genreId = getGenreID(song.getGenre(), conn);
+
+            ps.setString(1, song.getTitle().trim());
+            ps.setInt(2, artistId);
+            ps.setTime(3, song.getDuration());
+            ps.setInt(4, genreId);
+            ps.setString(5, song.getURL());
+            ps.executeUpdate();
+        }
+        catch(Exception e){
+            throw new Exception("Unable to update song", e);
+        }
+        return song;
     }
 
     @Override
     public void deleteSong(Song song) throws Exception{
+        String sql = "";
 
     }
 
@@ -196,6 +177,89 @@ public class DAO_DB  implements IDataAccess{
         String artist = rs.getString("ArtistName");
         return new Song(id, title, artist, dur, genre, URL);
     }
+
+    /**
+     * Get the artist id by their name, this is used all around the code, therefore it can be its own method
+     * @param Name The name of the artist - if the name is not in the database, it adds the name to it
+     * @param conn The connection to the database
+     * @return returns the id of the artist
+     * @throws Exception It throws an exception if it's unable to execute the statement
+     */
+    private int getAritstID(String Name, Connection conn) throws Exception{
+        int id;
+        String sql = "SELECT Artist.Id FROM Artist WHERE Artist.ArtistName = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, Name);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()){
+            id = rs.getInt("Id");
+        }
+        else{
+            id = addArtist(Name, conn);
+        }
+        return id;
+    }
+
+    /**
+     * Adds an artist to the database
+     * @param name The name of the artist
+     * @param conn The connection to the database
+     * @return returns the id of the artist
+     * @throws Exception If the query is unable to execute or the connection fails
+     */
+    private int addArtist(String name, Connection conn) throws Exception{
+        String sql = "INSERT INTO Artist (ArtistName) VALUES (?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, name);
+        ps.executeUpdate();
+
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        return rs.getInt("Id");
+    }
+
+    /**
+     * Get the artist id by their name, this is used all around the code, therefore it can be its own method
+     * @param genre The name of the genre - if the name is not in the database, it adds the name to it
+     * @param conn The connection to the database
+     * @return returns the id of the genre
+     * @throws Exception It throws an exception if it's unable to execute the statement or connect to the database
+     */
+    private int getGenreID(String genre, Connection conn) throws Exception{
+        int id;
+        String sql = "SELECT Genre.Id FROM Genre WHERE Genre.GenreName = ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, genre);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()){
+            id = rs.getInt("Id");
+        }
+        else{
+            id = addGenre(genre, conn);
+        }
+        return id;
+    }
+
+    /**
+     * Adds a genre to the database
+     * @param genreName The name of the genre
+     * @param conn The connection to the database
+     * @return returns the id of the genre
+     * @throws Exception If the query is unable to execute or the connection fails
+     */
+    private int addGenre(String genreName, Connection conn) throws Exception{
+        String sql = "INSERT INTO Genre (GenreName) VALUES (?)";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, genreName);
+        ps.executeUpdate();
+
+        ResultSet rs = ps.getGeneratedKeys();
+        rs.next();
+        return rs.getInt("Id");
+    }
+
 
     @Override
     public List<Playlist> getAllPlaylists() throws Exception{
