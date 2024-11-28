@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/gruppe5/MyTunes/Main-window.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/gruppe5/MyTunes/MyTunes.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 880, 620);
         stage.setTitle("SoundSurf");
         stage.setScene(scene);
