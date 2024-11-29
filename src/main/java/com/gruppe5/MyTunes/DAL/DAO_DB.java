@@ -317,12 +317,13 @@ public class DAO_DB  implements IDataAccess{
             int playlistID = keys.getInt("Id");
 
             // add the songs to the playlistContainer
-            PreparedStatement addSong = conn.prepareStatement("INSERT INTO PlaylistContainer (PlaylistID, SongID) VALUES (?, ?)");
+            PreparedStatement addSong = conn.prepareStatement("INSERT INTO PlaylistContainer (PlaylistID, SongID, SongIndex) VALUES (?, ?, ?)");
             addSong.setInt(1, playlistID); // set the playlist id - we don't need to touch this again
             List<Song> songs = playlist.getSongs();
             for (int i = 0; i < songs.size(); i++) {
                 int songID = songs.get(i).getId(); // get the id
                 addSong.setInt(2, songID); // set the id in the query
+                addSong.setInt(3, i);
                 addSong.executeUpdate(); // execute the update
             }
 
@@ -333,6 +334,7 @@ public class DAO_DB  implements IDataAccess{
         }
     }
 
+    // TODO: refactor det nye ind
     /**
      * Update a specific playlist
      * @param playlist the playlist which have been changed
@@ -357,8 +359,12 @@ public class DAO_DB  implements IDataAccess{
 
             // add them again
             List<Song> songs = playlist.getSongs();
-            for (Song song : songs) {
-                addSongToPlaylistContainer(playlist, song, conn);
+            PreparedStatement insert = conn.prepareStatement("INSERT INTO PlaylistContainer (PlaylistID, SongID, SongIndex) VALUES (?, ?, ?)");
+            insert.setInt(1, playlist.getId()); // permanent playlist id for this case
+            for (int i = 0; i < songs.size(); i++) {
+                insert.setInt(2, songs.get(i).getId());
+                insert.setInt(3, i);
+                insert.executeUpdate();
             }
         }
         catch(Exception e){
@@ -491,17 +497,19 @@ public class DAO_DB  implements IDataAccess{
      * and if one was curious you could simply navigate to the method.
      * @return Returns the search query described by the name.
      */
-    private String getSQL_SearchSongsInPlaylistContainerByPlaylistID(){
+    private String getSQL_SearchSongsInPlaylistContainerByPlaylistID_OrderedBySongIndex(){
         return "SELECT PlaylistContainer.SongID, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL "+
                 "FROM PlaylistContainer "+
                 "INNER JOIN Songs ON PlaylistContainer.SongID = Songs.Id "+
                 "INNER JOIN Artist ON Songs.ArtistID = Artist.Id "+
                 "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
-                "WHERE PlaylistContainer.PlaylistID = ?;";
+                "WHERE PlaylistContainer.PlaylistID = ?" +
+                "ORDER BY PlaylistContainer.SongIndex;";
     }
 
     /**
      * Gets all the songs in a playlist. It searches through the playlistContainer and adds the songs to the list.
+     * The songs are in order
      * @param playlistID The id of the playlist which songs should be returned.
      * @param conn The connection to the database.
      * @return Returns a list of songs.
@@ -509,7 +517,7 @@ public class DAO_DB  implements IDataAccess{
      */
     private List<Song> getSongsInPlaylist(int playlistID, Connection conn) throws Exception{
         List<Song> songs = new ArrayList<>();
-        String sql = getSQL_SearchSongsInPlaylistContainerByPlaylistID();
+        String sql = getSQL_SearchSongsInPlaylistContainerByPlaylistID_OrderedBySongIndex();
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, playlistID);
         ResultSet rs = ps.executeQuery();
@@ -518,33 +526,5 @@ public class DAO_DB  implements IDataAccess{
             songs.add(s);
         }
         return songs;
-    }
-
-    /**
-     * Adds a song to the playlistContainer
-     * @param playlist The playlist that should have the song
-     * @param song The song which needs to be added
-     * @param conn The connection to the database
-     * @throws Exception If something goes wrong
-     */
-    private void addSongToPlaylistContainer(Playlist playlist, Song song, Connection conn) throws Exception{
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO PlaylistContainer (PlaylistID, SongID) VALUES (?, ?)");
-        ps.setInt(1, playlist.getId());
-        ps.setInt(2, song.getId());
-        ps.executeUpdate();
-    }
-
-    /**
-     * Removes a song from the playlistContainer
-     * @param playlist The playlist that has the song
-     * @param song The song which needs to be removed
-     * @param conn The connection to the database
-     * @throws Exception If something goes wrong
-     */
-    private void removeSongFromPlaylistContainer(Playlist playlist, Song song, Connection conn) throws Exception{
-        PreparedStatement ps = conn.prepareStatement("DELETE FROM PlaylistContainer WHERE PlaylistID = ? AND SongID = ?");
-        ps.setInt(1, playlist.getId());
-        ps.setInt(2, song.getId());
-        ps.executeUpdate();
     }
 }
