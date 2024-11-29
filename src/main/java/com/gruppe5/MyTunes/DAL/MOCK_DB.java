@@ -9,11 +9,7 @@ public class MOCK_DB implements IDataAccess {
 
     @Override
     public List<Song> getAllSongs() {
-        return List.of(
-                new Song(1, "song1", "artist1"),
-                new Song(2, "song2", "artist2"),
-                new Song(3, "song3", "artist3")
-        );
+        return List.of();
     }
 
     @Override

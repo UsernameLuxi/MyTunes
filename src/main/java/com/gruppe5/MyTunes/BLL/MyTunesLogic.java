@@ -4,7 +4,6 @@ import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.DAL.DAO_DB;
 import com.gruppe5.MyTunes.DAL.IDataAccess;
-import com.gruppe5.MyTunes.DAL.MOCK_DB;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -12,13 +11,17 @@ import java.io.File;
 import java.util.List;
 
 public class MyTunesLogic {
-    private IDataAccess dataAccess = new MOCK_DB();
+    private IDataAccess dataAccess = new DAO_DB();
     private MediaPlayer mediaPlayer;
     private Playlist selectedPlaylist = null;
     private Song selectedSong = null;
 
     public MyTunesLogic() {
-        System.out.println(playSong(dataAccess.getAllSongs().getFirst()));
+        try {
+            System.out.println(playSong(dataAccess.getAllSongs().getFirst()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean playSong(Song song)  {
@@ -38,12 +41,18 @@ public class MyTunesLogic {
         selectedSong = song;
         mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         mediaPlayer.play();
-        mediaPlayer.setOnEndOfMedia(this::nextSong);
+        mediaPlayer.setOnEndOfMedia(() -> {
+            try {
+                this.nextSong();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         return true;
     }
 
-    public boolean nextSong() {
+    public void nextSong() throws Exception {
         List<Song> songList = selectedPlaylist != null ? selectedPlaylist.getSongs() : dataAccess.getAllSongs();
         for (int i = 0; i < songList.size(); i++) {
             if (songList.get(i).getTitle().equals(selectedSong.getTitle())) {
@@ -56,10 +65,9 @@ public class MyTunesLogic {
             }
         }
 
-        return true;
     }
 
-    public boolean previousSong() {
+    public void previousSong() throws Exception {
         List<Song> songList = selectedPlaylist != null ? selectedPlaylist.getSongs() : dataAccess.getAllSongs();
         for (int i = 0; i < songList.size(); i++) {
             if (songList.get(i).getTitle().equals(selectedSong.getTitle())) {
@@ -71,8 +79,6 @@ public class MyTunesLogic {
                 break;
             }
         }
-
-        return true;
     }
 
     public boolean pauseSong() {
@@ -91,5 +97,13 @@ public class MyTunesLogic {
 
         mediaPlayer.play();
         return true;
+    }
+
+    /**
+     * Sets the volume of the mediaplayer
+     * @param volumeValue the value from the volume slider, 0-100
+     */
+    public void setVolume(int volumeValue) {
+        mediaPlayer.setVolume((double)volumeValue / 100);
     }
 }
