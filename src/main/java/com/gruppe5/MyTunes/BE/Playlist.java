@@ -23,6 +23,10 @@ public class Playlist {
         return songs;
     }
 
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
     public int getId(){
         return id;
     }
@@ -30,4 +34,15 @@ public class Playlist {
     public String getName(){
         return name;
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name + ";" + songs.toString();
+    }
+
+
 }

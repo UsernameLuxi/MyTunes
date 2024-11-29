@@ -280,7 +280,7 @@ public class DAO_DB  implements IDataAccess{
      */
     @Override
     public Playlist getPlaylist(String name) throws Exception{
-        String sql = "SELECT Playlists.Id, Playlists.PlaylistName FROM Playlists WHERE Playlists.PlaylistName = ?";
+        String sql = "SELECT Playlists.Id, Playlists.PlaylistName FROM Playlists WHERE Playlists.PlaylistName LIKE ?;"; // use LIKE or = both could be used depending on what you want to achieve
         try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, name.trim());
             ResultSet rs = ps.executeQuery();
@@ -306,8 +306,8 @@ public class DAO_DB  implements IDataAccess{
      */
     @Override
     public Playlist addPlaylist(Playlist playlist) throws Exception{
-        String sql = "INSERT INTO Playlists (PlaylistName) VALUES (?)";
-        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+        String sql = "INSERT INTO Playlists (PlaylistName) VALUES (?);";
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             // insert the playlist in the Playlist table
             ps.setString(1, playlist.getName());
             ps.executeUpdate();
@@ -315,7 +315,7 @@ public class DAO_DB  implements IDataAccess{
             // get the playlist id from the auto-generation
             ResultSet keys = ps.getGeneratedKeys();
             keys.next();
-            int playlistID = keys.getInt("Id");
+            int playlistID = keys.getInt(1);
 
             // add the songs to the playlistContainer
             PreparedStatement addSong = conn.prepareStatement("INSERT INTO PlaylistContainer (PlaylistID, SongID, SongIndex) VALUES (?, ?, ?)");
@@ -331,7 +331,9 @@ public class DAO_DB  implements IDataAccess{
             return new Playlist(playlistID, playlist.getName(), songs);
         }
         catch (Exception e) {
-            throw new Exception("Unable to add playlist " + playlist.getName().trim(), e);
+            String errorMessage = "Unable to add playlist " + playlist.getName().trim();
+            errorMessage += (e.getMessage().contains("duplicate")) ? " because of duplicate names. Cannot have duplicate names" : "";
+            throw new Exception(errorMessage, e);
         }
     }
 
@@ -503,7 +505,7 @@ public class DAO_DB  implements IDataAccess{
                 "INNER JOIN Songs ON PlaylistContainer.SongID = Songs.Id "+
                 "INNER JOIN Artist ON Songs.ArtistID = Artist.Id "+
                 "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
-                "WHERE PlaylistContainer.PlaylistID = ?" +
+                "WHERE PlaylistContainer.PlaylistID = ? " +
                 "ORDER BY PlaylistContainer.SongIndex;";
     }
 
