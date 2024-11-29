@@ -10,13 +10,20 @@ public class Song {
     private String genre;
     private String URL;
 
-    /*
     public Song(int id, String title, String artist) {
         this.id = id;
         this.title = title;
         this.artist = artist;
     }
-    */
+
+    public Song(String title, String artist, Time duration, String genre, String URL) {
+        this.title = title;
+        this.artist = artist;
+        this.duration = duration;
+        this.genre = genre;
+        this.URL = URL;
+    }
+    
     public Song(int id, String title, String artist, Time duration, String genre, String URL) {
         this.id = id;
         this.title = title;
