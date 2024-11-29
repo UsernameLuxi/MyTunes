@@ -20,9 +20,9 @@ public class DAO_DB  implements IDataAccess{
     @Override
     public List<Song> getAllSongs() throws Exception{
         List<Song> songs = new ArrayList<Song>();
-        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
-                "FROM Songs" +
-                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL " +
+                "FROM Songs " +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id " +
                 "INNER JOIN Genre ON Songs.GenreID = Genre.Id;";
         try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ResultSet rs = ps.executeQuery();
@@ -43,11 +43,11 @@ public class DAO_DB  implements IDataAccess{
      */
     @Override
     public Song getSong(int id) throws Exception{
-        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
-                "FROM Songs" +
-                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
-                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
-                "WHERE Songs.Id = ?";
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL " +
+                "FROM Songs " +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id " +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
+                "WHERE Songs.Id = ? ";
         try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -68,10 +68,10 @@ public class DAO_DB  implements IDataAccess{
     @Override
     public List<Song> getSongByName(String name) throws Exception{
         List<Song> songs = new ArrayList<>();
-        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
-                "FROM Songs" +
-                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
-                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL " +
+                "FROM Songs " +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id " +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
                 "WHERE Songs.Title LIKE ?";
         try (Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, "%"+name+"%");
@@ -92,10 +92,10 @@ public class DAO_DB  implements IDataAccess{
     @Override
     public List<Song> getSongByArtist(String artist) throws Exception{
         List<Song> songs = new ArrayList<>();
-        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
-                "FROM Songs" +
-                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
-                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL " +
+                "FROM Songs " +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id " +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
                 "WHERE Artist.ArtistName LIKE ?";
         try (Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, "%"+artist+"%");
@@ -116,11 +116,11 @@ public class DAO_DB  implements IDataAccess{
     @Override
     public List<Song> getSongByArtist(int artistID) throws Exception{
         List<Song> songs = new ArrayList<>();
-        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL" +
-                "FROM Songs" +
-                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id" +
-                "INNER JOIN Genre ON Songs.GenreID = Genre.Id;"+
-                "WHERE Artist.Id LIKE ?";
+        String sql = "SELECT Songs.Id, Songs.Title, Artist.ArtistName, Songs.Duration, Genre.GenreName, Songs.URL " +
+                "FROM Songs " +
+                "INNER JOIN Artist ON Songs.ArtistID = Artist.Id " +
+                "INNER JOIN Genre ON Songs.GenreID = Genre.Id "+
+                "WHERE Artist.Id = ?";
         try (Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, artistID);
             ResultSet rs = ps.executeQuery();
@@ -141,7 +141,7 @@ public class DAO_DB  implements IDataAccess{
     public Song addSong(Song song) throws Exception{
         String sql_insert = "INSERT INTO Songs (Title, ArtistID, Duration, GenreID, URL) VALUES (?, ?, ?, ?, ?)";
 
-        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps_insert = conn.prepareStatement(sql_insert);){
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps_insert = conn.prepareStatement(sql_insert, Statement.RETURN_GENERATED_KEYS)){
 
             // fill out the information
             ps_insert.setString(1, song.getTitle().trim());
@@ -164,7 +164,7 @@ public class DAO_DB  implements IDataAccess{
             // get the id - redundant
             ResultSet rs = ps_insert.getGeneratedKeys();
             rs.next();
-            int songID = rs.getInt("Id");
+            int songID = rs.getInt(1);
             return new Song(songID, song.getTitle(), song.getArtist(), song.getDuration(), song.getGenre(), song.getURL());
 
         }
@@ -193,6 +193,7 @@ public class DAO_DB  implements IDataAccess{
             ps.setTime(3, song.getDuration());
             ps.setInt(4, genreId);
             ps.setString(5, song.getURL());
+            ps.setInt(6, song.getId());
             ps.executeUpdate();
         }
         catch(Exception e){
@@ -334,7 +335,6 @@ public class DAO_DB  implements IDataAccess{
         }
     }
 
-    // TODO: refactor det nye ind
     /**
      * Update a specific playlist
      * @param playlist the playlist which have been changed
@@ -440,13 +440,13 @@ public class DAO_DB  implements IDataAccess{
      */
     private int addArtist(String name, Connection conn) throws Exception{
         String sql = "INSERT INTO Artist (ArtistName) VALUES (?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
+        PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, name);
         ps.executeUpdate();
 
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
-        return rs.getInt("Id");
+        return rs.getInt(1);
     }
 
     /**
@@ -481,13 +481,13 @@ public class DAO_DB  implements IDataAccess{
      */
     private int addGenre(String genreName, Connection conn) throws Exception{
         String sql = "INSERT INTO Genre (GenreName) VALUES (?)";
-        PreparedStatement ps = conn.prepareStatement(sql);
+        PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, genreName);
         ps.executeUpdate();
 
         ResultSet rs = ps.getGeneratedKeys();
         rs.next();
-        return rs.getInt("Id");
+        return rs.getInt(1);
     }
 
     /**
