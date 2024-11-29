@@ -71,6 +71,6 @@
       <Button fx:id="btnSongsEdit" layoutX="524.0" layoutY="582.0" mnemonicParsing="false" text="Edit" />
       <Button fx:id="btnSongsDel" layoutX="575.0" layoutY="582.0" mnemonicParsing="false" text="Delete" />
       <Button fx:id="btnClose" layoutX="829.0" layoutY="582.0" mnemonicParsing="false" text="Close" />
-      <Slider fx:id="sliderVol" layoutX="41.0" layoutY="68.0" prefHeight="18.0" prefWidth="150.0" />
+      <Slider fx:id="sliderVol" layoutX="41.0" layoutY="68.0" prefHeight="18.0" prefWidth="150.0"/>
    </children>
 </AnchorPane>

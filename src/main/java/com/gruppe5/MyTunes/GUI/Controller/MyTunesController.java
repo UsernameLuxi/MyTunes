@@ -1,5 +1,7 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
+import com.gruppe5.MyTunes.BLL.MyTunesLogic;
+import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +15,8 @@ import java.io.IOException;
 
 
 public class MyTunesController {
+    private MyTunesLogic myTunesLogic;
+
     @FXML
     public TableView tblPlaylists;
 
@@ -81,6 +85,14 @@ public class MyTunesController {
 
     @FXML
     private void onNewSongButtonClick(ActionEvent actionEvent){}
+
+    public void initialize(MyTunesLogic myTunesLogic) {
+        this.myTunesLogic = myTunesLogic;
+
+        sliderVol.valueProperty().addListener((observable, oldValue, newValue) -> {
+            myTunesLogic.setVolume(newValue.intValue());
+        });
+    }
 
     public void onNewSongButtonClick() throws IOException {
         FXMLLoader loader = new FXMLLoader();
