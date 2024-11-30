@@ -1,7 +1,6 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
 import com.gruppe5.MyTunes.BLL.MyTunesLogic;
-import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +9,6 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 
@@ -86,16 +84,23 @@ public class MyTunesController {
     @FXML
     private Label sliderVolLabel;
 
-    @FXML
-    private void onNewSongButtonClick(ActionEvent actionEvent){}
-
     public void initialize(MyTunesLogic myTunesLogic) {
         this.myTunesLogic = myTunesLogic;
 
         sliderVol.valueProperty().addListener((observable, oldValue, newValue) -> {
-            myTunesLogic.setVolume(newValue.intValue());
-            sliderVolLabel.setText(String.valueOf(newValue.intValue()));
+            sliderVolumeChanged(newValue);
         });
+
+        sliderVolumeChanged(50);
+    }
+
+    /**
+     * Sets the volume in the BLL and changes the volume slider label text.
+     * @param newValue the value from the volume slider, 0-100
+     */
+    private void sliderVolumeChanged(Number newValue) {
+        myTunesLogic.setVolume(newValue.intValue());
+        sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
     public void onNewSongButtonClick() throws IOException {
@@ -115,6 +120,14 @@ public class MyTunesController {
         // Set the modality to Application (you must close Window1 before going to the parent window
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+    public void btnBackClicked() throws Exception {
+        this.myTunesLogic.previousSong();
+    }
+
+    public void btnSkipClicked() throws Exception {
+        this.myTunesLogic.nextSong();
     }
 }
 

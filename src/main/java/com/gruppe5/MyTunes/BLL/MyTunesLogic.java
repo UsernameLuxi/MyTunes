@@ -57,7 +57,7 @@ public class MyTunesLogic {
         List<Song> songList = selectedPlaylist != null ? selectedPlaylist.getSongs() : dataAccess.getAllSongs();
         for (int i = 0; i < songList.size(); i++) {
             if (songList.get(i).getTitle().equals(selectedSong.getTitle())) {
-                if ((i + 1) > songList.size()) {
+                if ((i + 1) >= songList.size()) {
                     playSong(songList.getFirst());
                 } else {
                     playSong(songList.get(i + 1));
@@ -105,6 +105,7 @@ public class MyTunesLogic {
      * @param volumeValue the value from the volume slider, 0-100
      */
     public void setVolume(int volumeValue) {
-        mediaPlayer.setVolume((double)volumeValue / 100);
+        double valueToApply = (double)volumeValue / 100;
+        mediaPlayer.setVolume(valueToApply);
     }
 }
