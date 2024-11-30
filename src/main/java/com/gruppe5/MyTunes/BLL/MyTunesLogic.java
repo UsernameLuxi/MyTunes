@@ -35,6 +35,7 @@ public class MyTunesLogic {
         File songFile = new File(songName + ".mp3");
 
         if (!songFile.exists()) {
+            System.out.println("File does not exist, returning");
             return false;
         }
 

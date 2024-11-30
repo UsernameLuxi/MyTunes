@@ -84,6 +84,9 @@ public class MyTunesController {
     private Label testText;
 
     @FXML
+    private Label sliderVolLabel;
+
+    @FXML
     private void onNewSongButtonClick(ActionEvent actionEvent){}
 
     public void initialize(MyTunesLogic myTunesLogic) {
@@ -91,6 +94,7 @@ public class MyTunesController {
 
         sliderVol.valueProperty().addListener((observable, oldValue, newValue) -> {
             myTunesLogic.setVolume(newValue.intValue());
+            sliderVolLabel.setText(String.valueOf(newValue.intValue()));
         });
     }
 
