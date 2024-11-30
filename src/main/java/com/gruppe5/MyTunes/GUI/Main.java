@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws Exception {
         MyTunesLogic myTunesLogic = new MyTunesLogic();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/gruppe5/MyTunes/MyTunes.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 880, 620);

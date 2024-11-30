@@ -8,6 +8,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.sql.Time;
 import java.util.List;
 
 public class MyTunesLogic {
@@ -16,12 +17,14 @@ public class MyTunesLogic {
     private Playlist selectedPlaylist = null;
     private Song selectedSong = null;
 
-    public MyTunesLogic() {
+    public MyTunesLogic() throws Exception {
         try {
-            System.out.println(playSong(dataAccess.getAllSongs().getFirst()));
+            System.out.println(dataAccess.getAllSongs().toString());
+            playSong(dataAccess.getAllSongs().getFirst());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public boolean playSong(Song song)  {
