@@ -1,6 +1,6 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
-import com.gruppe5.MyTunes.BLL.MyTunesLogic;
+import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 public class MyTunesController {
-    private MyTunesLogic myTunesLogic;
+    private MyTunesModel myTunesModel;
 
     @FXML
     public TableView tblPlaylists;
@@ -84,8 +84,8 @@ public class MyTunesController {
     @FXML
     private Label sliderVolLabel;
 
-    public void initialize(MyTunesLogic myTunesLogic) {
-        this.myTunesLogic = myTunesLogic;
+    public void initialize(MyTunesModel myTunesModel) {
+        this.myTunesModel = myTunesModel;
 
         sliderVol.valueProperty().addListener((observable, oldValue, newValue) -> {
             sliderVolumeChanged(newValue);
@@ -99,7 +99,7 @@ public class MyTunesController {
      * @param newValue the value from the volume slider, 0-100
      */
     private void sliderVolumeChanged(Number newValue) {
-        myTunesLogic.setVolume(newValue.intValue());
+        myTunesModel.myTunesLogic.setVolume(newValue.intValue());
         sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
@@ -123,11 +123,11 @@ public class MyTunesController {
     }
 
     public void btnBackClicked() throws Exception {
-        this.myTunesLogic.previousSong();
+        myTunesModel.myTunesLogic.previousSong();
     }
 
     public void btnSkipClicked() throws Exception {
-        this.myTunesLogic.nextSong();
+        myTunesModel.myTunesLogic.nextSong();
     }
 }
 
