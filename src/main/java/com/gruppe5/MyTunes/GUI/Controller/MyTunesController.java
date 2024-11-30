@@ -99,7 +99,7 @@ public class MyTunesController {
      * @param newValue the value from the volume slider, 0-100
      */
     private void sliderVolumeChanged(Number newValue) {
-        myTunesModel.myTunesLogic.setVolume(newValue.intValue());
+        myTunesModel.setVolume(newValue.intValue());
         sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
@@ -123,11 +123,11 @@ public class MyTunesController {
     }
 
     public void btnBackClicked() throws Exception {
-        myTunesModel.myTunesLogic.previousSong();
+        myTunesModel.prevSong();
     }
 
     public void btnSkipClicked() throws Exception {
-        myTunesModel.myTunesLogic.nextSong();
+        myTunesModel.nextSong();
     }
 }
 
