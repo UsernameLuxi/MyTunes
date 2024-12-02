@@ -21,7 +21,7 @@ public class MyTunesLogic {
     private Song selectedSong = null;
     private MyTunesModel myTunesModel;
 
-    public MyTunesLogic(MyTunesModel myTunesModel) throws Exception {
+    public MyTunesLogic(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
 
         try {
@@ -33,13 +33,12 @@ public class MyTunesLogic {
 
     }
 
-    public boolean playSong(Song song) throws InterruptedException {
+    public boolean playSong(Song song) {
         if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
 
         String songPath = song.getURL();
-        // File songFile = new File(songPath + ".mp3");
         File songFile = new File(song.getURL());
         if (!songFile.exists()) {
             System.out.println("File does not exist at " + songPath);
@@ -48,7 +47,9 @@ public class MyTunesLogic {
 
         myTunesModel.changePlayingSongText(song.getTitle());
         selectedSong = song;
-        getSongDuration(song, System.out::println);
+        getSongDuration(song, time -> {
+            System.out.println(time);
+        });
         mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         mediaPlayer.play();
         mediaPlayer.setOnEndOfMedia(() -> {
@@ -130,7 +131,7 @@ public class MyTunesLogic {
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         mediaPlayer.setOnReady(() -> {
             Duration duration = mediaPlayer.getTotalDuration();
-            Time time = new Time((long) duration.toMillis() - (1000 * 3600)); // 1 time for meget, derfor trækker vi en time fra
+            Time time = new Time((long) duration.toMillis() - (1000 * 3600)); // 1 time for meget åbenbart?, derfor trækker vi en time fra
             callback.accept(time);
             mediaPlayer.dispose();
         });
