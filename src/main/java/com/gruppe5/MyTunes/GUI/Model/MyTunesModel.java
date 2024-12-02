@@ -1,12 +1,15 @@
 package com.gruppe5.MyTunes.GUI.Model;
 
 import com.gruppe5.MyTunes.BLL.MyTunesLogic;
+import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
 
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
+    private MyTunesController myTunesController;
 
-    public MyTunesModel() throws Exception {
-        myTunesLogic = new MyTunesLogic();
+    public MyTunesModel(MyTunesController myTunesController) throws Exception {
+        this.myTunesController = myTunesController;
+        myTunesLogic = new MyTunesLogic(this);
     }
 
     public void nextSong() throws Exception {
@@ -19,5 +22,8 @@ public class MyTunesModel {
 
     public void setVolume(int volumeVal) {
         myTunesLogic.setVolume(volumeVal);
+    }
+    public void changePlayingSongText(String songTitle) {
+        myTunesController.lblCurrentSong.setText(songTitle);
     }
 }

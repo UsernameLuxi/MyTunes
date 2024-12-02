@@ -13,13 +13,13 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        MyTunesModel myTunesModel = new MyTunesModel();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/gruppe5/MyTunes/MyTunes.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 880, 620);
         stage.setTitle("SoundSurf");
         stage.setScene(scene);
         stage.show();
         MyTunesController controller = fxmlLoader.getController();
+        MyTunesModel myTunesModel = new MyTunesModel(controller);
         controller.initialize(myTunesModel);
     }
 
