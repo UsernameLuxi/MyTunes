@@ -1,5 +1,6 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
+import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.event.ActionEvent;
@@ -19,10 +20,10 @@ public class MyTunesController {
     private MyTunesModel myTunesModel;
 
     @FXML
-    public TableView tblPlaylists;
+    public TableView<Playlist> tblPlaylists;
 
     @FXML
-    public TableView tblSongs;
+    public TableView<Song> tblSongs;
 
     @FXML
     public ListView<Song> lstSongsInPlaylist;
@@ -171,6 +172,31 @@ public class MyTunesController {
 
     @FXML
     private void onSongDeleteInPlaylist(ActionEvent actionEvent) {
+        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null){
+            try{
+                List<Song> playlist = myTunesModel.getPlaylist();
+                playlist.removeIf(s -> s.toString().equals(lstSongsInPlaylist.getSelectionModel().getSelectedItem().toString()));
+                myTunesModel.updatePlaylist(playlist);
+            }
+            catch(Exception e){
+                throw new RuntimeException(e); // TODO: vis den til brugeren tak!
+            }
+        }
+    }
+
+    @FXML
+    private void addNewSongToPlaylist(ActionEvent actionEvent) {
+        if (tblSongs.getSelectionModel().getSelectedItem() != null) {
+            List<Song> playlist = myTunesModel.getPlaylist();
+            playlist.add(tblSongs.getSelectionModel().getSelectedItem());
+            try{
+                myTunesModel.updatePlaylist(playlist);
+            }
+            catch(Exception e){
+                throw new RuntimeException(e); // TODO : vis den til brugeren hvis det er
+            }
+
+        }
     }
 }
 

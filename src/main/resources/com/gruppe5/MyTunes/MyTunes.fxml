@@ -35,7 +35,7 @@
             <ListView fx:id="lstSongsInPlaylist" prefHeight="430.0" prefWidth="140.0" />
          </children>
       </VBox>
-      <Button fx:id="btnTransferSongs" layoutX="395.0" layoutY="147.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="←" />
+      <Button fx:id="btnTransferSongs" layoutX="395.0" layoutY="147.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="←" onAction="#addNewSongToPlaylist" />
       <VBox layoutX="456.0" layoutY="129.0" prefHeight="446.0" prefWidth="417.0">
          <children>
             <Label text="Songs" />
