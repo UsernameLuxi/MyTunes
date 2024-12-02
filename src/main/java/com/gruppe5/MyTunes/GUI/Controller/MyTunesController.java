@@ -167,5 +167,9 @@ public class MyTunesController {
             myTunesModel.updatePlaylist(playlist);
         }
     }
+
+    @FXML
+    private void onSongDeleteInPlaylist(ActionEvent actionEvent) {
+    }
 }
 
