@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.List;
 
 
@@ -87,6 +88,12 @@ public class MyTunesController {
 
     @FXML
     private Label sliderVolLabel;
+    @FXML
+    private TableColumn<Playlist, String> colPlaylistName;
+    @FXML
+    private TableColumn<Playlist, Integer> colPlaylistAmtSongs;
+    @FXML
+    private TableColumn<Playlist, Time> colPlaylistTotDur;
 
     public void initialize(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
