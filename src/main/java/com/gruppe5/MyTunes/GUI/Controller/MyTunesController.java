@@ -96,13 +96,13 @@ public class MyTunesController {
     @FXML
     private TableColumn<Playlist, Time> colPlaylistTotDur;
     @FXML
-    private TableColumn colSongTitle;
+    private TableColumn<Song, String> colSongTitle;
     @FXML
-    private TableColumn colArtist;
+    private TableColumn<Song, String> colArtist;
     @FXML
-    private TableColumn colGenre;
+    private TableColumn<Song, String> colGenre;
     @FXML
-    private TableColumn colSongDur;
+    private TableColumn<Song, Time> colSongDur;
 
     public void initialize(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
