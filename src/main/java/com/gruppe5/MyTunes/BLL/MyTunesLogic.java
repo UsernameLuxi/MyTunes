@@ -7,10 +7,12 @@ import com.gruppe5.MyTunes.DAL.IDataAccess;
 import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.sql.Time;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MyTunesLogic {
     private IDataAccess dataAccess = new DAO_DB();
@@ -31,21 +33,22 @@ public class MyTunesLogic {
 
     }
 
-    public boolean playSong(Song song)  {
+    public boolean playSong(Song song) throws InterruptedException {
         if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
 
-        String songName = song.getTitle();
-        File songFile = new File(songName + ".mp3");
-
+        String songPath = song.getURL();
+        // File songFile = new File(songPath + ".mp3");
+        File songFile = new File(song.getTitle() + ".mp3");
         if (!songFile.exists()) {
-            System.out.println("File does not exist, returning");
+            System.out.println("File does not exist at " + songPath);
             return false;
         }
 
         myTunesModel.changePlayingSongText(song.getTitle());
         selectedSong = song;
+        getSongDuration(song, System.out::println);
         mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         mediaPlayer.play();
         mediaPlayer.setOnEndOfMedia(() -> {
@@ -89,18 +92,14 @@ public class MyTunesLogic {
     }
 
     public boolean pauseSong() {
-        if (mediaPlayer == null) {
-            return false;
-        }
+        if (mediaPlayer == null) { return false; }
 
         mediaPlayer.pause();
         return true;
     }
 
     public boolean resumeSong() {
-        if (mediaPlayer == null) {
-            return false;
-        }
+        if (mediaPlayer == null) { return false; }
 
         mediaPlayer.play();
         return true;
@@ -111,6 +110,8 @@ public class MyTunesLogic {
      * @param volumeValue the value from the volume slider, 0-100
      */
     public void setVolume(int volumeValue) {
+        if (mediaPlayer == null) { return; }
+
         double valueToApply = (double)volumeValue / 100;
         mediaPlayer.setVolume(valueToApply);
     }
@@ -122,5 +123,16 @@ public class MyTunesLogic {
 
     public Playlist getSelectedPlaylist() {
         return selectedPlaylist;
+    }
+
+    public void getSongDuration(Song song, Consumer<Time> callback)  {
+        File songFile = new File(song.getTitle() + ".mp3");
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
+        mediaPlayer.setOnReady(() -> {
+            Duration duration = mediaPlayer.getTotalDuration();
+            Time time = new Time((long) duration.toMillis() - (1000 * 3600)); // 1 time for meget, derfor trækker vi en time fra
+            callback.accept(time);
+            mediaPlayer.dispose();
+        });
     }
 }
