@@ -1,5 +1,6 @@
 package com.gruppe5.MyTunes.BE;
 
+import java.sql.Time;
 import java.util.List;
 
 public class Playlist {
@@ -37,6 +38,14 @@ public class Playlist {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public Time getTotalDuration(){
+        Time time = new Time(0);
+        for (Song song : songs) {
+            time.setTime(time.getTime() + song.getDuration().getTime());
+        }
+        return time;
     }
 
     @Override
