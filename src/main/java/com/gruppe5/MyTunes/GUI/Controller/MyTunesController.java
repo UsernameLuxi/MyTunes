@@ -117,6 +117,11 @@ public class MyTunesController {
         colPlaylistAmtSongs.setCellValueFactory(new PropertyValueFactory<Playlist, Integer>("size"));
         tblPlaylists.setItems(myTunesModel.getPlaylists());
 
+        colSongTitle.setCellValueFactory(new PropertyValueFactory<Playlist, String>("title"));
+        colArtist.setCellValueFactory(new PropertyValueFactory<Playlist, String>("artist"));
+        colGenre.setCellValueFactory(new PropertyValueFactory<Playlist, String>("genre"));
+        colSongDur.setCellValueFactory(new PropertyValueFactory<Playlist, Time>("duration"));
+        tblSongs.setItems(myTunesModel.getSongs());
     }
 
     /**

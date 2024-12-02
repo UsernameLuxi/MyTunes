@@ -14,12 +14,16 @@ public class MyTunesModel {
     private final MyTunesController myTunesController;
     ObservableList<Song> playlist;
     private ObservableList<Playlist> playlists;
+    private ObservableList<Song> songs;
 
     public MyTunesModel(MyTunesController myTunesController) throws Exception {
         this.myTunesController = myTunesController;
         myTunesLogic = new MyTunesLogic(this);
+
         playlists = FXCollections.observableArrayList();
         playlists.addAll(myTunesLogic.getAllPlaylists());
+        songs = FXCollections.observableArrayList();
+        songs.addAll(myTunesLogic.getAllSongs());
     }
 
     public void nextSong() throws Exception {
@@ -40,6 +44,10 @@ public class MyTunesModel {
 
     public ObservableList<Playlist> getPlaylists() {
         return playlists;
+    }
+
+    public ObservableList<Song> getSongs() {
+        return songs;
     }
 
     public Playlist updatePlaylist(List<Song> songs) throws Exception {

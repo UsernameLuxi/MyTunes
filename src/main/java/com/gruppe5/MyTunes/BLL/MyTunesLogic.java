@@ -146,4 +146,8 @@ public class MyTunesLogic {
     public List<Playlist> getAllPlaylists() throws Exception {
         return dataAccess.getAllPlaylists();
     }
+
+    public List<Song> getAllSongs() throws Exception {
+        return dataAccess.getAllSongs();
+    }
 }
