@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -103,7 +104,11 @@ public class MyTunesController {
         });
 
         sliderVolumeChanged(50);
+        colPlaylistName.setCellValueFactory(new PropertyValueFactory<Playlist, String>("name"));
+        colPlaylistTotDur.setCellValueFactory(new PropertyValueFactory<Playlist, Time>("totalDuration"));
+        colPlaylistAmtSongs.setCellValueFactory(new PropertyValueFactory<Playlist, Integer>("size"));
         tblPlaylists.setItems(myTunesModel.getPlaylists());
+
     }
 
     /**

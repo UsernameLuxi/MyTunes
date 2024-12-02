@@ -8,11 +8,13 @@ public class Playlist {
     private int id;
     private String name;
     private List<Song> songs;
+    private Time totalDuration;
 
     public Playlist(int id, String name, List<Song> songs) {
         this.id = id;
         this.name = name;
         this.songs = songs;
+        calculateTotalDuration();
     }
 
     public Playlist(String name, List<Song> songs) {
@@ -41,11 +43,21 @@ public class Playlist {
     }
 
     public Time getTotalDuration(){
-        Time time = new Time(0);
+        calculateTotalDuration();
+        return totalDuration;
+    }
+
+    private void calculateTotalDuration() {
+        Time time = new Time(0, 0, 0);
         for (Song song : songs) {
             time.setTime(time.getTime() + song.getDuration().getTime());
         }
-        return time;
+
+        totalDuration = time;
+    }
+
+    public Integer getSize() {
+        return songs.size();
     }
 
     @Override
