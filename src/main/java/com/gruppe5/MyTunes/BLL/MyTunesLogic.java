@@ -11,6 +11,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -135,5 +136,14 @@ public class MyTunesLogic {
             callback.accept(time);
             mediaPlayer.dispose();
         });
+    }
+
+    public Playlist createPlaylist(String playlistName) throws Exception {
+        Playlist playlist = new Playlist(playlistName, new ArrayList<>());
+        return dataAccess.addPlaylist(playlist);
+    }
+
+    public List<Playlist> getAllPlaylists() throws Exception {
+        return dataAccess.getAllPlaylists();
     }
 }

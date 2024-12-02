@@ -95,6 +95,7 @@ public class MyTunesController {
         });
 
         sliderVolumeChanged(50);
+        tblPlaylists.setItems(myTunesModel.getPlaylists());
     }
 
     /**

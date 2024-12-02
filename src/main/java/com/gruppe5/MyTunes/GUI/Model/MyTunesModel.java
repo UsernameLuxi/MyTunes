@@ -4,6 +4,7 @@ import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.BLL.MyTunesLogic;
 import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.List;
@@ -12,10 +13,13 @@ public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private final MyTunesController myTunesController;
     ObservableList<Song> playlist;
+    private ObservableList<Playlist> playlists;
 
     public MyTunesModel(MyTunesController myTunesController) throws Exception {
         this.myTunesController = myTunesController;
         myTunesLogic = new MyTunesLogic(this);
+        playlists = FXCollections.observableArrayList();
+        playlists.addAll(myTunesLogic.getAllPlaylists());
     }
 
     public void nextSong() throws Exception {
@@ -34,6 +38,10 @@ public class MyTunesModel {
         return playlist;
     }
 
+    public ObservableList<Playlist> getPlaylists() {
+        return playlists;
+    }
+
     public Playlist updatePlaylist(List<Song> songs) throws Exception {
         Playlist p = myTunesLogic.getSelectedPlaylist();
         p.setSongs(songs);
@@ -42,5 +50,10 @@ public class MyTunesModel {
 
     public void changePlayingSongText(String songTitle) {
         myTunesController.lblCurrentSong.setText(songTitle);
+    }
+
+    public void createPlaylist(String playlistName) throws Exception {
+        Playlist playlist = myTunesLogic.createPlaylist(playlistName);
+        myTunesController.tblPlaylists.getItems().add(playlist);
     }
 }
