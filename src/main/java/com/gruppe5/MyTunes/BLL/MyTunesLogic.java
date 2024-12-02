@@ -40,7 +40,7 @@ public class MyTunesLogic {
 
         String songPath = song.getURL();
         // File songFile = new File(songPath + ".mp3");
-        File songFile = new File(song.getTitle() + ".mp3");
+        File songFile = new File(song.getURL());
         if (!songFile.exists()) {
             System.out.println("File does not exist at " + songPath);
             return false;
@@ -126,7 +126,7 @@ public class MyTunesLogic {
     }
 
     public void getSongDuration(Song song, Consumer<Time> callback)  {
-        File songFile = new File(song.getTitle() + ".mp3");
+        File songFile = new File(song.getURL());
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         mediaPlayer.setOnReady(() -> {
             Duration duration = mediaPlayer.getTotalDuration();
