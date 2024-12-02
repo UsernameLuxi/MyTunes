@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
-    private MyTunesController myTunesController;
+    private final MyTunesController myTunesController;
     ObservableList<Song> playlist;
 
     public MyTunesModel(MyTunesController myTunesController) throws Exception {
@@ -38,5 +38,9 @@ public class MyTunesModel {
         Playlist p = myTunesLogic.getSelectedPlaylist();
         p.setSongs(songs);
         return myTunesLogic.updatePlaylist(p);
+    }
+
+    public void changePlayingSongText(String songTitle) {
+        myTunesController.lblCurrentSong.setText(songTitle);
     }
 }

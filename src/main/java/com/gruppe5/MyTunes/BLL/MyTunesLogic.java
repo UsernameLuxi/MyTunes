@@ -32,8 +32,6 @@ public class MyTunesLogic {
     }
 
     public boolean playSong(Song song)  {
-        System.out.println("attempting to play song " + song.getTitle());
-        // Dispose mediaplayer hvis en sang allerede afspiller
         if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
