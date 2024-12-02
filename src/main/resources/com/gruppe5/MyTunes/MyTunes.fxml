@@ -41,10 +41,10 @@
             <Label text="Songs" />
             <TableView fx:id="tblSongs" prefHeight="426.0" prefWidth="418.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Title" />
-                  <TableColumn prefWidth="75.0" text="Artist" />
-                  <TableColumn prefWidth="75.0" text="Category" />
-                  <TableColumn prefWidth="75.0" text="Time" />
+                  <TableColumn prefWidth="75.0" text="Title" fx:id="colSongTitle"/>
+                  <TableColumn prefWidth="75.0" text="Artist" fx:id="colArtist" />
+                  <TableColumn prefWidth="75.0" text="Category" fx:id="colGenre" />
+                  <TableColumn prefWidth="75.0" text="Time" fx:id="colSongDur" />
                </columns>
             </TableView>
          </children>
