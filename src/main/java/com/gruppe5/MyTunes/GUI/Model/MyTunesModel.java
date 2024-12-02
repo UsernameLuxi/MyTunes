@@ -12,8 +12,8 @@ import java.util.List;
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private final MyTunesController myTunesController;
-    ObservableList<Song> playlist;
-    private ObservableList<Playlist> playlists;
+    private ObservableList<Song> playlist; // current playlist?
+    private ObservableList<Playlist> playlists; // all playlists
     private ObservableList<Song> songs;
 
     public MyTunesModel(MyTunesController myTunesController) throws Exception {
@@ -63,5 +63,9 @@ public class MyTunesModel {
     public void createPlaylist(String playlistName) throws Exception {
         Playlist playlist = myTunesLogic.createPlaylist(playlistName);
         myTunesController.tblPlaylists.getItems().add(playlist);
+    }
+
+    public void getSongByName(String query) throws Exception {
+        songs.setAll(myTunesLogic.getSongByName(query));
     }
 }

@@ -150,4 +150,8 @@ public class MyTunesLogic {
     public List<Song> getAllSongs() throws Exception {
         return dataAccess.getAllSongs();
     }
+
+    public List<Song> getSongByName(String query) throws Exception {
+        return dataAccess.getSongByName(query);
+    }
 }

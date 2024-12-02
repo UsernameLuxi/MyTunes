@@ -16,7 +16,7 @@
       </Label>
       <Label layoutX="625.0" layoutY="46.0" text="Filter:" />
       <TextField fx:id="txtFilter" layoutX="657.0" layoutY="42.0" />
-      <Button fx:id="btnFilter" layoutX="815.0" layoutY="41.0" mnemonicParsing="false" text="🔍" />
+      <Button fx:id="btnFilter" layoutX="815.0" layoutY="41.0" mnemonicParsing="false" text="🔍" onAction="#searchForSong"/>
       <VBox layoutX="12.0" layoutY="130.0" prefHeight="446.0" prefWidth="227.0">
          <children>
             <Label text="Playlists" />

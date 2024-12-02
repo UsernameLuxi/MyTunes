@@ -223,5 +223,15 @@ public class MyTunesController {
 
         }
     }
+
+    @FXML
+    private void searchForSong(ActionEvent actionEvent) {
+        try{
+            myTunesModel.getSongByName(txtFilter.getText().trim());
+        }
+        catch(Exception e){
+            throw new RuntimeException(e); // TODO : vis det til brugeren
+        }
+    }
 }
 
