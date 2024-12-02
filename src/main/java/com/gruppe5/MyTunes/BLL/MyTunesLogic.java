@@ -116,4 +116,13 @@ public class MyTunesLogic {
         double valueToApply = (double)volumeValue / 100;
         mediaPlayer.setVolume(valueToApply);
     }
+
+
+    public Playlist updatePlaylist(Playlist playlist) throws Exception {
+        return dataAccess.updatePlaylist(playlist);
+    }
+
+    public Playlist getSelectedPlaylist() {
+        return selectedPlaylist;
+    }
 }

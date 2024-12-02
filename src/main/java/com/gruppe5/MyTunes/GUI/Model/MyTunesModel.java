@@ -1,11 +1,17 @@
 package com.gruppe5.MyTunes.GUI.Model;
 
+import com.gruppe5.MyTunes.BE.Playlist;
+import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.BLL.MyTunesLogic;
 import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
+import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private MyTunesController myTunesController;
+    ObservableList<Song> playlist;
 
     public MyTunesModel(MyTunesController myTunesController) throws Exception {
         this.myTunesController = myTunesController;
@@ -23,7 +29,14 @@ public class MyTunesModel {
     public void setVolume(int volumeVal) {
         myTunesLogic.setVolume(volumeVal);
     }
-    public void changePlayingSongText(String songTitle) {
-        myTunesController.lblCurrentSong.setText(songTitle);
+
+    public ObservableList<Song> getPlaylist() {
+        return playlist;
+    }
+
+    public Playlist updatePlaylist(List<Song> songs) throws Exception {
+        Playlist p = myTunesLogic.getSelectedPlaylist();
+        p.setSongs(songs);
+        return myTunesLogic.updatePlaylist(p);
     }
 }
