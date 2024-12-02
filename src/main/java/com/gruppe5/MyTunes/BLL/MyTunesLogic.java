@@ -4,6 +4,7 @@ import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.DAL.DAO_DB;
 import com.gruppe5.MyTunes.DAL.IDataAccess;
+import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -16,8 +17,11 @@ public class MyTunesLogic {
     private MediaPlayer mediaPlayer;
     private Playlist selectedPlaylist = null;
     private Song selectedSong = null;
+    private MyTunesModel myTunesModel;
 
-    public MyTunesLogic() throws Exception {
+    public MyTunesLogic(MyTunesModel myTunesModel) throws Exception {
+        this.myTunesModel = myTunesModel;
+
         try {
             System.out.println(dataAccess.getAllSongs().toString());
             playSong(dataAccess.getAllSongs().getFirst());
@@ -28,8 +32,6 @@ public class MyTunesLogic {
     }
 
     public boolean playSong(Song song)  {
-        System.out.println("attempting to play song " + song.getTitle());
-        // Dispose mediaplayer hvis en sang allerede afspiller
         if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
@@ -42,6 +44,7 @@ public class MyTunesLogic {
             return false;
         }
 
+        myTunesModel.changePlayingSongText(song.getTitle());
         selectedSong = song;
         mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         mediaPlayer.play();

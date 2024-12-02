@@ -3,16 +3,19 @@ package com.gruppe5.MyTunes.GUI.Model;
 import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.BLL.MyTunesLogic;
+import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
 import javafx.collections.ObservableList;
 
 import java.util.List;
 
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
+    private final MyTunesController myTunesController;
     ObservableList<Song> playlist;
 
-    public MyTunesModel() throws Exception {
-        myTunesLogic = new MyTunesLogic();
+    public MyTunesModel(MyTunesController myTunesController) throws Exception {
+        this.myTunesController = myTunesController;
+        myTunesLogic = new MyTunesLogic(this);
     }
 
     public void nextSong() throws Exception {
@@ -35,5 +38,9 @@ public class MyTunesModel {
         Playlist p = myTunesLogic.getSelectedPlaylist();
         p.setSongs(songs);
         return myTunesLogic.updatePlaylist(p);
+    }
+
+    public void changePlayingSongText(String songTitle) {
+        myTunesController.lblCurrentSong.setText(songTitle);
     }
 }
