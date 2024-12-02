@@ -170,6 +170,16 @@ public class MyTunesController {
 
     @FXML
     private void onSongDeleteInPlaylist(ActionEvent actionEvent) {
+        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null){
+            try{
+                List<Song> playlist = myTunesModel.getPlaylist();
+                playlist.removeIf(s -> s.toString().equals(lstSongsInPlaylist.getSelectionModel().getSelectedItem().toString()));
+                myTunesModel.updatePlaylist(playlist);
+            }
+            catch(Exception e){
+                throw new RuntimeException(e); // TODO: vis den til brugeren tak!
+            }
+        }
     }
 }
 
