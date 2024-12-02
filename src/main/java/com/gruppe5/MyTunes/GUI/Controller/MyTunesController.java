@@ -1,6 +1,8 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
+import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +12,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class MyTunesController {
@@ -22,7 +25,7 @@ public class MyTunesController {
     public TableView tblSongs;
 
     @FXML
-    public ListView lstSongsInPlaylist;
+    public ListView<Song> lstSongsInPlaylist;
 
     @FXML
     public Button btnBack;
@@ -128,6 +131,41 @@ public class MyTunesController {
 
     public void btnSkipClicked() throws Exception {
         myTunesModel.nextSong();
+    }
+
+    @FXML
+    private void onMoveSongUp(ActionEvent actionEvent) throws Exception {
+        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+            Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+            List<Song> playlist = myTunesModel.getPlaylist();
+            for (int i = 0; i < playlist.size(); i++) {
+                if (playlist.get(i).equals(selectedSong) && i != 0) {
+                    Song tempsong = playlist.get(i - 1);
+                    playlist.set(i - 1, selectedSong);
+                    playlist.set(i, tempsong);
+                    break;
+                }
+            }
+            myTunesModel.updatePlaylist(playlist);
+        }
+
+    }
+
+    @FXML
+    private void onMoveSongDown(ActionEvent actionEvent) throws Exception {
+        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+            Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+            List<Song> playlist = myTunesModel.getPlaylist();
+            for (int i = 0; i < playlist.size() - 1; i++) {
+                if (playlist.get(i).equals(selectedSong)) {
+                    Song tempsong = playlist.get(i + 1);
+                    playlist.set(i + 1, selectedSong);
+                    playlist.set(i, tempsong);
+                    break;
+                }
+            }
+            myTunesModel.updatePlaylist(playlist);
+        }
     }
 }
 
