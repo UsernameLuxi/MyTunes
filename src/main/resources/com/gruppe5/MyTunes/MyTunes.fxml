@@ -22,9 +22,9 @@
             <Label text="Playlists" />
             <TableView fx:id="tblPlaylists" prefHeight="450.0" prefWidth="227.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Name" />
-                  <TableColumn prefWidth="75.0" text="Songs" />
-                  <TableColumn prefWidth="75.0" text="Time" />
+                  <TableColumn prefWidth="75.0" text="Name" fx:id="colPlaylistName"/>
+                  <TableColumn prefWidth="75.0" text="Songs" fx:id="colPlaylistAmtSongs"/>
+                  <TableColumn prefWidth="75.0" text="Time" fx:id="colPlaylistTotDur"/>
                </columns>
             </TableView>
          </children>
