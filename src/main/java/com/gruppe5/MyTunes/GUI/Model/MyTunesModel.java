@@ -12,7 +12,7 @@ import java.util.List;
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private final MyTunesController myTunesController;
-    private ObservableList<Song> playlist; // current playlist?
+    private Playlist playlist; // current playlist?
     private ObservableList<Playlist> playlists; // all playlists
     private ObservableList<Song> songs;
 
@@ -38,7 +38,11 @@ public class MyTunesModel {
         myTunesLogic.setVolume(volumeVal);
     }
 
-    public ObservableList<Song> getPlaylist() {
+    public void setPlaylist(Playlist playlist){
+        this.playlist = playlist;
+    }
+
+    public Playlist getPlaylist() {
         return playlist;
     }
 
@@ -50,9 +54,7 @@ public class MyTunesModel {
         return songs;
     }
 
-    public Playlist updatePlaylist(List<Song> songs) throws Exception {
-        Playlist p = myTunesLogic.getSelectedPlaylist();
-        p.setSongs(songs);
+    public Playlist updatePlaylist(Playlist p) throws Exception {
         return myTunesLogic.updatePlaylist(p);
     }
 

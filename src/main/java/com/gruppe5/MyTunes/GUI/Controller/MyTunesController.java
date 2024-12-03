@@ -111,11 +111,18 @@ public class MyTunesController {
             sliderVolumeChanged(newValue);
         });
 
+
         sliderVolumeChanged(50);
         colPlaylistName.setCellValueFactory(new PropertyValueFactory<Playlist, String>("name"));
         colPlaylistTotDur.setCellValueFactory(new PropertyValueFactory<Playlist, Time>("totalDuration"));
         colPlaylistAmtSongs.setCellValueFactory(new PropertyValueFactory<Playlist, Integer>("size"));
         tblPlaylists.setItems(myTunesModel.getPlaylists());
+
+        tblPlaylists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                myTunesModel.setPlaylist(newValue);
+            }
+        });
 
         colSongTitle.setCellValueFactory(new PropertyValueFactory<Song, String>("title"));
         colArtist.setCellValueFactory(new PropertyValueFactory<Song, String>("artist"));
@@ -164,7 +171,8 @@ public class MyTunesController {
     private void onMoveSongUp(ActionEvent actionEvent) throws Exception {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
             Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
-            List<Song> playlist = myTunesModel.getPlaylist();
+            Playlist p = myTunesModel.getPlaylist();
+            List<Song> playlist = p.getSongs();
             for (int i = 0; i < playlist.size(); i++) {
                 if (playlist.get(i).equals(selectedSong) && i != 0) {
                     Song tempsong = playlist.get(i - 1);
@@ -173,7 +181,7 @@ public class MyTunesController {
                     break;
                 }
             }
-            myTunesModel.updatePlaylist(playlist);
+            myTunesModel.updatePlaylist(p);
         }
 
     }
@@ -181,8 +189,9 @@ public class MyTunesController {
     @FXML
     private void onMoveSongDown(ActionEvent actionEvent) throws Exception {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+            Playlist p = myTunesModel.getPlaylist();
             Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
-            List<Song> playlist = myTunesModel.getPlaylist();
+            List<Song> playlist = p.getSongs();
             for (int i = 0; i < playlist.size() - 1; i++) {
                 if (playlist.get(i).equals(selectedSong)) {
                     Song tempsong = playlist.get(i + 1);
@@ -191,7 +200,7 @@ public class MyTunesController {
                     break;
                 }
             }
-            myTunesModel.updatePlaylist(playlist);
+            myTunesModel.updatePlaylist(p);
         }
     }
 
@@ -199,8 +208,10 @@ public class MyTunesController {
     private void onSongDeleteInPlaylist(ActionEvent actionEvent) {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null){
             try{
-                List<Song> playlist = myTunesModel.getPlaylist();
-                playlist.removeIf(s -> s.toString().equals(lstSongsInPlaylist.getSelectionModel().getSelectedItem().toString()));
+                Playlist playlist = myTunesModel.getPlaylist();
+                List<Song> songs = playlist.getSongs();
+                songs.removeIf(s -> s.toString().equals(lstSongsInPlaylist.getSelectionModel().getSelectedItem().toString()));
+                playlist.setSongs(songs);
                 myTunesModel.updatePlaylist(playlist);
             }
             catch(Exception e){
@@ -212,10 +223,12 @@ public class MyTunesController {
     @FXML
     private void addNewSongToPlaylist(ActionEvent actionEvent) {
         if (tblSongs.getSelectionModel().getSelectedItem() != null) {
-            List<Song> playlist = myTunesModel.getPlaylist();
+            Playlist p = myTunesModel.getPlaylist();
+            List<Song> playlist = p.getSongs();
             playlist.add(tblSongs.getSelectionModel().getSelectedItem());
+            p.setSongs(playlist);
             try{
-                myTunesModel.updatePlaylist(playlist);
+                myTunesModel.updatePlaylist(p);
             }
             catch(Exception e){
                 throw new RuntimeException(e); // TODO : vis den til brugeren hvis det er
