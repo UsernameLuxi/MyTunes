@@ -1,5 +1,6 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -18,4 +19,7 @@ public class AddSongsPopUpController {
         this.parent = parentParam;
     }
 
+    @FXML
+    private void onFileChoose(ActionEvent actionEvent) {
+    }
 }
