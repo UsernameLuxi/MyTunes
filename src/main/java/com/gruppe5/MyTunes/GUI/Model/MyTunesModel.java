@@ -38,6 +38,7 @@ public class MyTunesModel {
 
     public void setPlaylist(Playlist playlist){
         this.playlist = playlist;
+        songs.setAll(playlist.getSongs());
     }
 
     public Playlist getPlaylist() {

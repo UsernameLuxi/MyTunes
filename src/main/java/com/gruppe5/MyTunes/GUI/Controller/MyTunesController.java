@@ -121,6 +121,7 @@ public class MyTunesController {
         tblPlaylists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 myTunesModel.setPlaylist(newValue);
+                lstSongsInPlaylist.setItems(myTunesModel.getSongs());
             }
         });
 
