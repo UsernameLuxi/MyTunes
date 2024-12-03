@@ -26,7 +26,7 @@
       <TextField fx:id="txtTime" layoutX="98.0" layoutY="187.0" />
       <TextField fx:id="txtFile" layoutX="98.0" layoutY="231.0" />
       <Button fx:id="btnCategory" layoutX="195.0" layoutY="143.0" mnemonicParsing="false" text="More..." />
-      <Button fx:id="btnFile" layoutX="258.0" layoutY="231.0" mnemonicParsing="false" text="Choose..." />
+      <Button fx:id="btnFile" layoutX="258.0" layoutY="231.0" mnemonicParsing="false" text="Choose..." onAction="#onFileChoose" />
       <Button fx:id="btnCancel" layoutX="310.0" layoutY="291.0" mnemonicParsing="false" text="Cancel" />
       <Button fx:id="btnSave" layoutX="373.0" layoutY="291.0" mnemonicParsing="false" text="Save" />
    </children>

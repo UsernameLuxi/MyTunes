@@ -1,6 +1,8 @@
 package com.gruppe5.MyTunes.BE;
 
 
+import java.sql.Time;
+
 public class Song {
     private int id;
     private String title;
@@ -64,6 +66,10 @@ public class Song {
         return duration;
     }
 
+    public Time getTime() {
+        return new Time(duration * 1000L - (1000 * 3600));
+    }
+
     public void setDuration(int duration) {
         this.duration = duration;
     }
@@ -78,6 +84,6 @@ public class Song {
 
     @Override
     public String toString() {
-        return title + "," + artist + "," + duration + "," + genre + "," + URL;
+        return title + " - " + artist;
     }
 }

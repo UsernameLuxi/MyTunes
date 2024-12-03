@@ -20,6 +20,8 @@ import java.util.List;
 
 public class MyTunesController {
     private MyTunesModel myTunesModel;
+    private String pauseSymbol = "⏸";
+    private String playSymbol = "▶";
 
     @FXML
     public TableView<Playlist> tblPlaylists;
@@ -34,7 +36,7 @@ public class MyTunesController {
     public Button btnBack;
 
     @FXML
-    public Button BtnPlay;
+    public Button btnPlay;
 
     @FXML
     public Button btnSkip;
@@ -125,10 +127,23 @@ public class MyTunesController {
             }
         });
 
+        tblSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !btnPlay.getText().equals(playSymbol)) {
+                btnPlay.setText(playSymbol);
+            }
+
+        });
+
+        lstSongsInPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                btnPlay.setText(playSymbol);
+            }
+        });
+
         colSongTitle.setCellValueFactory(new PropertyValueFactory<Song, String>("title"));
         colArtist.setCellValueFactory(new PropertyValueFactory<Song, String>("artist"));
         colGenre.setCellValueFactory(new PropertyValueFactory<Song, String>("genre"));
-        colSongDur.setCellValueFactory(new PropertyValueFactory<Song, Time>("duration"));
+        colSongDur.setCellValueFactory(new PropertyValueFactory<Song, Time>("time"));
         tblSongs.setItems(myTunesModel.getSongs());
     }
 
@@ -249,7 +264,33 @@ public class MyTunesController {
     }
     @FXML
     private void onPlayButtonClick(ActionEvent actionEvent) {
+        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+            int index = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+            myTunesModel.playFromNewPlace(index, myTunesModel.getCurrentPlaylistSongs());
+            btnPlay.setText(pauseSymbol);
+        } else if (tblSongs.getSelectionModel().getSelectedItem() != null) {
+            int index = tblSongs.getSelectionModel().getSelectedIndex();
+            myTunesModel.playFromNewPlace(index, myTunesModel.getSongs());
+            btnPlay.setText(pauseSymbol);
+        }
+        else{
+            if (btnPlay.getText().equals(pauseSymbol)){
+                btnPlay.setText(playSymbol);
+                // pause
+                myTunesModel.pauseSong();
+            }
+            else{
+                btnPlay.setText(pauseSymbol);
+                // resume
+                myTunesModel.resumeSong();
+            }
 
+
+        }
+
+        tblPlaylists.getSelectionModel().clearSelection();
+        tblSongs.getSelectionModel().clearSelection();
+        lstSongsInPlaylist.getSelectionModel().clearSelection();
     }
     boolean isCreating = false;
     @FXML

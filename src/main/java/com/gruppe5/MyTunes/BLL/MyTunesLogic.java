@@ -18,27 +18,28 @@ import java.util.function.Consumer;
 public class MyTunesLogic {
     private IDataAccess dataAccess = new DAO_DB();
     private MediaPlayer mediaPlayer;
-    private Playlist selectedPlaylist = null;
     private Song selectedSong = null;
     private MyTunesModel myTunesModel;
+    private int currentIndex;
+    private List<Song> currentSongs;
 
     public MyTunesLogic(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
 
         try {
-            System.out.println(dataAccess.getAllSongs().toString());
-            playSong(dataAccess.getAllSongs().getFirst());
+            playFromNewPlace(0, dataAccess.getAllSongs());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public boolean playSong(Song song) {
+    public boolean playSong() {
         if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
 
+        Song song = currentSongs.get(currentIndex);
         String songPath = song.getURL();
         File songFile = new File(song.getURL());
         if (!songFile.exists()) {
@@ -65,32 +66,21 @@ public class MyTunesLogic {
     }
 
     public void nextSong() throws Exception {
-        List<Song> songList = selectedPlaylist != null ? selectedPlaylist.getSongs() : dataAccess.getAllSongs();
-        for (int i = 0; i < songList.size(); i++) {
-            if (songList.get(i).getTitle().equals(selectedSong.getTitle())) {
-                if ((i + 1) >= songList.size()) {
-                    playSong(songList.getFirst());
-                } else {
-                    playSong(songList.get(i + 1));
-                }
-                break;
-            }
+        if (currentIndex + 1 >= currentSongs.size()) {
+            currentIndex = 0;
+        } else {
+            currentIndex = currentIndex + 1;
         }
-
+        playSong();
     }
 
     public void previousSong() throws Exception {
-        List<Song> songList = selectedPlaylist != null ? selectedPlaylist.getSongs() : dataAccess.getAllSongs();
-        for (int i = 0; i < songList.size(); i++) {
-            if (songList.get(i).getTitle().equals(selectedSong.getTitle())) {
-                if ((i - 1) < 0) {
-                    playSong(songList.getLast());
-                } else {
-                    playSong(songList.get(i - 1));
-                }
-                break;
-            }
+        if (currentIndex - 1 < 0) {
+            currentIndex = currentSongs.size() - 1;
+        } else {
+            currentIndex = currentIndex - 1;
         }
+        playSong();
     }
 
     public boolean pauseSong() {
@@ -123,8 +113,10 @@ public class MyTunesLogic {
         return dataAccess.updatePlaylist(playlist);
     }
 
-    public Playlist getSelectedPlaylist() {
-        return selectedPlaylist;
+    public void playFromNewPlace(int index, List<Song> songs) {
+        currentSongs = songs;
+        currentIndex = index;
+        playSong();
     }
 
     public void getSongDuration(Song song, Consumer<Time> callback)  {
