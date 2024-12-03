@@ -171,18 +171,16 @@ public class MyTunesController {
     @FXML
     private void onMoveSongUp(ActionEvent actionEvent) throws Exception {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
-            Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+            int selectedIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
             Playlist p = myTunesModel.getPlaylist();
+            Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
             List<Song> playlist = p.getSongs();
-            for (int i = 0; i < playlist.size(); i++) {
-                if (playlist.get(i).equals(selectedSong) && i != 0) {
-                    Song tempsong = playlist.get(i - 1);
-                    playlist.set(i - 1, selectedSong);
-                    playlist.set(i, tempsong);
-                    break;
-                }
+            if (selectedIndex != 0) {
+                Song down = playlist.get(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() - 1);
+                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex(), down);
+                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() - 1, selectedSong);
+                myTunesModel.updatePlaylist(p);
             }
-            myTunesModel.updatePlaylist(p);
         }
 
     }
@@ -190,18 +188,17 @@ public class MyTunesController {
     @FXML
     private void onMoveSongDown(ActionEvent actionEvent) throws Exception {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+            int selectedIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
             Playlist p = myTunesModel.getPlaylist();
             Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
             List<Song> playlist = p.getSongs();
-            for (int i = 0; i < playlist.size() - 1; i++) {
-                if (playlist.get(i).equals(selectedSong)) {
-                    Song tempsong = playlist.get(i + 1);
-                    playlist.set(i + 1, selectedSong);
-                    playlist.set(i, tempsong);
-                    break;
-                }
+            if (selectedIndex != playlist.size() - 1) {
+                Song up = playlist.get(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() + 1);
+                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex(), up);
+                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() + 1, selectedSong);
+                myTunesModel.updatePlaylist(p);
             }
-            myTunesModel.updatePlaylist(p);
+
         }
     }
 
@@ -211,7 +208,7 @@ public class MyTunesController {
             try{
                 Playlist playlist = myTunesModel.getPlaylist();
                 List<Song> songs = playlist.getSongs();
-                songs.removeIf(s -> s.toString().equals(lstSongsInPlaylist.getSelectionModel().getSelectedItem().toString()));
+                songs.remove(lstSongsInPlaylist.getSelectionModel().getSelectedIndex());
                 playlist.setSongs(songs);
                 myTunesModel.updatePlaylist(playlist);
                 tblPlaylists.refresh();
