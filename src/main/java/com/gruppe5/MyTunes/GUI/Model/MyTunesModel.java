@@ -102,7 +102,9 @@ public class MyTunesModel {
     }
 
     public Song addSong(Song song) throws Exception{
-        return myTunesLogic.addSong(song);
+        Song s = myTunesLogic.addSong(song);
+        songs.add(s);
+        return s;
     }
 
     public void setDurationOfFile(String path, AddSongsPopUpController caller){

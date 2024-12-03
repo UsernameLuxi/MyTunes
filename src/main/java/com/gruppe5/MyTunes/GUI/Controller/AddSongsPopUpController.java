@@ -66,8 +66,8 @@ public class AddSongsPopUpController {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choose a file");
         chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Wav Files", "*.wav"),
-                new FileChooser.ExtensionFilter("Mp3 Files", "*.mp3")
+                new FileChooser.ExtensionFilter("Mp3 Files", "*.mp3"),
+                new FileChooser.ExtensionFilter("Wav Files", "*.wav")
         );
         File file = chooser.showOpenDialog(null);
         if (file != null) {
