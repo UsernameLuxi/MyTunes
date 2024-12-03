@@ -22,6 +22,8 @@ import java.util.List;
 
 public class MyTunesController {
     private MyTunesModel myTunesModel;
+    private String pauseSymbol = "⏸";
+    private String playSymbol = "▶";
 
     @FXML
     public TableView<Playlist> tblPlaylists;
@@ -36,7 +38,7 @@ public class MyTunesController {
     public Button btnBack;
 
     @FXML
-    public Button BtnPlay;
+    public Button btnPlay;
 
     @FXML
     public Button btnSkip;
@@ -124,6 +126,19 @@ public class MyTunesController {
             if (newValue != null) {
                 myTunesModel.setPlaylist(newValue);
                 lstSongsInPlaylist.setItems(myTunesModel.getCurrentPlaylistSongs());
+            }
+        });
+
+        tblSongs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !btnPlay.getText().equals(playSymbol)) {
+                btnPlay.setText(playSymbol);
+            }
+
+        });
+
+        lstSongsInPlaylist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                btnPlay.setText(playSymbol);
             }
         });
 
@@ -254,9 +269,25 @@ public class MyTunesController {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
             int index = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
             myTunesModel.playFromNewPlace(index, myTunesModel.getCurrentPlaylistSongs());
-        } else {
+            btnPlay.setText(pauseSymbol);
+        } else if (tblSongs.getSelectionModel().getSelectedItem() != null) {
             int index = tblSongs.getSelectionModel().getSelectedIndex();
             myTunesModel.playFromNewPlace(index, myTunesModel.getSongs());
+            btnPlay.setText(pauseSymbol);
+        }
+        else{
+            if (btnPlay.getText().equals(pauseSymbol)){
+                btnPlay.setText(playSymbol);
+                // pause
+                myTunesModel.pauseSong();
+            }
+            else{
+                btnPlay.setText(pauseSymbol);
+                // resume
+                myTunesModel.resumeSong();
+            }
+
+
         }
 
         tblPlaylists.getSelectionModel().clearSelection();

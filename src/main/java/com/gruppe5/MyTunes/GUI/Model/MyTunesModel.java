@@ -84,4 +84,12 @@ public class MyTunesModel {
     public void playFromNewPlace(int index, ObservableList<Song> songs) {
         myTunesLogic.playFromNewPlace(index, songs);
     }
+
+    public void pauseSong(){
+        myTunesLogic.pauseSong();
+    }
+
+    public void resumeSong(){
+        myTunesLogic.resumeSong();
+    }
 }
