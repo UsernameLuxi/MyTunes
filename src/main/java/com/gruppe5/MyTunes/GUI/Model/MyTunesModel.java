@@ -11,6 +11,7 @@ public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private final MyTunesController myTunesController;
     private Playlist playlist; // current playlist?
+    private ObservableList<Song> currentPlaylistSongs;
     private ObservableList<Playlist> playlists; // all playlists
     private ObservableList<Song> songs;
 
@@ -20,6 +21,7 @@ public class MyTunesModel {
 
         playlists = FXCollections.observableArrayList();
         playlists.addAll(myTunesLogic.getAllPlaylists());
+        currentPlaylistSongs = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songs.addAll(myTunesLogic.getAllSongs());
     }
@@ -38,10 +40,15 @@ public class MyTunesModel {
 
     public void setPlaylist(Playlist playlist){
         this.playlist = playlist;
+        currentPlaylistSongs.setAll(playlist.getSongs());
     }
 
     public Playlist getPlaylist() {
         return playlist;
+    }
+
+    public ObservableList<Song> getCurrentPlaylistSongs() {
+        return currentPlaylistSongs;
     }
 
     public ObservableList<Playlist> getPlaylists() {
