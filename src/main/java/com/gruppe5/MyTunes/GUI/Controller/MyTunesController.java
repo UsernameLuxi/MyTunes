@@ -213,6 +213,7 @@ public class MyTunesController {
                 songs.removeIf(s -> s.toString().equals(lstSongsInPlaylist.getSelectionModel().getSelectedItem().toString()));
                 playlist.setSongs(songs);
                 myTunesModel.updatePlaylist(playlist);
+                tblPlaylists.refresh();
             }
             catch(Exception e){
                 throw new RuntimeException(e); // TODO: vis den til brugeren tak!
@@ -229,6 +230,7 @@ public class MyTunesController {
             p.setSongs(playlist);
             try{
                 myTunesModel.updatePlaylist(p);
+                tblPlaylists.refresh();
             }
             catch(Exception e){
                 throw new RuntimeException(e); // TODO : vis den til brugeren hvis det er
