@@ -8,6 +8,6 @@
    <children>
       <Button fx:id="btnDelete" layoutX="294.0" layoutY="187.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="Delete" />
       <Label layoutX="250.0" layoutY="155.0" text="Are ´you sure" />
-      <Button fx:id="btnCancel" layoutX="224.0" layoutY="187.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="btnCancel" layoutX="224.0" layoutY="187.0" mnemonicParsing="false" text="Cancel" onAction="#onCancelButtonClick" />
    </children>
 </AnchorPane>

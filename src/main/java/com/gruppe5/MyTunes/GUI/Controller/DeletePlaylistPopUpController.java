@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class DeletePlaylistPopUpController {
     private MyTunesController parent;
@@ -27,8 +28,13 @@ public class DeletePlaylistPopUpController {
 
 
     public void onDeleteButtonClick(ActionEvent actionEvent) throws Exception {
-
         parent.deletePlaylistConfirm();
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
+    }
+    public void onCancelButtonClick(ActionEvent actionEvent) throws Exception {
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
     }
 }
 

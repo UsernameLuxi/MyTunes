@@ -74,6 +74,7 @@ public class MyTunesModel {
 
     public void deletePlaylist(Playlist playlist) throws Exception {
         myTunesLogic.deletePlaylist(playlist);
+        playlists.remove(playlist);
     }
 
     public void getSongByName(String query) throws Exception {

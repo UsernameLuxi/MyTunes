@@ -10,7 +10,7 @@
    <children>
       <Label layoutX="187.0" layoutY="153.0" text="Name:" />
       <TextField fx:id="txtName" layoutX="225.0" layoutY="149.0" />
-      <Button fx:id="btnCancel" layoutX="333.0" layoutY="216.0" mnemonicParsing="false" text="Cancel" />
-      <Button fx:id="btnSave" layoutX="407.0" layoutY="216.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="btnCancel" layoutX="333.0" layoutY="216.0" mnemonicParsing="false" text="Cancel" onAction="#onCancelButtonClick" />
+      <Button fx:id="btnSave" layoutX="407.0" layoutY="216.0" mnemonicParsing="false" text="Save" onAction="#onSaveButtonClick"/>
    </children>
 </AnchorPane>
