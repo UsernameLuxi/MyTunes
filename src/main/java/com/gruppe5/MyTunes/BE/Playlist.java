@@ -1,6 +1,5 @@
 package com.gruppe5.MyTunes.BE;
 
-import java.sql.Time;
 import java.util.List;
 
 public class Playlist {
@@ -8,7 +7,7 @@ public class Playlist {
     private int id;
     private String name;
     private List<Song> songs;
-    private Time totalDuration;
+    private int totalDuration;
 
     public Playlist(int id, String name, List<Song> songs) {
         this.id = id;
@@ -42,18 +41,18 @@ public class Playlist {
         this.name = name;
     }
 
-    public Time getTotalDuration(){
+    public int getTotalDuration(){
         calculateTotalDuration();
         return totalDuration;
     }
-
     private void calculateTotalDuration() {
-        Time time = new Time(0, 0, 0);
+        int time = 0;
         for (Song song : songs) {
-            time.setTime(time.getTime() + song.getDuration().getTime());
+            time += song.getDuration();
         }
 
         totalDuration = time;
+        // convert to time
     }
 
     public Integer getSize() {
