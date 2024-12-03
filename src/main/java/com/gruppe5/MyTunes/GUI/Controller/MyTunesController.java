@@ -123,9 +123,7 @@ public class MyTunesController {
         tblPlaylists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 myTunesModel.setPlaylist(newValue);
-                ObservableList<Song> p = FXCollections.observableArrayList() ;
-                p.addAll(newValue.getSongs());
-                lstSongsInPlaylist.setItems(p);
+                lstSongsInPlaylist.setItems(myTunesModel.getCurrentPlaylistSongs());
             }
         });
 
