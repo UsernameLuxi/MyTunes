@@ -60,6 +60,7 @@ public class MyTunesModel {
     }
 
     public Playlist updatePlaylist(Playlist p) throws Exception {
+        currentPlaylistSongs.setAll(p.getSongs());
         return myTunesLogic.updatePlaylist(p);
     }
 
@@ -73,6 +74,6 @@ public class MyTunesModel {
     }
 
     public void getSongByName(String query) throws Exception {
-        currentPlaylistSongs.setAll(myTunesLogic.getSongByName(query));
+        songs.setAll(myTunesLogic.getSongByName(query));
     }
 }
