@@ -80,4 +80,8 @@ public class MyTunesModel {
     public void getSongByName(String query) throws Exception {
         songs.setAll(myTunesLogic.getSongByName(query));
     }
+
+    public void playFromNewPlace(int index, ObservableList<Song> songs) {
+        myTunesLogic.playFromNewPlace(index, songs);
+    }
 }

@@ -251,7 +251,17 @@ public class MyTunesController {
     }
     @FXML
     private void onPlayButtonClick(ActionEvent actionEvent) {
+        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+            int index = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+            myTunesModel.playFromNewPlace(index, myTunesModel.getCurrentPlaylistSongs());
+        } else {
+            int index = tblSongs.getSelectionModel().getSelectedIndex();
+            myTunesModel.playFromNewPlace(index, myTunesModel.getSongs());
+        }
 
+        tblPlaylists.getSelectionModel().clearSelection();
+        tblSongs.getSelectionModel().clearSelection();
+        lstSongsInPlaylist.getSelectionModel().clearSelection();
     }
     @FXML
     private void onNewPlaylistButtonClick(ActionEvent actionEvent) throws IOException {
