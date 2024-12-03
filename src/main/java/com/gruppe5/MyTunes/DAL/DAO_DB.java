@@ -529,4 +529,21 @@ public class DAO_DB  implements IDataAccess{
         }
         return songs;
     }
+
+    public List<String> getGenres() throws Exception {
+        List<String> genres = new ArrayList<>();
+        String sql = "SELECT Genre.GenreName FROM Genre";
+
+        try(Connection conn = new DBConnector().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                genres.add(rs.getString("GenreName").trim());
+            }
+        }
+        catch(Exception e){
+            throw new Exception("Unable to retrieve genres", e);
+        }
+
+        return genres;
+    }
 }

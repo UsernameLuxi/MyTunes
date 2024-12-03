@@ -35,4 +35,6 @@ public interface IDataAccess {
 
     void deletePlaylist(Playlist playlist) throws Exception;
 
+    List<String> getGenres() throws Exception;
+
 }
