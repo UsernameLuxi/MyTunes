@@ -3,6 +3,8 @@ package com.gruppe5.MyTunes.GUI.Controller;
 import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -121,7 +123,9 @@ public class MyTunesController {
         tblPlaylists.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 myTunesModel.setPlaylist(newValue);
-                lstSongsInPlaylist.setItems(myTunesModel.getSongs());
+                ObservableList<Song> p = FXCollections.observableArrayList() ;
+                p.addAll(newValue.getSongs());
+                lstSongsInPlaylist.setItems(p);
             }
         });
 
