@@ -22,6 +22,7 @@ public class MyTunesLogic {
     private MyTunesModel myTunesModel;
     private int currentIndex;
     private List<Song> currentSongs;
+    private int volume;
 
     public MyTunesLogic(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
@@ -48,11 +49,13 @@ public class MyTunesLogic {
         }
 
         myTunesModel.changePlayingSongText(song.getTitle());
+
         selectedSong = song;
         getSongDuration(song, time -> {
             System.out.println(time);
         });
         mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
+        setVolume(volume);
         mediaPlayer.play();
         mediaPlayer.setOnEndOfMedia(() -> {
             try {
@@ -105,6 +108,7 @@ public class MyTunesLogic {
         if (mediaPlayer == null) { return; }
 
         double valueToApply = (double)volumeValue / 100;
+        volume = volumeValue;
         mediaPlayer.setVolume(valueToApply);
     }
 
