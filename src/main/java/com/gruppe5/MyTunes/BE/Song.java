@@ -1,12 +1,11 @@
 package com.gruppe5.MyTunes.BE;
 
-import java.sql.Time;
 
 public class Song {
     private int id;
     private String title;
     private String artist;
-    private Time duration;
+    private int duration;
     private String genre;
     private String URL;
 
@@ -16,7 +15,7 @@ public class Song {
         this.artist = artist;
     }
 
-    public Song(String title, String artist, Time duration, String genre, String URL) {
+    public Song(String title, String artist, int duration, String genre, String URL) {
         this.title = title;
         this.artist = artist;
         this.duration = duration;
@@ -24,7 +23,7 @@ public class Song {
         this.URL = URL;
     }
 
-    public Song(int id, String title, String artist, Time duration, String genre, String URL) {
+    public Song(int id, String title, String artist, int duration, String genre, String URL) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -61,11 +60,11 @@ public class Song {
         this.URL = URL;
     }
 
-    public Time getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 

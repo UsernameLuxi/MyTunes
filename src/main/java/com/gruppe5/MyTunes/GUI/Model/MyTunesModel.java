@@ -7,12 +7,11 @@ import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.List;
-
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private final MyTunesController myTunesController;
-    private ObservableList<Song> playlist; // current playlist?
+    private Playlist playlist; // current playlist?
+    private ObservableList<Song> currentPlaylistSongs;
     private ObservableList<Playlist> playlists; // all playlists
     private ObservableList<Song> songs;
 
@@ -22,6 +21,7 @@ public class MyTunesModel {
 
         playlists = FXCollections.observableArrayList();
         playlists.addAll(myTunesLogic.getAllPlaylists());
+        currentPlaylistSongs = FXCollections.observableArrayList();
         songs = FXCollections.observableArrayList();
         songs.addAll(myTunesLogic.getAllSongs());
     }
@@ -38,8 +38,17 @@ public class MyTunesModel {
         myTunesLogic.setVolume(volumeVal);
     }
 
-    public ObservableList<Song> getPlaylist() {
+    public void setPlaylist(Playlist playlist){
+        this.playlist = playlist;
+        currentPlaylistSongs.setAll(playlist.getSongs());
+    }
+
+    public Playlist getPlaylist() {
         return playlist;
+    }
+
+    public ObservableList<Song> getCurrentPlaylistSongs() {
+        return currentPlaylistSongs;
     }
 
     public ObservableList<Playlist> getPlaylists() {
@@ -50,9 +59,7 @@ public class MyTunesModel {
         return songs;
     }
 
-    public Playlist updatePlaylist(List<Song> songs) throws Exception {
-        Playlist p = myTunesLogic.getSelectedPlaylist();
-        p.setSongs(songs);
+    public Playlist updatePlaylist(Playlist p) throws Exception {
         return myTunesLogic.updatePlaylist(p);
     }
 
@@ -62,7 +69,7 @@ public class MyTunesModel {
 
     public void createPlaylist(String playlistName) throws Exception {
         Playlist playlist = myTunesLogic.createPlaylist(playlistName);
-        myTunesController.tblPlaylists.getItems().add(playlist);
+        playlists.add(playlist);
     }
 
     public void deletePlaylist(Playlist playlist) throws Exception {
@@ -70,6 +77,6 @@ public class MyTunesModel {
     }
 
     public void getSongByName(String query) throws Exception {
-        songs.setAll(myTunesLogic.getSongByName(query));
+        currentPlaylistSongs.setAll(myTunesLogic.getSongByName(query));
     }
 }

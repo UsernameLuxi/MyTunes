@@ -150,7 +150,7 @@ public class DAO_DB  implements IDataAccess{
             int artistID = getAritstID(song.getArtist(), conn);
             ps_insert.setInt(2, artistID);
 
-            ps_insert.setTime(3, song.getDuration());
+            ps_insert.setInt(3, song.getDuration());
 
             // search the genre
             int genreID = getGenreID(song.getGenre(), conn);
@@ -190,7 +190,7 @@ public class DAO_DB  implements IDataAccess{
             // fill out the information
             ps.setString(1, song.getTitle().trim());
             ps.setInt(2, artistId);
-            ps.setTime(3, song.getDuration());
+            ps.setInt(3, song.getDuration());
             ps.setInt(4, genreId);
             ps.setString(5, song.getURL());
             ps.setInt(6, song.getId());
@@ -403,7 +403,7 @@ public class DAO_DB  implements IDataAccess{
     private Song createSong(ResultSet rs) throws Exception{
         int id = rs.getInt("Id");
         String title = rs.getString("Title");
-        Time dur = rs.getTime("Duration");
+        int dur = rs.getInt("Duration");
         String URL = rs.getString("URL");
         String genre = rs.getString("GenreName");
         String artist = rs.getString("ArtistName");
@@ -524,7 +524,7 @@ public class DAO_DB  implements IDataAccess{
         ps.setInt(1, playlistID);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
-            Song s = new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTime(4), rs.getString(5), rs.getString(6));
+            Song s = new Song(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6));
             songs.add(s);
         }
         return songs;
