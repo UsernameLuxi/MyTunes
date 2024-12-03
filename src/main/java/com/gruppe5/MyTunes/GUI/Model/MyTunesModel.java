@@ -65,6 +65,10 @@ public class MyTunesModel {
         myTunesController.tblPlaylists.getItems().add(playlist);
     }
 
+    public void deletePlaylist(Playlist playlist) throws Exception {
+        myTunesLogic.deletePlaylist(playlist);
+    }
+
     public void getSongByName(String query) throws Exception {
         songs.setAll(myTunesLogic.getSongByName(query));
     }
