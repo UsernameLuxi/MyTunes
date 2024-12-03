@@ -150,11 +150,12 @@ public class MyTunesController {
         Parent scene = loader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(scene));
+        stage.setTitle("Add/Edit Song");
 
         // Get the controller reference
         AddSongsPopUpController controller = loader.getController();
 
-        // Send a reference to the parent to Window1Controller
+        // Send a reference to the parent to MyTunesController
         controller.setParent(this); // this refers to this MainWindowController object
 
         // Set the modality to Application (you must close Window1 before going to the parent window
@@ -247,6 +248,53 @@ public class MyTunesController {
         catch(Exception e){
             throw new RuntimeException(e); // TODO : vis det til brugeren
         }
+    }
+    @FXML
+    private void onPlayButtonClick(ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private void onNewPlaylistButtonClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddPlaylistPopUp.fxml"));
+
+        Parent scene = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(scene));
+        stage.setTitle("Add/Edit Playlist");
+
+        // Get the controller reference
+        AddPlaylistPopUpController controller = loader.getController();
+
+        // Send a reference to the parent to MyTunesController
+        controller.setParent(this); // this refers to this MainWindowController object
+
+        // Set the modality to Application (you must close Window1 before going to the parent window
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+    @FXML
+    private void onDeletePlaylistButtonClick(ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/DeletePlaylistPopUp.fxml"));
+
+        Parent scene = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(scene));
+        stage.setTitle("Delete Playlist");
+
+        // Get the controller reference
+        DeletePlaylistPopUpController controller = loader.getController();
+
+        // Send a reference to the parent to MyTunesController
+        controller.setParent(this); // this refers to this MainWindowController object
+
+        // Set the modality to Application (you must close Window1 before going to the parent window
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+    public void deletePlaylistConfirm() throws Exception {
+        myTunesModel.deletePlaylist(tblPlaylists.getSelectionModel().getSelectedItem());
     }
 }
 
