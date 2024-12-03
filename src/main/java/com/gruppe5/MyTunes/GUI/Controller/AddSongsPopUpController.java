@@ -1,21 +1,22 @@
 package com.gruppe5.MyTunes.GUI.Controller;
 
+import com.gruppe5.MyTunes.BE.Song;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddSongsPopUpController {
     private MyTunesController parent;
+    private int time = 0;
 
     @FXML
     private TextField txtName;
@@ -48,7 +49,12 @@ public class AddSongsPopUpController {
 
         List<MenuItem> items = new ArrayList<>();
         for (String string : parent.getMyTunesModel().getGenres()) {
-            items.add(new MenuItem(string));
+            MenuItem mi = new MenuItem(string);
+            mi.setOnAction(event -> {
+                MenuItem mt = (MenuItem) event.getSource();
+                mbtnCategory.setText(mt.getText());
+            });
+            items.add(mi);
         }
         this.mbtnCategory.getItems().clear();
         this.mbtnCategory.getItems().addAll(items);
@@ -66,6 +72,7 @@ public class AddSongsPopUpController {
         File file = chooser.showOpenDialog(null);
         if (file != null) {
             txtFile.setText(file.getPath());
+            parent.getMyTunesModel().setDurationOfFile(file.getPath(), this);
         }
     }
 
@@ -73,5 +80,28 @@ public class AddSongsPopUpController {
     private void onCancel(ActionEvent actionEvent) {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    private void onSave(ActionEvent actionEvent) throws Exception{
+        if (time != 0){
+            String title = txtTitle.getText();
+            String genre = mbtnCategory.getText();
+            String artist = txtArtist.getText();
+            String path = txtFile.getText();
+            Song s = new Song(title, artist, time, genre, path);
+            parent.getMyTunesModel().addSong(s);
+            // close stage
+            onCancel(actionEvent);
+        }
+        else{
+            throw new Exception("Time is invalid, or not ready");
+        }
+    }
+
+    public void setTimeField(Integer value) {
+        time = value;
+        System.out.println((long) value);
+        txtTime.setText(new Time((long) (value * 1000) - (1000 * 3600)).toString()); //  convert to milliseconds, the subtract the annoying hour
     }
 }

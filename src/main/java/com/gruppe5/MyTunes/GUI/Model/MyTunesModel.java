@@ -3,6 +3,7 @@ package com.gruppe5.MyTunes.GUI.Model;
 import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.BLL.MyTunesLogic;
+import com.gruppe5.MyTunes.GUI.Controller.AddSongsPopUpController;
 import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -99,4 +100,17 @@ public class MyTunesModel {
     public void resumeSong(){
         myTunesLogic.resumeSong();
     }
+
+    public Song addSong(Song song) throws Exception{
+        return myTunesLogic.addSong(song);
+    }
+
+    public void setDurationOfFile(String path, AddSongsPopUpController caller){
+        myTunesLogic.getDurationOfFile(path, integer -> {displayDurationOfFile(integer, caller);});
+    }
+
+    private void displayDurationOfFile(Integer value, AddSongsPopUpController caller){
+        caller.setTimeField(value);
+    }
+
 }

@@ -153,4 +153,24 @@ public class MyTunesLogic {
     public List<String> getGenres() throws Exception {
         return dataAccess.getGenres();
     }
+
+    public Song addSong(Song song) throws Exception{
+        return dataAccess.addSong(song);
+    }
+
+    /**
+     * Get the duration of the song or sound file in seconds
+     * @param path the path to the file
+     * @param callback that's a good question
+     */
+    public void getDurationOfFile(String path, Consumer<Integer> callback){
+        File songFile = new File(path);
+        MediaPlayer mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
+        mediaPlayer.setOnReady(() -> {
+            Duration duration = mediaPlayer.getTotalDuration();
+            Integer time = (int) (duration.toMillis() / 1000);
+            callback.accept(time);
+            mediaPlayer.dispose();
+        });
+    }
 }
