@@ -156,7 +156,7 @@ public class MyTunesController {
         sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
-    public void onNewSongButtonClick() throws IOException {
+    public void onNewSongButtonClick() throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddSongsPopUp.fxml"));
 
@@ -371,6 +371,10 @@ public class MyTunesController {
         // Set the modality to Application (you must close Window1 before going to the parent window
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
+    }
+
+    public MyTunesModel getMyTunesModel() {
+        return myTunesModel;
     }
 }
 

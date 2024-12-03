@@ -7,6 +7,8 @@ import com.gruppe5.MyTunes.GUI.Controller.MyTunesController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class MyTunesModel {
     private final MyTunesLogic myTunesLogic;
     private final MyTunesController myTunesController;
@@ -45,6 +47,10 @@ public class MyTunesModel {
 
     public Playlist getPlaylist() {
         return playlist;
+    }
+
+    public List<String> getGenres() throws Exception {
+        return myTunesLogic.getGenres();
     }
 
     public ObservableList<Song> getCurrentPlaylistSongs() {

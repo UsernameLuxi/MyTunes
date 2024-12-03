@@ -76,4 +76,9 @@ public class MOCK_DB implements IDataAccess {
     public void deletePlaylist(Playlist playlist) {
 
     }
+
+    @Override
+    public List<String> getGenres() throws Exception {
+        return List.of();
+    }
 }

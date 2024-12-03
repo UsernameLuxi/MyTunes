@@ -149,4 +149,8 @@ public class MyTunesLogic {
     public void deletePlaylist(Playlist playlist) throws Exception {
         dataAccess.deletePlaylist(playlist);
     }
+
+    public List<String> getGenres() throws Exception {
+        return dataAccess.getGenres();
+    }
 }

@@ -4,12 +4,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddSongsPopUpController {
     private MyTunesController parent;
@@ -40,8 +43,16 @@ public class AddSongsPopUpController {
      * Sets a reference to the main window controller (parent window)
      * @param parentParam
      */
-    public void setParent(MyTunesController parentParam) {
+    public void setParent(MyTunesController parentParam) throws Exception {
         this.parent = parentParam;
+
+        List<MenuItem> items = new ArrayList<>();
+        for (String string : parent.getMyTunesModel().getGenres()) {
+            items.add(new MenuItem(string));
+        }
+        this.mbtnCategory.getItems().clear();
+        this.mbtnCategory.getItems().addAll(items);
+
     }
 
     @FXML
