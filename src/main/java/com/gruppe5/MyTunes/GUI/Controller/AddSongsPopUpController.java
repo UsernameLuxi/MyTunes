@@ -7,6 +7,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 
@@ -59,5 +60,7 @@ public class AddSongsPopUpController {
 
     @FXML
     private void onCancel(ActionEvent actionEvent) {
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
     }
 }
