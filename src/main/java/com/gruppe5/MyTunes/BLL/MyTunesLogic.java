@@ -154,4 +154,7 @@ public class MyTunesLogic {
     public List<Song> getSongByName(String query) throws Exception {
         return dataAccess.getSongByName(query);
     }
+    public void deletePlaylist(Playlist playlist) throws Exception {
+        dataAccess.deletePlaylist(playlist);
+    }
 }
