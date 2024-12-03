@@ -284,7 +284,7 @@ public class MyTunesController {
         stage.setTitle("Delete Playlist");
 
         // Get the controller reference
-        AddPlaylistPopUpController controller = loader.getController();
+        DeletePlaylistPopUpController controller = loader.getController();
 
         // Send a reference to the parent to MyTunesController
         controller.setParent(this); // this refers to this MainWindowController object
