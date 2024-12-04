@@ -180,6 +180,11 @@ public class MyTunesController {
         sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
+    public void onEditButtonClick() {
+        AddSongsPopUpController controller = onNewSongButtonClick();
+        Song song = tblSongs.getSelectionModel().getSelectedItem();
+        controller.fillInformation(song);
+    }
 
     public AddSongsPopUpController onNewSongButtonClick() {
         try{
@@ -444,7 +449,6 @@ public class MyTunesController {
 
             // Get the controller reference
             AddPlaylistPopUpController controller = loader.getController();
-
             // Send a reference to the parent to MyTunesController
             controller.setParent(this); // this refers to this MainWindowController object
 

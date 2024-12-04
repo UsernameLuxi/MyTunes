@@ -137,6 +137,15 @@ public class AddSongsPopUpController {
         mbtnCategory.setText(mi.getText());
     }
 
+    public void fillInformation(Song song) {
+        mbtnCategory.setText(song.getGenre());
+        setTimeField(song.getDuration());
+        txtTitle.setText(song.getTitle());
+        txtArtist.setText(song.getArtist());
+        txtFile.setText(song.getURL());
+
+    }
+
     public void setUriText(String uri) {
         txtFile.setText(uri);
     }
