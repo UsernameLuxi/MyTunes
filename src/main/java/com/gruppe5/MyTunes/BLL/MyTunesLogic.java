@@ -152,7 +152,8 @@ public class MyTunesLogic {
         dataAccess.deleteSong(song);
     }
 
-    public void updateSong(Song song) throws Exception {
+    public Song updateSong(Song song) throws Exception {
         dataAccess.updateSong(song);
+        return song;
     }
 }

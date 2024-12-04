@@ -94,14 +94,17 @@ public class AddSongsPopUpController {
             String artist = txtArtist.getText();
             String path = txtFile.getText();
 
-
             if (isEdit) {
                 songToEdit.setTitle(title);
                 songToEdit.setGenre(genre);
                 songToEdit.setArtist(artist);
                 songToEdit.setURL(path);
-                parent.getMyTunesModel().updateSong(songToEdit);
+                songToEdit.setDuration(time);
+                songToEdit = parent.getMyTunesModel().updateSong(songToEdit);
+                parent.getMyTunesModel().updatePlaylistsDuration();
                 parent.tblSongs.refresh();
+                parent.tblPlaylists.refresh();
+                parent.lstSongsInPlaylist.refresh();
             } else {
                 Song s = new Song(title, artist, time, genre, path);
                 parent.getMyTunesModel().addSong(s);

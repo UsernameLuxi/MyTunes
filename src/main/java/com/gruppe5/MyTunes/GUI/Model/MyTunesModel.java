@@ -120,7 +120,16 @@ public class MyTunesModel {
         songs.remove(song);
     }
 
-    public void updateSong(Song song) throws Exception {
-        myTunesLogic.updateSong(song);
+    public Song updateSong(Song song) throws Exception {
+        return myTunesLogic.updateSong(song);
+    }
+
+    public void updatePlaylistsDuration() throws Exception {
+        for (Playlist playlist : getPlaylists()) {
+            playlist.getTotalDuration();
+        }
+
+        playlists.clear();
+        playlists.addAll(myTunesLogic.getAllPlaylists());
     }
 }
