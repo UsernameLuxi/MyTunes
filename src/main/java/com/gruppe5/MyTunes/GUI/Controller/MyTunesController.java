@@ -113,6 +113,14 @@ public class MyTunesController {
     private TableColumn<Song, Time> colSongDur;
     @FXML
     private Label lblSoundPicture;
+    @FXML
+    private Label lblFilter;
+    @FXML
+    private Label lblPlaylistTableviewTitle;
+    @FXML
+    private Label lblSongsTableviewTitle;
+    @FXML
+    private Label lblPlaylistViewTitle;
 
     public void initialize(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
@@ -516,103 +524,211 @@ public class MyTunesController {
      * resizes the items in the window relative to the original relations
      */
     public void resizeItems(double width, double height){
+        /*
+        *
+        * BASIC INFORMATION
+        *
+         */
         // original width 880 , height 620
         int orgWidth = 880;
         int orgHeight = 620;
         //tblPlaylists
-        float tblPlaylistPercentage_width = 227.0f/ orgWidth;
-        float tblPlaylistPercentage_height = 450.0f / orgHeight;
+        // no need to move right
+        // TODO : move up
+        // TODO : resize
+        double tblPlaylistPercentage_width = 227.0d / orgWidth;
+        double tblPlaylistPercentage_height = 450.0d / orgHeight;
 
         // TableView<Song> tblSongs;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float tblSongsPercentage_width = 418.0f / orgWidth;
         float tblSongsPercentage_height = 426.0f / orgHeight;
 
         // ListView<Song> lstSongsInPlaylist;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float lstSongsInPlaylistPercentage_width = 140.0f / orgWidth;
         float lstSongsInPlaylistPercentage_height = 430.0f / orgHeight;
 
         // Button btnBack;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnBackPercentage_width = 26.4f / orgWidth;
         float btnBackPercentage_height = 25.6f / orgHeight;
 
         // Button btnPlay;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnPlayPercentage_width = 37.0f / orgWidth;
         float btnPlayPercentage_height = 30.0f / orgHeight;
 
         // Button btnSkip;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSkipPercentage_width = 26.4f / orgWidth;
         float btnSkipPercentage_height = 25.6f / orgHeight;
 
         // Button btnFilter;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnFilterPercentage_width = 28f / orgWidth;
         float btnFilterPercentage_height = 25.6f / orgHeight;
 
         // Button btnTransferSongs;
         float btnTransferSongsPercentage_width = 48.0f / orgWidth;
         float btnTransferSongsPercentage_height = 26.0f / orgHeight;
+        double spacing = btnTransferSongs.getLayoutX() - ()
 
         // Button btnPlaylistNew;
+        // no need to move right
+        // TODO : move up
+        // TODO : resize
         float btnPlaylistNewPercentage_width = 48f / orgWidth;
         float btnPlaylistNewPercentage_height = 25.6f / orgHeight;
 
         // Button btnPlaylistEdit;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnPlaylistsEditPercentage_width = 36.8f / orgWidth;
         float btnPlaylistsEditPercentage_height = 25.6f / orgHeight;
 
         // Button btnPlaylistDel;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnPlaylistsDelPercentage_width = 50.4f / orgWidth;
         float btnPlaylistsDelPercentage_height = 25.6f / orgHeight;
 
         // Button btnSongInPlaylistUp;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSongInPlaylistUpPercentage_width = 22.4f / orgWidth;
         float btnSongInPlaylistUpPercentage_height = 25.6f / orgHeight;
 
         // Button btnSongInPlaylistDown;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSongInPlaylistDownPercentage_width = 22.4f / orgWidth;
         float btnSongInPlaylistDownPercentage_height = 25.6f / orgHeight;
 
         // Button btnSongInPlaylistDel;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSongInPlaylistDelPercentage_width = 50.4f / orgWidth;
         float btnSongInPlaylistDelPercentage_height = 25.6f / orgHeight;
 
         // Button btnSongsNew;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSongsNewPercentage_width = 48f / orgWidth;
         float btnSongsNewPercentage_height = 25.6f / orgHeight;
 
         // Button btnSongsEdit;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSongsEditPercentage_width = 36.8f / orgWidth;
         float btnSongsEditPercentage_height = 25.6f / orgHeight;
 
         // Button btnSongsDel;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnSongsDelPercentage_width = 50.4f / orgWidth;
         float btnSongsDelPercentage_height = 25.6f / orgHeight;
 
         // Button btnClose;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float btnClosePercentage_width = 44.8f / orgWidth;
         float btnClosePercentage_height = 25.6f / orgHeight;
 
         // Slider sliderVol;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float sliderVolPercentage_width = 150f / orgWidth;
         float sliderVolPercentage_height = 18f / orgHeight;
 
         // Label lblCurrentSong;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float lblCurrentSongPercentage_width = 324f / orgWidth;
         float lblCurrentSongPercentage_height = 30f / orgHeight;
 
         // TextField txtFilter;
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
         float txtFilterPercentage_width = 149.6f / orgWidth;
         float txtFilterPercentage_height = 25.6f / orgHeight;
 
         // Label lblSoundPicture
         // no need to move right
+        // TODO : move up
+        // TODO : resize
         float lblSoundPicturePercentage_width = 28f / orgWidth;
         float lblSoundPicturePercentage_height = 18f / orgHeight;
 
         // Label lblPlaylistTableviewTitle
         // no need to move right
+        // TODO : move up
+        // TODO : resize
         float lblPlaylistTableviewTitlePercentage_width = 42.4f / orgWidth;
         float lblPlaylistTableviewTitlePercentage_height = 17.6f / orgHeight;
 
+        // Label lblFilter
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
+        float lblFilterPercentage_width = 28.8f / orgWidth;
+        float lblFilterPercentage_height = 17.6f / orgHeight;
+
+        // Label lblSongsTableviewTitle
+        // TODO : move right
+        // TODO : move up
+        // TODO : resize
+        float lblSongsTableviewTitlePercentage_width = 32.8f / orgWidth;
+        float lblSongsTableviewTitlePercentage_height = 17.6f / orgHeight;
+
+        // Label lblPlaylistViewTitle
+        // no need to move right
+        // TODO : move up
+        // TODO : resize
+        float lblPlaylistViewTitlePercentage_width = 85.6f / orgWidth;
+        float lblPlaylistViewTitlePercentage_height = 17.6f / orgHeight;
+
+        /*
+        *
+        * RESIZE EVERYTHING
+        *
+         */
+    }
+
+    private void scaleX(double percentage_width, double window_width, double spacing, Control object, Control relative) {
+        setWidth(object, percentage_width, window_width);
+        // formel: X(traget) = width(relative) + X(relative) + spacing
+        // -> kommer af Spaceing = X(target) - (Width(Rekative) + X(relative))
+        double x = (relative.getWidth() + relative.getLayoutX()) + spacing;
+        object.setLayoutX(x);
+    }
+
+    private void setWidth(Control object, double percentageWidth, double windowWidth){
+        object.setPrefWidth(windowWidth * percentageWidth);
     }
 }
 
