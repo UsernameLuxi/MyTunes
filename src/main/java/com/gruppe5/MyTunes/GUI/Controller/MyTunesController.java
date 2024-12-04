@@ -156,65 +156,87 @@ public class MyTunesController {
         sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
-    public void onNewSongButtonClick() throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddSongsPopUp.fxml"));
+    public void onNewSongButtonClick() {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddSongsPopUp.fxml"));
 
-        Parent scene = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(scene));
-        stage.setTitle("Add/Edit Song");
+            Parent scene = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(scene));
+            stage.setTitle("Add/Edit Song");
 
-        // Get the controller reference
-        AddSongsPopUpController controller = loader.getController();
+            // Get the controller reference
+            AddSongsPopUpController controller = loader.getController();
 
-        // Send a reference to the parent to MyTunesController
-        controller.setParent(this); // this refers to this MainWindowController object
+            // Send a reference to the parent to MyTunesController
+            controller.setParent(this); // this refers to this MainWindowController object
 
-        // Set the modality to Application (you must close Window1 before going to the parent window
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+            // Set the modality to Application (you must close Window1 before going to the parent window
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
+        catch (Exception e){
+            displayError(e);
+        }
     }
 
-    public void btnBackClicked() throws Exception {
-        myTunesModel.prevSong();
+    public void btnBackClicked(){
+        try{
+            myTunesModel.prevSong();
+        }
+        catch (Exception e){
+            displayError(e);
+        }
     }
 
-    public void btnSkipClicked() throws Exception {
-        myTunesModel.nextSong();
+    public void btnSkipClicked() {
+        try{
+            myTunesModel.nextSong();
+        }
+        catch (Exception e){
+            displayError(e);
+        }
     }
 
     @FXML
-    private void onMoveSongUp(ActionEvent actionEvent) throws Exception {
-        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
-            int selectedIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
-            Playlist p = myTunesModel.getPlaylist();
-            Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
-            List<Song> playlist = p.getSongs();
-            if (selectedIndex != 0) {
-                Song down = playlist.get(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() - 1);
-                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex(), down);
-                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() - 1, selectedSong);
-                myTunesModel.updatePlaylist(p);
+    private void onMoveSongUp(ActionEvent actionEvent) {
+        try{
+            if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+                int selectedIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+                Playlist p = myTunesModel.getPlaylist();
+                Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+                List<Song> playlist = p.getSongs();
+                if (selectedIndex != 0) {
+                    Song down = playlist.get(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() - 1);
+                    playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex(), down);
+                    playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() - 1, selectedSong);
+                    myTunesModel.updatePlaylist(p);
+                }
             }
+        } catch (Exception e) {
+            displayError(e);
         }
 
     }
 
     @FXML
     private void onMoveSongDown(ActionEvent actionEvent) throws Exception {
-        if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
-            int selectedIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
-            Playlist p = myTunesModel.getPlaylist();
-            Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
-            List<Song> playlist = p.getSongs();
-            if (selectedIndex != playlist.size() - 1) {
-                Song up = playlist.get(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() + 1);
-                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex(), up);
-                playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() + 1, selectedSong);
-                myTunesModel.updatePlaylist(p);
+        try{
+            if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
+                int selectedIndex = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
+                Playlist p = myTunesModel.getPlaylist();
+                Song selectedSong = lstSongsInPlaylist.getSelectionModel().getSelectedItem();
+                List<Song> playlist = p.getSongs();
+                if (selectedIndex != playlist.size() - 1) {
+                    Song up = playlist.get(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() + 1);
+                    playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex(), up);
+                    playlist.set(lstSongsInPlaylist.getSelectionModel().getSelectedIndex() + 1, selectedSong);
+                    myTunesModel.updatePlaylist(p);
+                }
             }
-
+        } catch (Exception e) {
+            displayError(e);
         }
     }
 
@@ -230,7 +252,7 @@ public class MyTunesController {
                 tblPlaylists.refresh();
             }
             catch(Exception e){
-                throw new RuntimeException(e); // TODO: vis den til brugeren tak!
+                displayError(e);
             }
         }
     }
@@ -247,7 +269,7 @@ public class MyTunesController {
                 tblPlaylists.refresh();
             }
             catch(Exception e){
-                throw new RuntimeException(e); // TODO : vis den til brugeren hvis det er
+                displayError(e);
             }
 
         }
@@ -259,7 +281,7 @@ public class MyTunesController {
             myTunesModel.getSongByName(txtFilter.getText().trim());
         }
         catch(Exception e){
-            throw new RuntimeException(e); // TODO : vis det til brugeren
+            displayError(e);
         }
     }
     @FXML
@@ -292,89 +314,135 @@ public class MyTunesController {
         tblSongs.getSelectionModel().clearSelection();
         lstSongsInPlaylist.getSelectionModel().clearSelection();
     }
+
+    // move please ikke victor
     boolean isCreating = false;
     @FXML
-    private void onNewPlaylistButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddPlaylistPopUp.fxml"));
+    private void onNewPlaylistButtonClick(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddPlaylistPopUp.fxml"));
 
-        Parent scene = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(scene));
-        stage.setTitle("Add/Edit Playlist");
+            Parent scene = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(scene));
+            stage.setTitle("Add/Edit Playlist");
 
-        // Get the controller reference
-        AddPlaylistPopUpController controller = loader.getController();
+            // Get the controller reference
+            AddPlaylistPopUpController controller = loader.getController();
 
-        // Send a reference to the parent to MyTunesController
-        controller.setParent(this); // this refers to this MainWindowController object
+            // Send a reference to the parent to MyTunesController
+            controller.setParent(this); // this refers to this MainWindowController object
 
-        isCreating = true;
+            isCreating = true;
 
-        // Set the modality to Application (you must close Window1 before going to the parent window
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+            // Set the modality to Application (you must close Window1 before going to the parent window
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
+        catch(Exception e){
+            displayError(e);
+        }
     }
     @FXML
-    private void onDeletePlaylistButtonClick(ActionEvent actionEvent) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/DeletePlaylistPopUp.fxml"));
+    private void onDeletePlaylistButtonClick(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/DeletePlaylistPopUp.fxml"));
 
-        Parent scene = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(scene));
-        stage.setTitle("Delete Playlist");
+            Parent scene = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(scene));
+            stage.setTitle("Delete Playlist");
 
-        // Get the controller reference
-        DeletePlaylistPopUpController controller = loader.getController();
+            // Get the controller reference
+            DeletePlaylistPopUpController controller = loader.getController();
 
-        // Send a reference to the parent to MyTunesController
-        controller.setParent(this); // this refers to this MainWindowController object
+            // Send a reference to the parent to MyTunesController
+            controller.setParent(this); // this refers to this MainWindowController object
 
-        // Set the modality to Application (you must close Window1 before going to the parent window
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+            // Set the modality to Application (you must close Window1 before going to the parent window
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
+        catch(Exception e){
+            displayError(e);
+        }
+
     }
-    public void deletePlaylistConfirm() throws Exception {
-        System.out.println("deletePlaylistConfirm test");
-        myTunesModel.deletePlaylist(tblPlaylists.getSelectionModel().getSelectedItem());
+
+    public void deletePlaylistConfirm(){
+        try{
+            System.out.println("deletePlaylistConfirm test");
+            myTunesModel.deletePlaylist(tblPlaylists.getSelectionModel().getSelectedItem());
+        }
+        catch(Exception e){
+            displayError(e);
+        }
+
     }
+
     public Playlist getPlaylist() {
-        myTunesModel.getPlaylist();
+        //myTunesModel.getPlaylist();
         return myTunesModel.getPlaylist();
     }
-    public void createPlaylist(String name) throws Exception {
-        myTunesModel.createPlaylist(name);
+
+    public void createPlaylist(String name){
+        try{
+            myTunesModel.createPlaylist(name);
+        }
+        catch(Exception e){
+            displayError(e);
+        }
     }
-    public void updatePlaylist() throws Exception {
-        myTunesModel.updatePlaylist(myTunesModel.getPlaylist());
-        tblPlaylists.refresh();
+
+    public void updatePlaylist() {
+        try{
+            myTunesModel.updatePlaylist(myTunesModel.getPlaylist());
+            tblPlaylists.refresh();
+        }
+        catch(Exception e){
+            displayError(e);
+        }
     }
     @FXML
     private void onEditPlaylistButtonClick(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddPlaylistPopUp.fxml"));
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddPlaylistPopUp.fxml"));
 
-        Parent scene = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(scene));
-        stage.setTitle("Add/Edit Playlist");
+            Parent scene = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(scene));
+            stage.setTitle("Add/Edit Playlist");
 
-        // Get the controller reference
-        AddPlaylistPopUpController controller = loader.getController();
+            // Get the controller reference
+            AddPlaylistPopUpController controller = loader.getController();
 
-        // Send a reference to the parent to MyTunesController
-        controller.setParent(this); // this refers to this MainWindowController object
+            // Send a reference to the parent to MyTunesController
+            controller.setParent(this); // this refers to this MainWindowController object
 
-        isCreating = false;
+            isCreating = false;
 
-        // Set the modality to Application (you must close Window1 before going to the parent window
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+            // Set the modality to Application (you must close Window1 before going to the parent window
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
+        catch(Exception e){
+            displayError(e);
+        }
     }
 
     public MyTunesModel getMyTunesModel() {
         return myTunesModel;
+    }
+
+    private void displayError(Throwable t)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Something went wrong");
+        alert.setHeaderText(t.getMessage());
+        alert.showAndWait();
     }
 }
 
