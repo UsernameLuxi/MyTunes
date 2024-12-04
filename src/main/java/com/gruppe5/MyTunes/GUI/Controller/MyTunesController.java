@@ -129,17 +129,13 @@ public class MyTunesController {
             event.consume();
         });
 
-        anchorPane.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                AddSongsPopUpController controller = onNewSongButtonClick();
-                String filePath = event.getDragboard().getFiles().getFirst().toString();
-                controller.setUriText(filePath);
-                System.out.println(filePath);
-                myTunesModel.setDurationOfFile(filePath, controller);
-                event.setDropCompleted(true);
-                event.consume();
-            }
+        anchorPane.setOnDragDropped(event -> {
+            AddSongsPopUpController controller = onNewSongButtonClick();
+            String filePath = event.getDragboard().getFiles().getFirst().toString();
+            controller.setUriText(filePath);
+            myTunesModel.setDurationOfFile(filePath, controller);
+            event.setDropCompleted(true);
+            event.consume();
         });
 
         sliderVolumeChanged(50);
