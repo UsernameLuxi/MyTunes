@@ -535,6 +535,12 @@ public class MyTunesController {
         int orgHeight = 620;
 
         map.put(tblPlaylists, new ArrayList<>(){{add(tblPlaylists.getWidth() / orgWidth);add(tblPlaylists.getHeight()/orgHeight);add(tblPlaylists.getLayoutX()/orgWidth);add(tblPlaylists.getLayoutY()/orgHeight);}});
+        map.put(btnPlaylistNew, new ArrayList<>(){{add(btnPlaylistNew.getWidth() / orgWidth);add(btnPlaylistNew.getHeight()/orgHeight);add(btnPlaylistNew.getLayoutX()/orgWidth);add(btnPlaylistNew.getLayoutY()/orgHeight);}});
+        map.put(lblSoundPicture, new ArrayList<>(){{add(lblSoundPicture.getWidth() / orgWidth);add(lblSoundPicture.getHeight()/orgHeight);add(lblSoundPicture.getLayoutX()/orgWidth);add(lblSoundPicture.getLayoutY()/orgHeight);}});
+        map.put(lblPlaylistTableviewTitle, new ArrayList<>(){{add(lblPlaylistTableviewTitle.getWidth() / orgWidth);add(lblPlaylistTableviewTitle.getHeight()/orgHeight);add(lblPlaylistTableviewTitle.getLayoutX()/orgWidth);add(lblPlaylistTableviewTitle.getLayoutY()/orgHeight);}});
+
+
+
         map.put(btnBack, new ArrayList<>(){{add(btnBack.getWidth() / orgWidth);add(btnBack.getHeight()/orgHeight);add(btnBack.getLayoutX()/orgWidth);add(btnBack.getLayoutY()/orgHeight);}});
         map.put(btnPlay, new ArrayList<>(){{add(btnPlay.getWidth() / orgWidth);add(btnPlay.getHeight()/orgHeight);add(btnPlay.getLayoutX()/orgWidth);add(btnPlay.getLayoutY()/orgHeight);}});
         map.put(btnSkip, new ArrayList<>(){{add(btnSkip.getWidth() / orgWidth);add(btnSkip.getHeight()/orgHeight);add(btnSkip.getLayoutX()/orgWidth);add(btnSkip.getLayoutY()/orgHeight);}});
@@ -558,7 +564,7 @@ public class MyTunesController {
         map.put(btnSongsEdit, new ArrayList<>(){{add(btnSongsEdit.getWidth() / orgWidth);add(btnSongsEdit.getHeight()/orgHeight);add(btnSongsEdit.getLayoutX()/orgWidth);add(btnSongsEdit.getLayoutY()/orgHeight);}});
         map.put(btnSongsDel, new ArrayList<>(){{add(btnSongsDel.getWidth() / orgWidth);add(btnSongsDel.getHeight()/orgHeight);add(btnSongsDel.getLayoutX()/orgWidth);add(btnSongsDel.getLayoutY()/orgHeight);}});
         map.put(btnClose, new ArrayList<>(){{add(btnClose.getWidth() / orgWidth);add(btnClose.getHeight()/orgHeight);add(btnClose.getLayoutX()/orgWidth);add(btnClose.getLayoutY()/orgHeight);}});
-        
+
         /*
         double tblPlaylistPercentage_width = 227.0d / orgWidth;
         double tblPlaylistPercentage_height = 450.0d / orgHeight;
