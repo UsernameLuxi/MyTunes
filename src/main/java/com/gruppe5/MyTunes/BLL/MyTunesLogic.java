@@ -10,32 +10,26 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class MyTunesLogic {
-    private IDataAccess dataAccess = new DAO_DB();
+    private final IDataAccess dataAccess = new DAO_DB();
     private MediaPlayer mediaPlayer;
-    private Song selectedSong = null;
-    private MyTunesModel myTunesModel;
+    private final MyTunesModel myTunesModel;
     private int currentIndex;
     private List<Song> currentSongs;
     private int volume;
 
-    public MyTunesLogic(MyTunesModel myTunesModel) {
+    public MyTunesLogic(MyTunesModel myTunesModel) throws Exception {
         this.myTunesModel = myTunesModel;
 
-        try {
-            playFromNewPlace(0, dataAccess.getAllSongs());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        playFromNewPlace(0, dataAccess.getAllSongs());
     }
 
-    public boolean playSong() {
+    public void playSong() {
+        // Hvis mediaplayer eksisterer, fjern den inden ny sang bliver afspillet
         if (mediaPlayer != null) {
             mediaPlayer.dispose();
         }
@@ -45,30 +39,19 @@ public class MyTunesLogic {
         File songFile = new File(song.getURL());
         if (!songFile.exists()) {
             System.out.println("File does not exist at " + songPath);
-            return false;
+            return;
         }
 
         myTunesModel.changePlayingSongText(song.getTitle());
 
-        selectedSong = song;
-        getSongDuration(song, time -> {
-            System.out.println(time);
-        });
         mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
         setVolume(volume);
         mediaPlayer.play();
-        mediaPlayer.setOnEndOfMedia(() -> {
-            try {
-                this.nextSong();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        return true;
+        mediaPlayer.setOnEndOfMedia(this::nextSong);
     }
 
-    public void nextSong() throws Exception {
+    public void nextSong() {
+        // Hvis indekset overstiger antallet af indeks, gå til start
         if (currentIndex + 1 >= currentSongs.size()) {
             currentIndex = 0;
         } else {
@@ -77,7 +60,8 @@ public class MyTunesLogic {
         playSong();
     }
 
-    public void previousSong() throws Exception {
+    public void previousSong() {
+        // Hvis den nuværende sang er den første i listen, gå til slutningen
         if (currentIndex - 1 < 0) {
             currentIndex = currentSongs.size() - 1;
         } else {
@@ -86,18 +70,16 @@ public class MyTunesLogic {
         playSong();
     }
 
-    public boolean pauseSong() {
-        if (mediaPlayer == null) { return false; }
+    public void pauseSong() {
+        if (mediaPlayer == null) { return; }
 
         mediaPlayer.pause();
-        return true;
     }
 
-    public boolean resumeSong() {
-        if (mediaPlayer == null) { return false; }
+    public void resumeSong() {
+        if (mediaPlayer == null) { return; }
 
         mediaPlayer.play();
-        return true;
     }
 
     /**
@@ -121,17 +103,6 @@ public class MyTunesLogic {
         currentSongs = songs;
         currentIndex = index;
         playSong();
-    }
-
-    public void getSongDuration(Song song, Consumer<Time> callback)  {
-        File songFile = new File(song.getURL());
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(songFile.toURI().toString()));
-        mediaPlayer.setOnReady(() -> {
-            Duration duration = mediaPlayer.getTotalDuration();
-            Time time = new Time((long) duration.toMillis() - (1000 * 3600)); // 1 time for meget åbenbart?, derfor trækker vi en time fra
-            callback.accept(time);
-            mediaPlayer.dispose();
-        });
     }
 
     public Playlist createPlaylist(String playlistName) throws Exception {
