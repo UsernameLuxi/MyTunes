@@ -4,15 +4,21 @@ import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.List;
@@ -90,6 +96,9 @@ public class MyTunesController {
     private Label testText;
 
     @FXML
+    public AnchorPane anchorPane;
+
+    @FXML
     private Label sliderVolLabel;
     @FXML
     private TableColumn<Playlist, String> colPlaylistName;
@@ -113,6 +122,25 @@ public class MyTunesController {
             sliderVolumeChanged(newValue);
         });
 
+        anchorPane.setOnDragOver(event -> {
+            if (event.getGestureSource() != anchorPane && event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
+
+        anchorPane.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                AddSongsPopUpController controller = onNewSongButtonClick();
+                String filePath = event.getDragboard().getFiles().getFirst().toString();
+                controller.setUriText(filePath);
+                System.out.println(filePath);
+                myTunesModel.setDurationOfFile(filePath, controller);
+                event.setDropCompleted(true);
+                event.consume();
+            }
+        });
 
         sliderVolumeChanged(50);
         colPlaylistName.setCellValueFactory(new PropertyValueFactory<Playlist, String>("name"));
@@ -156,7 +184,8 @@ public class MyTunesController {
         sliderVolLabel.setText(String.valueOf(newValue.intValue()));
     }
 
-    public void onNewSongButtonClick() {
+
+    public AddSongsPopUpController onNewSongButtonClick() {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/AddSongsPopUp.fxml"));
@@ -168,17 +197,18 @@ public class MyTunesController {
 
             // Get the controller reference
             AddSongsPopUpController controller = loader.getController();
-
             // Send a reference to the parent to MyTunesController
             controller.setParent(this); // this refers to this MainWindowController object
 
             // Set the modality to Application (you must close Window1 before going to the parent window
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
+            return controller;
         }
         catch (Exception e){
             displayError(e);
         }
+        return null;
     }
 
     public void btnBackClicked(){
@@ -405,6 +435,7 @@ public class MyTunesController {
             displayError(e);
         }
     }
+
     @FXML
     private void onEditPlaylistButtonClick(ActionEvent actionEvent) throws IOException {
         try{

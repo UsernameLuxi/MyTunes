@@ -136,4 +136,8 @@ public class AddSongsPopUpController {
         mbtnCategory.getItems().add(mi);
         mbtnCategory.setText(mi.getText());
     }
+
+    public void setUriText(String uri) {
+        txtFile.setText(uri);
+    }
 }
