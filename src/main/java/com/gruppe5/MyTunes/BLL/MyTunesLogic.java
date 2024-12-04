@@ -25,7 +25,8 @@ public class MyTunesLogic {
     public MyTunesLogic(MyTunesModel myTunesModel) throws Exception {
         this.myTunesModel = myTunesModel;
 
-        playFromNewPlace(0, dataAccess.getAllSongs());
+        // play first song from all songs list
+        // playFromNewPlace(0, dataAccess.getAllSongs());
     }
 
     public void playSong() {

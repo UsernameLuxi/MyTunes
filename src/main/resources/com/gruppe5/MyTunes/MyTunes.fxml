@@ -9,9 +9,9 @@
       <Button fx:id="btnBack" layoutX="51.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnBackClicked" text="⏮" />
       <Button fx:id="btnPlay" layoutX="97.0" layoutY="38.0" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="30.0" prefWidth="37.0" text="▶" />
       <Button fx:id="btnSkip" layoutX="151.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnSkipClicked" text="⏭" />
-      <Label fx:id="lblCurrentSong" layoutX="335.0" layoutY="41.0" text="(none) ... is playing">
+      <Label fx:id="lblCurrentSong" alignment="CENTER" contentDisplay="CENTER" layoutX="258.0" layoutY="38.0" prefHeight="30.0" prefWidth="353.0" text="No song is playing" textAlignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font size="18.0" />
          </font>
       </Label>
       <Label layoutX="625.0" layoutY="46.0" text="Filter:" />
@@ -61,8 +61,8 @@
       <Button fx:id="btnSongInPlaylistDown" layoutX="278.0" layoutY="582.0" mnemonicParsing="false" onAction="#onMoveSongDown" text="↓" />
       <Button fx:id="btnSongInPlaylistDel" layoutX="330.0" layoutY="582.0" mnemonicParsing="false" onAction="#onSongDeleteInPlaylist" text="Delete" />
       <Button fx:id="btnSongsNew" layoutX="464.0" layoutY="582.0" mnemonicParsing="false" onAction="#onNewSongButtonClick" text="New..." />
-      <Button fx:id="btnSongsEdit" layoutX="524.0" layoutY="582.0" mnemonicParsing="false" text="Edit" onAction="#onEditButtonClick"/>
-      <Button fx:id="btnSongsDel" layoutX="575.0" layoutY="582.0" mnemonicParsing="false" text="Delete" onAction="#onDeleteSongButtonClick"/>
+      <Button fx:id="btnSongsEdit" layoutX="524.0" layoutY="582.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
+      <Button fx:id="btnSongsDel" layoutX="575.0" layoutY="582.0" mnemonicParsing="false" onAction="#onDeleteSongButtonClick" text="Delete" />
       <Button fx:id="btnClose" layoutX="829.0" layoutY="582.0" mnemonicParsing="false" text="Close" />
       <Label fx:id="sliderVolLabel" layoutX="191.0" layoutY="69.0" text="Label" />
       <Slider fx:id="sliderVol" blockIncrement="1.0" layoutX="41.0" layoutY="68.0" prefHeight="18.0" prefWidth="150.0" value="50.0" />

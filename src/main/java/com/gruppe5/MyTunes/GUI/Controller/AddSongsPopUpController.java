@@ -158,7 +158,6 @@ public class AddSongsPopUpController {
         txtTitle.setText(song.getTitle());
         txtArtist.setText(song.getArtist());
         txtFile.setText(song.getURL());
-
     }
 
     public void setUriText(String uri) {
