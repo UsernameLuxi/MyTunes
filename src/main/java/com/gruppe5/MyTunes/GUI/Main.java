@@ -19,6 +19,11 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
         MyTunesController controller = fxmlLoader.getController();
+
+        // make so that you can resize the window and make the items stay relative to the window size
+        stage.widthProperty().addListener((observable, oldValue, newValue) -> {controller.resizeItems((double) newValue, stage.getWidth());});
+        stage.heightProperty().addListener((observable, oldValue, newValue) -> {controller.resizeItems(stage.getWidth(), (double) newValue);});
+
         MyTunesModel myTunesModel = new MyTunesModel(controller);
         controller.initialize(myTunesModel);
     }

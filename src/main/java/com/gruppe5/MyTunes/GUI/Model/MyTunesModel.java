@@ -72,7 +72,7 @@ public class MyTunesModel {
     }
 
     public void changePlayingSongText(String songTitle) {
-        myTunesController.lblCurrentSong.setText(songTitle);
+        myTunesController.setSongsText(songTitle);
     }
 
     public void createPlaylist(String playlistName) throws Exception {

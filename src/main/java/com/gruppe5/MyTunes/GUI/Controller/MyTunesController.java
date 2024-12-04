@@ -30,73 +30,70 @@ public class MyTunesController {
     private String playSymbol = "▶";
 
     @FXML
-    public TableView<Playlist> tblPlaylists;
+    private TableView<Playlist> tblPlaylists;
 
     @FXML
-    public TableView<Song> tblSongs;
+    private TableView<Song> tblSongs;
 
     @FXML
-    public ListView<Song> lstSongsInPlaylist;
+    private ListView<Song> lstSongsInPlaylist;
 
     @FXML
-    public Button btnBack;
+    private Button btnBack;
 
     @FXML
-    public Button btnPlay;
+    private Button btnPlay;
 
     @FXML
-    public Button btnSkip;
+    private Button btnSkip;
 
     @FXML
-    public Button btnFilter;
+    private Button btnFilter;
 
     @FXML
-    public Button btnTransferSongs;
+    private Button btnTransferSongs;
 
     @FXML
-    public Button btnPlaylistsNew;
+    private Button btnPlaylistNew;
 
     @FXML
-    public Button btnPlaylistsEdit;
+    private Button btnPlaylistEdit;
 
     @FXML
-    public Button btnPlaylistsDel;
+    private Button btnPlaylistDel;
 
     @FXML
-    public Button btnSongInPlaylistUp;
+    private Button btnSongInPlaylistUp;
 
     @FXML
-    public Button btnSongInPlaylistDown;
+    private Button btnSongInPlaylistDown;
 
     @FXML
-    public Button btnSongInPlaylistDel;
+    private Button btnSongInPlaylistDel;
 
     @FXML
-    public Button btnSongsNew;
+    private Button btnSongsNew;
 
     @FXML
-    public Button btnSongsEdit;
+    private Button btnSongsEdit;
 
     @FXML
-    public Button btnSongsDel;
+    private Button btnSongsDel;
 
     @FXML
-    public Button btnClose;
+    private Button btnClose;
 
     @FXML
-    public Slider sliderVol;
+    private Slider sliderVol;
 
     @FXML
-    public Label lblCurrentSong;
+    private Label lblCurrentSong;
 
     @FXML
-    public TextField txtFilter;
+    private TextField txtFilter;
 
     @FXML
-    private Label testText;
-
-    @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
 
     @FXML
     private Label sliderVolLabel;
@@ -114,6 +111,8 @@ public class MyTunesController {
     private TableColumn<Song, String> colGenre;
     @FXML
     private TableColumn<Song, Time> colSongDur;
+    @FXML
+    private Label lblSoundPicture;
 
     public void initialize(MyTunesModel myTunesModel) {
         this.myTunesModel = myTunesModel;
@@ -193,6 +192,7 @@ public class MyTunesController {
 
             // Get the controller reference
             AddSongsPopUpController controller = loader.getController();
+
             // Send a reference to the parent to MyTunesController
             controller.setParent(this); // this refers to this MainWindowController object
 
@@ -497,6 +497,7 @@ public class MyTunesController {
         }
 
     }
+
     public void deleteSongConfirm(){
         try{
             myTunesModel.deleteSong(tblSongs.getSelectionModel().getSelectedItem());
@@ -504,6 +505,113 @@ public class MyTunesController {
         catch(Exception e){
             displayError(e);
         }
+    }
+
+    public void setSongsText(String text){
+        lblCurrentSong.setText(text);
+    }
+
+
+    /**
+     * resizes the items in the window relative to the original relations
+     */
+    public void resizeItems(double width, double height){
+        // original width 880 , height 620
+        int orgWidth = 880;
+        int orgHeight = 620;
+        //tblPlaylists
+        float tblPlaylistPercentage_width = 227.0f/ orgWidth;
+        float tblPlaylistPercentage_height = 450.0f / orgHeight;
+
+        // TableView<Song> tblSongs;
+        float tblSongsPercentage_width = 418.0f / orgWidth;
+        float tblSongsPercentage_height = 426.0f / orgHeight;
+
+        // ListView<Song> lstSongsInPlaylist;
+        float lstSongsInPlaylistPercentage_width = 140.0f / orgWidth;
+        float lstSongsInPlaylistPercentage_height = 430.0f / orgHeight;
+
+        // Button btnBack;
+        float btnBackPercentage_width = 26.4f / orgWidth;
+        float btnBackPercentage_height = 25.6f / orgHeight;
+
+        // Button btnPlay;
+        float btnPlayPercentage_width = 37.0f / orgWidth;
+        float btnPlayPercentage_height = 30.0f / orgHeight;
+
+        // Button btnSkip;
+        float btnSkipPercentage_width = 26.4f / orgWidth;
+        float btnSkipPercentage_height = 25.6f / orgHeight;
+
+        // Button btnFilter;
+        float btnFilterPercentage_width = 28f / orgWidth;
+        float btnFilterPercentage_height = 25.6f / orgHeight;
+
+        // Button btnTransferSongs;
+        float btnTransferSongsPercentage_width = 48.0f / orgWidth;
+        float btnTransferSongsPercentage_height = 26.0f / orgHeight;
+
+        // Button btnPlaylistNew;
+        float btnPlaylistNewPercentage_width = 48f / orgWidth;
+        float btnPlaylistNewPercentage_height = 25.6f / orgHeight;
+
+        // Button btnPlaylistEdit;
+        float btnPlaylistsEditPercentage_width = 36.8f / orgWidth;
+        float btnPlaylistsEditPercentage_height = 25.6f / orgHeight;
+
+        // Button btnPlaylistDel;
+        float btnPlaylistsDelPercentage_width = 50.4f / orgWidth;
+        float btnPlaylistsDelPercentage_height = 25.6f / orgHeight;
+
+        // Button btnSongInPlaylistUp;
+        float btnSongInPlaylistUpPercentage_width = 22.4f / orgWidth;
+        float btnSongInPlaylistUpPercentage_height = 25.6f / orgHeight;
+
+        // Button btnSongInPlaylistDown;
+        float btnSongInPlaylistDownPercentage_width = 22.4f / orgWidth;
+        float btnSongInPlaylistDownPercentage_height = 25.6f / orgHeight;
+
+        // Button btnSongInPlaylistDel;
+        float btnSongInPlaylistDelPercentage_width = 50.4f / orgWidth;
+        float btnSongInPlaylistDelPercentage_height = 25.6f / orgHeight;
+
+        // Button btnSongsNew;
+        float btnSongsNewPercentage_width = 48f / orgWidth;
+        float btnSongsNewPercentage_height = 25.6f / orgHeight;
+
+        // Button btnSongsEdit;
+        float btnSongsEditPercentage_width = 36.8f / orgWidth;
+        float btnSongsEditPercentage_height = 25.6f / orgHeight;
+
+        // Button btnSongsDel;
+        float btnSongsDelPercentage_width = 50.4f / orgWidth;
+        float btnSongsDelPercentage_height = 25.6f / orgHeight;
+
+        // Button btnClose;
+        float btnClosePercentage_width = 44.8f / orgWidth;
+        float btnClosePercentage_height = 25.6f / orgHeight;
+
+        // Slider sliderVol;
+        float sliderVolPercentage_width = 150f / orgWidth;
+        float sliderVolPercentage_height = 18f / orgHeight;
+
+        // Label lblCurrentSong;
+        float lblCurrentSongPercentage_width = 324f / orgWidth;
+        float lblCurrentSongPercentage_height = 30f / orgHeight;
+
+        // TextField txtFilter;
+        float txtFilterPercentage_width = 149.6f / orgWidth;
+        float txtFilterPercentage_height = 25.6f / orgHeight;
+
+        // Label lblSoundPicture
+        // no need to move right
+        float lblSoundPicturePercentage_width = 28f / orgWidth;
+        float lblSoundPicturePercentage_height = 18f / orgHeight;
+
+        // Label lblPlaylistTableviewTitle
+        // no need to move right
+        float lblPlaylistTableviewTitlePercentage_width = 42.4f / orgWidth;
+        float lblPlaylistTableviewTitlePercentage_height = 17.6f / orgHeight;
 
     }
 }
