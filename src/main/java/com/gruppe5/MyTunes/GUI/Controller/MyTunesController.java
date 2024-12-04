@@ -90,6 +90,9 @@ public class MyTunesController {
     public Label lblCurrentSong;
 
     @FXML
+    public Label lblCurrentPlaylist;
+
+    @FXML
     public TextField txtFilter;
 
     @FXML
@@ -323,11 +326,11 @@ public class MyTunesController {
     private void onPlayButtonClick(ActionEvent actionEvent) {
         if (lstSongsInPlaylist.getSelectionModel().getSelectedItem() != null) {
             int index = lstSongsInPlaylist.getSelectionModel().getSelectedIndex();
-            myTunesModel.playFromNewPlace(index, myTunesModel.getCurrentPlaylistSongs());
+            myTunesModel.playFromNewPlace(index, myTunesModel.getCurrentPlaylistSongs(), true);
             btnPlay.setText(pauseSymbol);
         } else if (tblSongs.getSelectionModel().getSelectedItem() != null) {
             int index = tblSongs.getSelectionModel().getSelectedIndex();
-            myTunesModel.playFromNewPlace(index, myTunesModel.getSongs());
+            myTunesModel.playFromNewPlace(index, myTunesModel.getSongs(), false);
             btnPlay.setText(pauseSymbol);
         }
         else{

@@ -100,7 +100,8 @@ public class MyTunesLogic {
         return dataAccess.updatePlaylist(playlist);
     }
 
-    public void playFromNewPlace(int index, List<Song> songs) {
+    public void playFromNewPlace(int index, List<Song> songs, String playlistName) {
+        myTunesModel.changePlayingPlaylistText(playlistName);
         currentSongs = songs;
         currentIndex = index;
         playSong();

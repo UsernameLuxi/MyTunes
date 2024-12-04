@@ -72,7 +72,11 @@ public class MyTunesModel {
     }
 
     public void changePlayingSongText(String songTitle) {
-        myTunesController.lblCurrentSong.setText(songTitle + " is playing");
+        myTunesController.lblCurrentSong.setText("Song: " + songTitle);
+    }
+
+    public void changePlayingPlaylistText(String playlistName) {
+        myTunesController.lblCurrentPlaylist.setText("Playlist: " + playlistName);
     }
 
     public void createPlaylist(String playlistName) throws Exception {
@@ -89,8 +93,12 @@ public class MyTunesModel {
         songs.setAll(myTunesLogic.getSongByName(query));
     }
 
-    public void playFromNewPlace(int index, ObservableList<Song> songs) {
-        myTunesLogic.playFromNewPlace(index, songs);
+    public void playFromNewPlace(int index, ObservableList<Song> songs, boolean isPlaylist) {
+        if (isPlaylist) {
+            myTunesLogic.playFromNewPlace(index, songs, playlist.getName());
+        } else {
+            myTunesLogic.playFromNewPlace(index, songs, "None");
+        }
     }
 
     public void pauseSong(){
