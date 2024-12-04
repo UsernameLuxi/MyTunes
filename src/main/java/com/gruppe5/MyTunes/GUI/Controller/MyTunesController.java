@@ -21,7 +21,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MyTunesController {
@@ -129,12 +132,15 @@ public class MyTunesController {
             sliderVolumeChanged(newValue);
         });
 
+        /*
         anchorPane.setOnDragOver(event -> {
             if (event.getGestureSource() != anchorPane && event.getDragboard().hasFiles()) {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             event.consume();
         });
+        */
+        /*
 
         anchorPane.setOnDragDropped(event -> {
             AddSongsPopUpController controller = onNewSongButtonClick();
@@ -144,6 +150,8 @@ public class MyTunesController {
             event.setDropCompleted(true);
             event.consume();
         });
+
+         */
 
         sliderVolumeChanged(50);
         colPlaylistName.setCellValueFactory(new PropertyValueFactory<Playlist, String>("name"));
@@ -520,280 +528,53 @@ public class MyTunesController {
     }
 
 
-    /**
-     * resizes the items in the window relative to the original relations
-     */
-    public void resizeItems(double width, double height){
-        /*
-        *
-        * BASIC INFORMATION
-        *
-        */
-        // original width 880 , height 620
+    Map<Control, List<Double>> map; // lstDouble percentage - width - height - x - y
+    void inti(){
+        map = new HashMap<Control, List<Double>>();
         int orgWidth = 880;
         int orgHeight = 620;
-        //tblPlaylists
-        // no need to move right
-        // TODO : move up
-        // TODO : resize Y
+
+        map.put(tblPlaylists, new ArrayList<>(){{add(tblPlaylists.getWidth() / orgWidth);add(tblPlaylists.getHeight()/orgHeight);add(tblPlaylists.getLayoutX()/orgWidth);add(tblPlaylists.getLayoutY()/orgHeight);}});
+        map.put(btnBack, new ArrayList<>(){{add(btnBack.getWidth() / orgWidth);add(btnBack.getHeight()/orgHeight);add(btnBack.getLayoutX()/orgWidth);add(btnBack.getLayoutY()/orgHeight);}});
+        map.put(btnPlay, new ArrayList<>(){{add(btnPlay.getWidth() / orgWidth);add(btnPlay.getHeight()/orgHeight);add(btnPlay.getLayoutX()/orgWidth);add(btnPlay.getLayoutY()/orgHeight);}});
+        map.put(btnSkip, new ArrayList<>(){{add(btnSkip.getWidth() / orgWidth);add(btnSkip.getHeight()/orgHeight);add(btnSkip.getLayoutX()/orgWidth);add(btnSkip.getLayoutY()/orgHeight);}});
+        map.put(sliderVol, new ArrayList<>(){{add(sliderVol.getWidth() / orgWidth);add(sliderVol.getHeight()/orgHeight);add(sliderVol.getLayoutX()/orgWidth);add(sliderVol.getLayoutY()/orgHeight);}});
+        map.put(sliderVolLabel, new ArrayList<>(){{add(sliderVolLabel.getWidth() / orgWidth);add(sliderVolLabel.getHeight()/orgHeight);add(sliderVolLabel.getLayoutX()/orgWidth);add(sliderVolLabel.getLayoutY()/orgHeight);}});
+        map.put(lblCurrentSong, new ArrayList<>(){{add(lblCurrentSong.getWidth() / orgWidth);add(lblCurrentSong.getHeight()/orgHeight);add(lblCurrentSong.getLayoutX()/orgWidth);add(lblCurrentSong.getLayoutY()/orgHeight);}});
+        map.put(lblFilter, new ArrayList<>(){{add(lblFilter.getWidth() / orgWidth);add(lblFilter.getHeight()/orgHeight);add(lblFilter.getLayoutX()/orgWidth);add(lblFilter.getLayoutY()/orgHeight);}});
+        map.put(txtFilter, new ArrayList<>(){{add(txtFilter.getWidth() / orgWidth);add(txtFilter.getHeight()/orgHeight);add(txtFilter.getLayoutX()/orgWidth);add(txtFilter.getLayoutY()/orgHeight);}});
+        map.put(btnFilter, new ArrayList<>(){{add(btnFilter.getWidth() / orgWidth);add(btnFilter.getHeight()/orgHeight);add(btnFilter.getLayoutX()/orgWidth);add(btnFilter.getLayoutY()/orgHeight);}});
+        map.put(btnPlaylistEdit, new ArrayList<>(){{add(btnPlaylistEdit.getWidth() / orgWidth);add(btnPlaylistEdit.getHeight()/orgHeight);add(btnPlaylistEdit.getLayoutX()/orgWidth);add(btnPlaylistEdit.getLayoutY()/orgHeight);}});
+        map.put(btnPlaylistDel, new ArrayList<>(){{add(btnPlaylistDel.getWidth() / orgWidth);add(btnPlaylistDel.getHeight()/orgHeight);add(btnPlaylistDel.getLayoutX()/orgWidth);add(btnPlaylistDel.getLayoutY()/orgHeight);}});
+        map.put(lstSongsInPlaylist, new ArrayList<>(){{add(lstSongsInPlaylist.getWidth() / orgWidth);add(lstSongsInPlaylist.getHeight()/orgHeight);add(lstSongsInPlaylist.getLayoutX()/orgWidth);add(lstSongsInPlaylist.getLayoutY()/orgHeight);}});
+        map.put(lblPlaylistViewTitle, new ArrayList<>(){{add(lblPlaylistViewTitle.getWidth() / orgWidth);add(lblPlaylistViewTitle.getHeight()/orgHeight);add(lblPlaylistViewTitle.getLayoutX()/orgWidth);add(lblPlaylistViewTitle.getLayoutY()/orgHeight);}});
+        map.put(btnSongInPlaylistUp, new ArrayList<>(){{add(btnSongInPlaylistUp.getWidth() / orgWidth);add(btnSongInPlaylistUp.getHeight()/orgHeight);add(btnSongInPlaylistUp.getLayoutX()/orgWidth);add(btnSongInPlaylistUp.getLayoutY()/orgHeight);}});
+        map.put(btnSongInPlaylistDown, new ArrayList<>(){{add(btnSongInPlaylistDown.getWidth() / orgWidth);add(btnSongInPlaylistDown.getHeight()/orgHeight);add(btnSongInPlaylistDown.getLayoutX()/orgWidth);add(btnSongInPlaylistDown.getLayoutY()/orgHeight);}});
+        map.put(btnSongInPlaylistDel, new ArrayList<>(){{add(btnSongInPlaylistDel.getWidth() / orgWidth);add(btnSongInPlaylistDel.getHeight()/orgHeight);add(btnSongInPlaylistDel.getLayoutX()/orgWidth);add(btnSongInPlaylistDel.getLayoutY()/orgHeight);}});
+        map.put(btnTransferSongs, new ArrayList<>(){{add(btnTransferSongs.getWidth() / orgWidth);add(btnTransferSongs.getHeight()/orgHeight);add(btnTransferSongs.getLayoutX()/orgWidth);add(btnTransferSongs.getLayoutY()/orgHeight);}});
+        map.put(lblSongsTableviewTitle, new ArrayList<>(){{add(lblSongsTableviewTitle.getWidth() / orgWidth);add(lblSongsTableviewTitle.getHeight()/orgHeight);add(lblSongsTableviewTitle.getLayoutX()/orgWidth);add(lblSongsTableviewTitle.getLayoutY()/orgHeight);}});
+        map.put(tblSongs, new ArrayList<>(){{add(tblSongs.getWidth() / orgWidth);add(tblSongs.getHeight()/orgHeight);add(tblSongs.getLayoutX()/orgWidth);add(tblSongs.getLayoutY()/orgHeight);}});
+        map.put(btnSongsNew, new ArrayList<>(){{add(btnSongsNew.getWidth() / orgWidth);add(btnSongsNew.getHeight()/orgHeight);add(btnSongsNew.getLayoutX()/orgWidth);add(btnSongsNew.getLayoutY()/orgHeight);}});
+        map.put(btnSongsEdit, new ArrayList<>(){{add(btnSongsEdit.getWidth() / orgWidth);add(btnSongsEdit.getHeight()/orgHeight);add(btnSongsEdit.getLayoutX()/orgWidth);add(btnSongsEdit.getLayoutY()/orgHeight);}});
+        map.put(btnSongsDel, new ArrayList<>(){{add(btnSongsDel.getWidth() / orgWidth);add(btnSongsDel.getHeight()/orgHeight);add(btnSongsDel.getLayoutX()/orgWidth);add(btnSongsDel.getLayoutY()/orgHeight);}});
+        map.put(btnClose, new ArrayList<>(){{add(btnClose.getWidth() / orgWidth);add(btnClose.getHeight()/orgHeight);add(btnClose.getLayoutX()/orgWidth);add(btnClose.getLayoutY()/orgHeight);}});
+        
+        /*
         double tblPlaylistPercentage_width = 227.0d / orgWidth;
         double tblPlaylistPercentage_height = 450.0d / orgHeight;
+        double tblPlaylistLeft = 12d / orgWidth;
+        List<Double> list = new ArrayList<Double>(){{add(tblPlaylistPercentage_width);add(tblPlaylistPercentage_height);add(tblPlaylistLeft);}};
+        map.put(tblPlaylists, list);
 
-        // TableView<Song> tblSongs;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double tblSongsPercentage_width = 418.0d / orgWidth;
-        double tblSongsPercentage_height = 426.0d / orgHeight;
+        double tblSongsPercentage_width = 417.6d / orgWidth;
+        double tblSongsPercentage_height = 426.4d / orgHeight;
+        double tblSongsLeft = tblSongs.getLayoutX() - (btnTransferSongs.getLayoutX() + btnTransferSongs.getWidth());
+        list = new ArrayList<>();
         double tblSongsSpacing = calculateSpaceing(tblSongs, btnTransferSongs);
-
-        // ListView<Song> lstSongsInPlaylist;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double lstSongsInPlaylistPercentage_width = 140.0d / orgWidth;
-        double lstSongsInPlaylistPercentage_height = 430.0d / orgHeight;
-        double lstSongsInPlaylistSpacing = calculateSpaceing(lstSongsInPlaylist, tblPlaylists);
-
-        // Button btnBack;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnBackPercentage_width = 26.4d / orgWidth;
-        double btnBackPercentage_height = 25.6d / orgHeight;
-        double btnBackSpacing = calculateSpaceing(btnBack, lblSoundPicture);
-
-        // Button btnPlay;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnPlayPercentage_width = 37.0d / orgWidth;
-        double btnPlayPercentage_height = 30.0d / orgHeight;
-        double btnPlaySpacing = calculateSpaceing(btnPlay, btnBack);
-
-        // Button btnSkip;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSkipPercentage_width = 26.4d / orgWidth;
-        double btnSkipPercentage_height = 25.6d / orgHeight;
-        double btnSkipSpacing = calculateSpaceing(btnSkip, btnPlay);
-
-        // Button btnFilter;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnFilterPercentage_width = 28d / orgWidth;
-        double btnFilterPercentage_height = 25.6d / orgHeight;
-        double btnFilterSpacing = calculateSpaceing(btnFilter, txtFilter);
-
-        // Button btnTransferSongs;
-        double btnTransferSongsPercentage_width = 48.0d / orgWidth;
-        double btnTransferSongsPercentage_height = 26.0d / orgHeight;
-        double spacing = calculateSpaceing(btnTransferSongs, lstSongsInPlaylist);
-
-        // Button btnPlaylistNew;
-        // no need to move right
-        // TODO : move up
-        // TODO : resize Y
-        double btnPlaylistNewPercentage_width = 48d / orgWidth;
-        double btnPlaylistNewPercentage_height = 25.6d / orgHeight;
-
-        // Button btnPlaylistEdit;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnPlaylistsEditPercentage_width = 36.8d / orgWidth;
-        double btnPlaylistsEditPercentage_height = 25.6d / orgHeight;
-        double btnPlaylistEditSpacing = calculateSpaceing(btnPlaylistEdit, btnPlaylistNew);
-
-        // Button btnPlaylistDel;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnPlaylistsDelPercentage_width = 50.4d / orgWidth;
-        double btnPlaylistsDelPercentage_height = 25.6d / orgHeight;
-        double btnPlaylistDelSpacing = calculateSpaceing(btnPlaylistDel, btnPlaylistEdit);
-
-        // Button btnSongInPlaylistUp;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSongInPlaylistUpPercentage_width = 22.4d / orgWidth;
-        double btnSongInPlaylistUpPercentage_height = 25.6d / orgHeight;
-        double btnSongInPlaylistUpSpacing = calculateSpaceing(btnSongInPlaylistUp, tblPlaylists);
-
-        // Button btnSongInPlaylistDown;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSongInPlaylistDownPercentage_width = 22.4d / orgWidth;
-        double btnSongInPlaylistDownPercentage_height = 25.6d / orgHeight;
-        double btnSongInPlaylistDownSpacing = calculateSpaceing(btnSongInPlaylistDown, btnSongInPlaylistUp);
-
-        // Button btnSongInPlaylistDel;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSongInPlaylistDelPercentage_width = 50.4d / orgWidth;
-        double btnSongInPlaylistDelPercentage_height = 25.6d / orgHeight;
-        double btnSongInPlaylistDelSpacing = calculateSpaceing(btnSongInPlaylistDel, btnSongInPlaylistDown);
-
-        // Button btnSongsNew;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSongsNewPercentage_width = 48d / orgWidth;
-        double btnSongsNewPercentage_height = 25.6d / orgHeight;
-        double btnSongsNewSpacing = calculateSpaceing(btnSongsNew, btnSongInPlaylistDel);
-
-        // Button btnSongsEdit;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSongsEditPercentage_width = 36.8d / orgWidth;
-        double btnSongsEditPercentage_height = 25.6d / orgHeight;
-        double btnSongsEditSpacing = calculateSpaceing(btnSongsEdit, btnSongsNew);
-
-        // Button btnSongsDel;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnSongsDelPercentage_width = 50.4d / orgWidth;
-        double btnSongsDelPercentage_height = 25.6d / orgHeight;
-        double btnSongsDelSpacing = calculateSpaceing(btnSongsDel, btnSongsEdit);
-
-        // Button btnClose;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double btnClosePercentage_width = 44.8d / orgWidth;
-        double btnClosePercentage_height = 25.6d / orgHeight;
-        double btnCloseSpacing = calculateSpaceing(btnClose, btnSongsDel);
-
-        // Slider sliderVol;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double sliderVolPercentage_width = 150d / orgWidth;
-        double sliderVolPercentage_height = 18d / orgHeight;
-        double sliderVolSpacing = calculateSpaceing(sliderVol, lblSoundPicture);
-
-        // Label lblCurrentSong;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double lblCurrentSongPercentage_width = 324d / orgWidth;
-        double lblCurrentSongPercentage_height = 30d / orgHeight;
-        double lblCurrentSongSpacing = calculateSpaceing(lblCurrentSong, btnSkip);
-
-        // TextField txtFilter;
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double txtFilterPercentage_width = 149.6d / orgWidth;
-        double txtFilterPercentage_height = 25.6d / orgHeight;
-        double txtFilterSpacing = calculateSpaceing(txtFilter, lblFilter);
-
-        // Label lblSoundPicture
-        // no need to move right
-        // TODO : move up
-        // TODO : resize Y
-        double lblSoundPicturePercentage_width = 28d / orgWidth;
-        double lblSoundPicturePercentage_height = 18d / orgHeight;
-
-        // Label lblPlaylistTableviewTitle
-        // no need to move right
-        // TODO : move up
-        // TODO : resize Y
-        double lblPlaylistTableviewTitlePercentage_width = 42.4d / orgWidth;
-        double lblPlaylistTableviewTitlePercentage_height = 17.6d / orgHeight;
-
-        // Label lblFilter
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double lblFilterPercentage_width = 28.8d / orgWidth;
-        double lblFilterPercentage_height = 17.6d / orgHeight;
-        double lblFilterSpacing = calculateSpaceing(lblFilter, lblCurrentSong);
-
-        // Label lblSongsTableviewTitle
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double lblSongsTableviewTitlePercentage_width = 32.8d / orgWidth;
-        double lblSongsTableviewTitlePercentage_height = 17.6d / orgHeight;
-        double lblSongsTableviewTitleSpacing = calculateSpaceing(lblSongsTableviewTitle, btnTransferSongs);
-
-        // Label sliderVolLabel
-        // TODO : move right
-        // TODO : move up
-        // TODO : resize
-        double sliderVolLabelPercentage_width = 32.8d / orgWidth;
-        double sliderVolLabelPercentage_height = 17.6d / orgHeight;
-        double sliderVolLabelSpacing = calculateSpaceing(sliderVolLabel, sliderVol);
-
-        // Label lblPlaylistViewTitle
-        // no need to move right
-        // TODO : MOVE RIGHT
-        // TODO : move up
-        // TODO : resize
-        double lblPlaylistViewTitlePercentage_width = 85.6f / orgWidth;
-        double lblPlaylistViewTitlePercentage_height = 17.6f / orgHeight;
-        double lblPlaylistViewTitleSpacing = calculateSpaceing(lblPlaylistViewTitle, tblPlaylists);
-
-
-        /*
-        *
-        * RESIZE EVERYTHING - MOVE RIGHT
-        *
         */
-        // resize things only relative til the left wall
-        setWidth(tblPlaylists, tblPlaylistPercentage_width, width);
-        setWidth(btnPlaylistNew, btnPlaylistNewPercentage_width, width);
-        setWidth(lblSoundPicture, lblSoundPicturePercentage_width, width);
-        setWidth(lblPlaylistTableviewTitle, lblPlaylistTableviewTitlePercentage_width, width);
 
-        // resize and move things
-        scaleX(btnBackPercentage_width, width, btnBackSpacing, btnBack, lblSoundPicture);
-        scaleX(btnPlayPercentage_width, width, btnPlaySpacing, btnPlay, btnBack);
-        scaleX(btnSkipPercentage_width, width, btnSkipSpacing, btnSkip, btnPlay);
-        scaleX(sliderVolPercentage_width, width, sliderVolSpacing, sliderVol, lblSoundPicture);
-        scaleX(sliderVolLabelPercentage_width, width, sliderVolLabelSpacing, sliderVolLabel, sliderVol);
-        scaleX(lblCurrentSongPercentage_width, width, lblCurrentSongSpacing, lblCurrentSong, btnSkip);
-        scaleX(lblFilterPercentage_width, width, lblFilterSpacing, lblFilter, lblCurrentSong);
-        scaleX(txtFilterPercentage_width, width, txtFilterSpacing, txtFilter, lblFilter);
-        scaleX(btnFilterPercentage_width, width, btnFilterSpacing, btnFilter, txtFilter);
-        scaleX(btnPlaylistsEditPercentage_width, width, btnPlaylistEditSpacing, btnPlaylistEdit, btnPlaylistNew);
-        scaleX(btnPlaylistsDelPercentage_width, width, btnPlaylistDelSpacing, btnPlaylistDel, btnPlaylistEdit);
-        scaleX(lstSongsInPlaylistPercentage_width, width, lstSongsInPlaylistSpacing, lstSongsInPlaylist, tblPlaylists);
-        scaleX(lblPlaylistViewTitlePercentage_width, width, lblPlaylistViewTitleSpacing, lblPlaylistViewTitle, tblPlaylists);
-        scaleX(btnSongInPlaylistUpPercentage_width, width, btnSongInPlaylistUpSpacing, btnSongInPlaylistUp, tblPlaylists);
-        scaleX(btnSongInPlaylistDownPercentage_width, width, btnSongInPlaylistDownSpacing, btnSongInPlaylistDown, btnSongInPlaylistUp);
-        scaleX(btnSongInPlaylistDelPercentage_width, width, btnSongInPlaylistDelSpacing, btnSongInPlaylistDel, btnSongInPlaylistDown);
-        scaleX(btnTransferSongsPercentage_width, width, spacing, btnTransferSongs, lstSongsInPlaylist);
-        scaleX(lblSongsTableviewTitlePercentage_width, width, lblSongsTableviewTitleSpacing, lblPlaylistTableviewTitle, btnTransferSongs);
-        scaleX(tblSongsPercentage_width, width, tblSongsSpacing, tblSongs, btnTransferSongs);
-        scaleX(btnSongsNewPercentage_width, width, btnSongsNewSpacing, btnSongsNew, btnSongInPlaylistDel);
-        scaleX(btnSongsEditPercentage_width, width, btnSongsEditSpacing, btnSongsEdit, btnSongsNew);
-        scaleX(btnSongsDelPercentage_width, width, btnSongsDelSpacing, btnSongsDel, btnSongsEdit);
-        scaleX(btnClosePercentage_width, width, btnCloseSpacing, btnClose, btnSongsDel);
+
     }
 
-    private void scaleX(double percentage_width, double window_width, double spacing, Control object, Control relative) {
-        setWidth(object, percentage_width, window_width);
-        // formel: X(traget) = width(relative) + X(relative) + spacing
-        // -> kommer af Spaceing = X(target) - (Width(Rekative) + X(relative))
-        double x = (relative.getWidth() + relative.getLayoutX()) + spacing;
-        object.setLayoutX(x);
-    }
-
-    private void setWidth(Control object, double percentageWidth, double windowWidth){
-        object.setPrefWidth(windowWidth * percentageWidth);
-    }
-
-    private double calculateSpaceing(Control target, Control relative){
-        return Math.abs(target.getLayoutX() - (relative.getWidth() + relative.getLayoutX()));
-    }
 }
 
