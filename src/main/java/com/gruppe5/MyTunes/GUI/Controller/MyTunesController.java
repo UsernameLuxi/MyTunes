@@ -181,9 +181,13 @@ public class MyTunesController {
     }
 
     public void onEditButtonClick() {
-        AddSongsPopUpController controller = onNewSongButtonClick();
-        Song song = tblSongs.getSelectionModel().getSelectedItem();
-        controller.fillInformation(song);
+        try {
+            AddSongsPopUpController controller = onNewSongButtonClick();
+            Song song = tblSongs.getSelectionModel().getSelectedItem();
+            controller.fillInformation(song);
+        } catch (Exception e) {
+            displayError(e);
+        }
     }
 
     public AddSongsPopUpController onNewSongButtonClick() {

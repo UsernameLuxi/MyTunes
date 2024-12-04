@@ -119,4 +119,8 @@ public class MyTunesModel {
         myTunesLogic.deleteSong(song);
         songs.remove(song);
     }
+
+    public void updateSong(Song song) throws Exception {
+        myTunesLogic.updateSong(song);
+    }
 }

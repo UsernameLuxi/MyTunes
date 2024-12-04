@@ -7,14 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,8 @@ import java.util.List;
 public class AddSongsPopUpController {
     private MyTunesController parent;
     private int time = 0;
+    private boolean isEdit;
+    private Song songToEdit;
 
     @FXML
     private TextField txtName;
@@ -94,8 +93,19 @@ public class AddSongsPopUpController {
             String genre = mbtnCategory.getText();
             String artist = txtArtist.getText();
             String path = txtFile.getText();
-            Song s = new Song(title, artist, time, genre, path);
-            parent.getMyTunesModel().addSong(s);
+
+
+            if (isEdit) {
+                songToEdit.setTitle(title);
+                songToEdit.setGenre(genre);
+                songToEdit.setArtist(artist);
+                songToEdit.setURL(path);
+                parent.getMyTunesModel().updateSong(songToEdit);
+                parent.tblSongs.refresh();
+            } else {
+                Song s = new Song(title, artist, time, genre, path);
+                parent.getMyTunesModel().addSong(s);
+            }
             // close stage
             onCancel(actionEvent);
         }
@@ -138,6 +148,8 @@ public class AddSongsPopUpController {
     }
 
     public void fillInformation(Song song) {
+        isEdit = true;
+        songToEdit = song;
         mbtnCategory.setText(song.getGenre());
         setTimeField(song.getDuration());
         txtTitle.setText(song.getTitle());
