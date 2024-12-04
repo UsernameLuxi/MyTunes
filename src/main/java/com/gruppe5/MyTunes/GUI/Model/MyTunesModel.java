@@ -115,4 +115,8 @@ public class MyTunesModel {
         caller.setTimeField(value);
     }
 
+    public void deleteSong(Song song) throws Exception {
+        myTunesLogic.deleteSong(song);
+        songs.remove(song);
+    }
 }

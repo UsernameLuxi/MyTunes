@@ -373,7 +373,6 @@ public class MyTunesController {
 
     public void deletePlaylistConfirm(){
         try{
-            System.out.println("deletePlaylistConfirm test");
             myTunesModel.deletePlaylist(tblPlaylists.getSelectionModel().getSelectedItem());
         }
         catch(Exception e){
@@ -443,6 +442,42 @@ public class MyTunesController {
         alert.setTitle("Something went wrong");
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
+    }
+
+    @FXML
+    private void onDeleteSongButtonClick(ActionEvent actionEvent) {
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/gruppe5/MyTunes/DeleteSongPopUp.fxml"));
+
+            Parent scene = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(scene));
+            stage.setTitle("Delete Song");
+
+            // Get the controller reference
+            DeleteSongPopUpController controller = loader.getController();
+
+            // Send a reference to the parent to MyTunesController
+            controller.setParent(this); // this refers to this MainWindowController object
+
+            // Set the modality to Application (you must close Window1 before going to the parent window
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        }
+        catch(Exception e){
+            displayError(e);
+        }
+
+    }
+    public void deleteSongConfirm(){
+        try{
+            myTunesModel.deleteSong(tblSongs.getSelectionModel().getSelectedItem());
+        }
+        catch(Exception e){
+            displayError(e);
+        }
+
     }
 }
 

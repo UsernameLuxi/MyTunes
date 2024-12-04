@@ -148,4 +148,7 @@ public class MyTunesLogic {
             mediaPlayer.dispose();
         });
     }
+    public void deleteSong(Song song) throws Exception {
+        dataAccess.deleteSong(song);
+    }
 }
