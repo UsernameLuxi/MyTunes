@@ -16,12 +16,12 @@
       <Button fx:id="btnBack" layoutX="51.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnBackClicked" text="⏮" />
       <Button fx:id="btnPlay" layoutX="97.0" layoutY="38.0" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="30.0" prefWidth="37.0" text="▶" />
       <Button fx:id="btnSkip" layoutX="151.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnSkipClicked" text="⏭" />
-      <Label layoutX="625.0" layoutY="46.0" text="Filter:" />
+      <Label layoutX="625.0" layoutY="46.0" text="Filter:" fx:id="lblFilter"/>
       <TextField fx:id="txtFilter" layoutX="657.0" layoutY="42.0" />
       <Button fx:id="btnFilter" layoutX="815.0" layoutY="41.0" mnemonicParsing="false" onAction="#searchForSong" text="🔍" />
       <VBox layoutX="12.0" layoutY="130.0" prefHeight="446.0" prefWidth="227.0">
          <children>
-            <Label text="Playlists" />
+            <Label text="Playlists" fx:id="lblPlaylistTableviewTitle"/>
             <TableView fx:id="tblPlaylists" prefHeight="450.0" prefWidth="227.0">
                <columns>
                   <TableColumn fx:id="colPlaylistName" prefWidth="75.0" text="Name" />
@@ -33,14 +33,14 @@
       </VBox>
       <VBox layoutX="247.0" layoutY="129.0" prefHeight="446.0" prefWidth="140.0">
          <children>
-            <Label text="Songs in playlist" />
+            <Label text="Songs in playlist" fx:id="lblPlaylistViewTitle"/>
             <ListView fx:id="lstSongsInPlaylist" prefHeight="430.0" prefWidth="140.0" />
          </children>
       </VBox>
       <Button fx:id="btnTransferSongs" layoutX="395.0" layoutY="147.0" mnemonicParsing="false" onAction="#addNewSongToPlaylist" prefHeight="26.0" prefWidth="48.0" text="←" />
       <VBox layoutX="456.0" layoutY="129.0" prefHeight="446.0" prefWidth="417.0">
          <children>
-            <Label text="Songs" />
+            <Label text="Songs" fx:id="lblSongsTableviewTitle"/>
             <TableView fx:id="tblSongs" prefHeight="426.0" prefWidth="418.0">
                <columns>
                   <TableColumn fx:id="colSongTitle" prefWidth="75.0" text="Title" />
@@ -51,7 +51,7 @@
             </TableView>
          </children>
       </VBox>
-      <Label layoutX="10.0" layoutY="63.0" prefHeight="18.0" prefWidth="28.0" text="🔊">
+      <Label layoutX="10.0" layoutY="63.0" prefHeight="18.0" prefWidth="28.0" text="🔊" fx:id="lblSoundPicture">
          <font>
             <Font size="16.0" />
          </font>

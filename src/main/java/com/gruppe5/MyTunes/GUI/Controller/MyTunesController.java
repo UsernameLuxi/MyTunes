@@ -4,30 +4,30 @@ import com.gruppe5.MyTunes.BE.Playlist;
 import com.gruppe5.MyTunes.BE.Song;
 import com.gruppe5.MyTunes.GUI.Model.MyTunesModel;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MyTunesController {
     private MyTunesModel myTunesModel;
     private String pauseSymbol = "⏸";
     private String playSymbol = "▶";
+    private Map<Control, List<Double>> map;
 
     @FXML
     private TableView<Playlist> tblPlaylists;
@@ -54,13 +54,13 @@ public class MyTunesController {
     private Button btnTransferSongs;
 
     @FXML
-    private Button btnPlaylistsNew;
+    private Button btnPlaylistNew;
 
     @FXML
-    private Button btnPlaylistsEdit;
+    private Button btnPlaylistEdit;
 
     @FXML
-    private Button btnPlaylistsDel;
+    private Button btnPlaylistDel;
 
     @FXML
     private Button btnSongInPlaylistUp;
@@ -96,13 +96,26 @@ public class MyTunesController {
     private TextField txtFilter;
 
     @FXML
-    private Label testText;
-
-    @FXML
     private AnchorPane anchorPane;
 
     @FXML
+    private Label lblFilter;
+
+    @FXML
+    private Label lblPlaylistViewTitle;
+
+    @FXML
     private Label sliderVolLabel;
+
+    @FXML
+    private Label lblSoundPicture;
+
+    @FXML
+    private Label lblPlaylistTableviewTitle;
+
+    @FXML
+    private Label lblSongsTableviewTitle;
+
     @FXML
     private TableColumn<Playlist, String> colPlaylistName;
     @FXML
@@ -536,6 +549,57 @@ public class MyTunesController {
             displayError(e);
         }
 
+    }
+
+
+    public void init(){
+        map = new HashMap<>();
+        int orgWidth = 880;
+        int orgHeight = 620;
+
+        map.put(tblPlaylists, new ArrayList<>(){{add(tblPlaylists.getWidth() / orgWidth);add(tblPlaylists.getHeight()/orgHeight);add(tblPlaylists.getLayoutX()/orgWidth);add(tblPlaylists.getLayoutY()/orgHeight);}});
+        map.put(btnPlaylistNew, new ArrayList<>(){{add(btnPlaylistNew.getWidth() / orgWidth);add(btnPlaylistNew.getHeight()/orgHeight);add(btnPlaylistNew.getLayoutX()/orgWidth);add(btnPlaylistNew.getLayoutY()/orgHeight);}});
+        map.put(lblSoundPicture, new ArrayList<>(){{add(lblSoundPicture.getWidth() / orgWidth);add(lblSoundPicture.getHeight()/orgHeight);add(lblSoundPicture.getLayoutX()/orgWidth);add(lblSoundPicture.getLayoutY()/orgHeight);}});
+        map.put(lblPlaylistTableviewTitle, new ArrayList<>(){{add(lblPlaylistTableviewTitle.getWidth() / orgWidth);add(lblPlaylistTableviewTitle.getHeight()/orgHeight);add(lblPlaylistTableviewTitle.getLayoutX()/orgWidth);add(lblPlaylistTableviewTitle.getLayoutY()/orgHeight);}});
+
+
+
+        map.put(btnBack, new ArrayList<>(){{add(btnBack.getWidth() / orgWidth);add(btnBack.getHeight()/orgHeight);add(btnBack.getLayoutX()/orgWidth);add(btnBack.getLayoutY()/orgHeight);}});
+        map.put(btnPlay, new ArrayList<>(){{add(btnPlay.getWidth() / orgWidth);add(btnPlay.getHeight()/orgHeight);add(btnPlay.getLayoutX()/orgWidth);add(btnPlay.getLayoutY()/orgHeight);}});
+        map.put(btnSkip, new ArrayList<>(){{add(btnSkip.getWidth() / orgWidth);add(btnSkip.getHeight()/orgHeight);add(btnSkip.getLayoutX()/orgWidth);add(btnSkip.getLayoutY()/orgHeight);}});
+        map.put(sliderVol, new ArrayList<>(){{add(sliderVol.getWidth() / orgWidth);add(sliderVol.getHeight()/orgHeight);add(sliderVol.getLayoutX()/orgWidth);add(sliderVol.getLayoutY()/orgHeight);}});
+        map.put(sliderVolLabel, new ArrayList<>(){{add(sliderVolLabel.getWidth() / orgWidth);add(sliderVolLabel.getHeight()/orgHeight);add(sliderVolLabel.getLayoutX()/orgWidth);add(sliderVolLabel.getLayoutY()/orgHeight);}});
+        map.put(lblCurrentSong, new ArrayList<>(){{add(lblCurrentSong.getWidth() / orgWidth);add(lblCurrentSong.getHeight()/orgHeight);add(lblCurrentSong.getLayoutX()/orgWidth);add(lblCurrentSong.getLayoutY()/orgHeight);}});
+        map.put(lblFilter, new ArrayList<>(){{add(lblFilter.getWidth() / orgWidth);add(lblFilter.getHeight()/orgHeight);add(lblFilter.getLayoutX()/orgWidth);add(lblFilter.getLayoutY()/orgHeight);}});
+        map.put(txtFilter, new ArrayList<>(){{add(txtFilter.getWidth() / orgWidth);add(txtFilter.getHeight()/orgHeight);add(txtFilter.getLayoutX()/orgWidth);add(txtFilter.getLayoutY()/orgHeight);}});
+        map.put(btnFilter, new ArrayList<>(){{add(btnFilter.getWidth() / orgWidth);add(btnFilter.getHeight()/orgHeight);add(btnFilter.getLayoutX()/orgWidth);add(btnFilter.getLayoutY()/orgHeight);}});
+        map.put(btnPlaylistEdit, new ArrayList<>(){{add(btnPlaylistEdit.getWidth() / orgWidth);add(btnPlaylistEdit.getHeight()/orgHeight);add(btnPlaylistEdit.getLayoutX()/orgWidth);add(btnPlaylistEdit.getLayoutY()/orgHeight);}});
+        map.put(btnPlaylistDel, new ArrayList<>(){{add(btnPlaylistDel.getWidth() / orgWidth);add(btnPlaylistDel.getHeight()/orgHeight);add(btnPlaylistDel.getLayoutX()/orgWidth);add(btnPlaylistDel.getLayoutY()/orgHeight);}});
+        map.put(lstSongsInPlaylist, new ArrayList<>(){{add(lstSongsInPlaylist.getWidth() / orgWidth);add(lstSongsInPlaylist.getHeight()/orgHeight);add(lstSongsInPlaylist.getLayoutX()/orgWidth);add(lstSongsInPlaylist.getLayoutY()/orgHeight);}});
+        map.put(lblPlaylistViewTitle, new ArrayList<>(){{add(lblPlaylistViewTitle.getWidth() / orgWidth);add(lblPlaylistViewTitle.getHeight()/orgHeight);add(lblPlaylistViewTitle.getLayoutX()/orgWidth);add(lblPlaylistViewTitle.getLayoutY()/orgHeight);}});
+        map.put(btnSongInPlaylistUp, new ArrayList<>(){{add(btnSongInPlaylistUp.getWidth() / orgWidth);add(btnSongInPlaylistUp.getHeight()/orgHeight);add(btnSongInPlaylistUp.getLayoutX()/orgWidth);add(btnSongInPlaylistUp.getLayoutY()/orgHeight);}});
+        map.put(btnSongInPlaylistDown, new ArrayList<>(){{add(btnSongInPlaylistDown.getWidth() / orgWidth);add(btnSongInPlaylistDown.getHeight()/orgHeight);add(btnSongInPlaylistDown.getLayoutX()/orgWidth);add(btnSongInPlaylistDown.getLayoutY()/orgHeight);}});
+        map.put(btnSongInPlaylistDel, new ArrayList<>(){{add(btnSongInPlaylistDel.getWidth() / orgWidth);add(btnSongInPlaylistDel.getHeight()/orgHeight);add(btnSongInPlaylistDel.getLayoutX()/orgWidth);add(btnSongInPlaylistDel.getLayoutY()/orgHeight);}});
+        map.put(btnTransferSongs, new ArrayList<>(){{add(btnTransferSongs.getWidth() / orgWidth);add(btnTransferSongs.getHeight()/orgHeight);add(btnTransferSongs.getLayoutX()/orgWidth);add(btnTransferSongs.getLayoutY()/orgHeight);}});
+        map.put(lblSongsTableviewTitle, new ArrayList<>(){{add(lblSongsTableviewTitle.getWidth() / orgWidth);add(lblSongsTableviewTitle.getHeight()/orgHeight);add(lblSongsTableviewTitle.getLayoutX()/orgWidth);add(lblSongsTableviewTitle.getLayoutY()/orgHeight);}});
+        map.put(tblSongs, new ArrayList<>(){{add(tblSongs.getWidth() / orgWidth);add(tblSongs.getHeight()/orgHeight);add(tblSongs.getLayoutX()/orgWidth);add(tblSongs.getLayoutY()/orgHeight);}});
+        map.put(btnSongsNew, new ArrayList<>(){{add(btnSongsNew.getWidth() / orgWidth);add(btnSongsNew.getHeight()/orgHeight);add(btnSongsNew.getLayoutX()/orgWidth);add(btnSongsNew.getLayoutY()/orgHeight);}});
+        map.put(btnSongsEdit, new ArrayList<>(){{add(btnSongsEdit.getWidth() / orgWidth);add(btnSongsEdit.getHeight()/orgHeight);add(btnSongsEdit.getLayoutX()/orgWidth);add(btnSongsEdit.getLayoutY()/orgHeight);}});
+        map.put(btnSongsDel, new ArrayList<>(){{add(btnSongsDel.getWidth() / orgWidth);add(btnSongsDel.getHeight()/orgHeight);add(btnSongsDel.getLayoutX()/orgWidth);add(btnSongsDel.getLayoutY()/orgHeight);}});
+        map.put(btnClose, new ArrayList<>(){{add(btnClose.getWidth() / orgWidth);add(btnClose.getHeight()/orgHeight);add(btnClose.getLayoutX()/orgWidth);add(btnClose.getLayoutY()/orgHeight);}});
+
+    }
+
+    public void resizeItems(double width, double height){
+        width -= 15; // hold dig fra siden mand!
+        height -= 30;
+        for (Control c : map.keySet()) {
+            c.setPrefWidth(width * map.get(c).get(0));
+            c.setLayoutX(width * map.get(c).get(2));
+
+            c.setPrefHeight(height * map.get(c).get(1));
+            c.setLayoutY(height * map.get(c).get(3));
+        }
     }
 }
 
