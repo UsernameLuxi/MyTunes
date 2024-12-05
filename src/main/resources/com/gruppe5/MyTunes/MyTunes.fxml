@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gruppe5.MyTunes.GUI.Controller.MyTunesController">
@@ -16,42 +15,30 @@
       <Button fx:id="btnBack" layoutX="51.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnBackClicked" text="⏮" />
       <Button fx:id="btnPlay" layoutX="97.0" layoutY="38.0" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="30.0" prefWidth="37.0" text="▶" />
       <Button fx:id="btnSkip" layoutX="151.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnSkipClicked" text="⏭" />
-      <Label layoutX="625.0" layoutY="46.0" text="Filter:" fx:id="lblFilter"/>
+      <Label fx:id="lblFilter" layoutX="625.0" layoutY="46.0" text="Filter:" />
       <TextField fx:id="txtFilter" layoutX="657.0" layoutY="42.0" />
       <Button fx:id="btnFilter" layoutX="815.0" layoutY="41.0" mnemonicParsing="false" onAction="#searchForSong" text="🔍" />
-      <VBox layoutX="12.0" layoutY="130.0" prefHeight="446.0" prefWidth="227.0">
-         <children>
-            <Label text="Playlists" fx:id="lblPlaylistTableviewTitle"/>
-            <TableView fx:id="tblPlaylists" prefHeight="450.0" prefWidth="227.0">
-               <columns>
-                  <TableColumn fx:id="colPlaylistName" prefWidth="75.0" text="Name" />
-                  <TableColumn fx:id="colPlaylistAmtSongs" prefWidth="75.0" text="Songs" />
-                  <TableColumn fx:id="colPlaylistTotDur" prefWidth="75.0" text="Time" />
-               </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <VBox layoutX="247.0" layoutY="129.0" prefHeight="446.0" prefWidth="140.0">
-         <children>
-            <Label text="Songs in playlist" fx:id="lblPlaylistViewTitle"/>
-            <ListView fx:id="lstSongsInPlaylist" prefHeight="430.0" prefWidth="140.0" />
-         </children>
-      </VBox>
+      <Label fx:id="lblPlaylistTableviewTitle" layoutX="12.0" layoutY="130.0" text="Playlists" />
+      <TableView fx:id="tblPlaylists" layoutX="12.0" layoutY="147.6" prefHeight="450.0" prefWidth="227.0">
+         <columns>
+            <TableColumn fx:id="colPlaylistName" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="colPlaylistAmtSongs" prefWidth="75.0" text="Songs" />
+            <TableColumn fx:id="colPlaylistTotDur" prefWidth="75.0" text="Time" />
+         </columns>
+      </TableView>
+      <Label fx:id="lblPlaylistViewTitle" layoutX="247.0" layoutY="130.0" text="Songs in playlist" />
+      <ListView fx:id="lstSongsInPlaylist" layoutX="247.0" layoutY="147.6" prefHeight="430.0" prefWidth="140.0" />
       <Button fx:id="btnTransferSongs" layoutX="395.0" layoutY="147.0" mnemonicParsing="false" onAction="#addNewSongToPlaylist" prefHeight="26.0" prefWidth="48.0" text="←" />
-      <VBox layoutX="456.0" layoutY="129.0" prefHeight="446.0" prefWidth="417.0">
-         <children>
-            <Label text="Songs" fx:id="lblSongsTableviewTitle"/>
-            <TableView fx:id="tblSongs" prefHeight="426.0" prefWidth="418.0">
-               <columns>
-                  <TableColumn fx:id="colSongTitle" prefWidth="75.0" text="Title" />
-                  <TableColumn fx:id="colArtist" prefWidth="75.0" text="Artist" />
-                  <TableColumn fx:id="colGenre" prefWidth="75.0" text="Category" />
-                  <TableColumn fx:id="colSongDur" prefWidth="75.0" text="Time" />
-               </columns>
-            </TableView>
-         </children>
-      </VBox>
-      <Label layoutX="10.0" layoutY="63.0" prefHeight="18.0" prefWidth="28.0" text="🔊" fx:id="lblSoundPicture">
+      <Label fx:id="lblSongsTableviewTitle" layoutX="456.0" layoutY="130.0" text="Songs" />
+      <TableView fx:id="tblSongs" layoutX="456.0" layoutY="147.6" prefHeight="426.0" prefWidth="418.0">
+         <columns>
+            <TableColumn fx:id="colSongTitle" prefWidth="75.0" text="Title" />
+            <TableColumn fx:id="colArtist" prefWidth="75.0" text="Artist" />
+            <TableColumn fx:id="colGenre" prefWidth="75.0" text="Category" />
+            <TableColumn fx:id="colSongDur" prefWidth="75.0" text="Time" />
+         </columns>
+      </TableView>
+      <Label fx:id="lblSoundPicture" layoutX="10.0" layoutY="63.0" prefHeight="18.0" prefWidth="28.0" text="🔊">
          <font>
             <Font size="16.0" />
          </font>
@@ -68,19 +55,15 @@
       <Button fx:id="btnClose" layoutX="829.0" layoutY="582.0" mnemonicParsing="false" text="Close" />
       <Label fx:id="sliderVolLabel" layoutX="191.0" layoutY="69.0" text="Label" />
       <Slider fx:id="sliderVol" blockIncrement="1.0" layoutX="41.0" layoutY="68.0" prefHeight="18.0" prefWidth="150.0" value="50.0" />
-      <VBox layoutX="247.0" layoutY="40.0" prefHeight="58.0" prefWidth="368.0">
-         <children>
-            <Label fx:id="lblCurrentPlaylist" prefHeight="30.0" prefWidth="353.0" text="Playlist: " textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblCurrentSong" prefHeight="30.0" prefWidth="353.0" text="Song:" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
+      <Label fx:id="lblCurrentPlaylist" layoutX="247.0" layoutY="40.0" prefHeight="30.0" prefWidth="353.0" text="Playlist: " textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCurrentSong" layoutX="247.0" layoutY="70.4" prefHeight="30.0" prefWidth="353.0" text="Song:" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
