@@ -88,10 +88,10 @@ public class MyTunesLogic {
      * @param volumeValue the value from the volume slider, 0-100
      */
     public void setVolume(int volumeValue) {
-        if (mediaPlayer == null) { return; }
-
         double valueToApply = (double)volumeValue / 100;
         volume = volumeValue;
+
+        if (mediaPlayer == null) { return; }
         mediaPlayer.setVolume(valueToApply);
     }
 
