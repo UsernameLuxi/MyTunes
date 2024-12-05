@@ -26,6 +26,7 @@ public class Main extends Application {
 
         MyTunesModel myTunesModel = new MyTunesModel(controller);
         controller.initialize(myTunesModel);
+        controller.init();
     }
 
     public static void main(String[] args) {

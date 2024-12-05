@@ -529,8 +529,8 @@ public class MyTunesController {
 
 
     Map<Control, List<Double>> map; // lstDouble percentage - width - height - x - y
-    void inti(){
-        map = new HashMap<Control, List<Double>>();
+    public void init(){
+        map = new HashMap<>();
         int orgWidth = 880;
         int orgHeight = 620;
 
@@ -580,6 +580,14 @@ public class MyTunesController {
         */
 
 
+    }
+
+    public void resizeItems(double width, double height){
+        width -= 15; // hold dig fra siden mand!
+        for (Control c : map.keySet()) {
+            c.setPrefWidth(width * map.get(c).get(0));
+            c.setLayoutX(width * map.get(c).get(2));
+        }
     }
 
 }
