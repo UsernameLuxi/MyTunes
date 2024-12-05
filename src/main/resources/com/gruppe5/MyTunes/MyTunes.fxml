@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gruppe5.MyTunes.GUI.Controller.MyTunesController">
    <children>
       <Button fx:id="btnBack" layoutX="51.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnBackClicked" text="⏮" />
       <Button fx:id="btnPlay" layoutX="97.0" layoutY="38.0" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="30.0" prefWidth="37.0" text="▶" />
