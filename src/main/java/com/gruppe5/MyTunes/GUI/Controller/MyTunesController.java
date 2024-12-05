@@ -30,76 +30,76 @@ public class MyTunesController {
     private String playSymbol = "▶";
 
     @FXML
-    public TableView<Playlist> tblPlaylists;
+    private TableView<Playlist> tblPlaylists;
 
     @FXML
-    public TableView<Song> tblSongs;
+    private TableView<Song> tblSongs;
 
     @FXML
-    public ListView<Song> lstSongsInPlaylist;
+    private ListView<Song> lstSongsInPlaylist;
 
     @FXML
-    public Button btnBack;
+    private Button btnBack;
 
     @FXML
-    public Button btnPlay;
+    private Button btnPlay;
 
     @FXML
-    public Button btnSkip;
+    private Button btnSkip;
 
     @FXML
-    public Button btnFilter;
+    private Button btnFilter;
 
     @FXML
-    public Button btnTransferSongs;
+    private Button btnTransferSongs;
 
     @FXML
-    public Button btnPlaylistsNew;
+    private Button btnPlaylistsNew;
 
     @FXML
-    public Button btnPlaylistsEdit;
+    private Button btnPlaylistsEdit;
 
     @FXML
-    public Button btnPlaylistsDel;
+    private Button btnPlaylistsDel;
 
     @FXML
-    public Button btnSongInPlaylistUp;
+    private Button btnSongInPlaylistUp;
 
     @FXML
-    public Button btnSongInPlaylistDown;
+    private Button btnSongInPlaylistDown;
 
     @FXML
-    public Button btnSongInPlaylistDel;
+    private Button btnSongInPlaylistDel;
 
     @FXML
-    public Button btnSongsNew;
+    private Button btnSongsNew;
 
     @FXML
-    public Button btnSongsEdit;
+    private Button btnSongsEdit;
 
     @FXML
-    public Button btnSongsDel;
+    private Button btnSongsDel;
 
     @FXML
-    public Button btnClose;
+    private Button btnClose;
 
     @FXML
-    public Slider sliderVol;
+    private Slider sliderVol;
 
     @FXML
-    public Label lblCurrentSong;
+    private Label lblCurrentSong;
 
     @FXML
-    public Label lblCurrentPlaylist;
+    private Label lblCurrentPlaylist;
 
     @FXML
-    public TextField txtFilter;
+    private TextField txtFilter;
 
     @FXML
     private Label testText;
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
 
     @FXML
     private Label sliderVolLabel;
@@ -172,6 +172,26 @@ public class MyTunesController {
         colGenre.setCellValueFactory(new PropertyValueFactory<Song, String>("genre"));
         colSongDur.setCellValueFactory(new PropertyValueFactory<Song, Time>("time"));
         tblSongs.setItems(myTunesModel.getSongs());
+    }
+
+    public TableView<Playlist> getTblPlaylists(){
+        return tblPlaylists;
+    }
+
+    public ListView<Song> getLstSongsInPlaylist(){
+        return lstSongsInPlaylist;
+    }
+
+    public TableView<Song> getTblSongs(){
+        return tblSongs;
+    }
+
+    public void setCurrentSong(String songTitle){
+        lblCurrentSong.setText(songTitle);
+    }
+
+    public void setCurrentPlaylist(String songTitle){
+        lblCurrentPlaylist.setText(songTitle);
     }
 
     /**

@@ -102,9 +102,9 @@ public class AddSongsPopUpController {
                 songToEdit.setDuration(time);
                 songToEdit = parent.getMyTunesModel().updateSong(songToEdit);
                 parent.getMyTunesModel().updatePlaylistsDuration();
-                parent.tblSongs.refresh();
-                parent.tblPlaylists.refresh();
-                parent.lstSongsInPlaylist.refresh();
+                parent.getTblSongs().refresh();
+                parent.getTblPlaylists().refresh();
+                parent.getLstSongsInPlaylist().refresh();
             } else {
                 Song s = new Song(title, artist, time, genre, path);
                 parent.getMyTunesModel().addSong(s);
