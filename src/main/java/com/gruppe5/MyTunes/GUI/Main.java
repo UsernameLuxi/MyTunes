@@ -18,9 +18,15 @@ public class Main extends Application {
         stage.setTitle("SoundSurf");
         stage.setScene(scene);
         stage.show();
+
         MyTunesController controller = fxmlLoader.getController();
         MyTunesModel myTunesModel = new MyTunesModel(controller);
         controller.initialize(myTunesModel);
+
+        controller.init();
+        stage.widthProperty().addListener((observable, oldValue, newValue) -> {controller.resizeItems(newValue.doubleValue(), stage.getHeight());});
+        stage.heightProperty().addListener((observable, oldValue, newValue) -> {controller.resizeItems(stage.getWidth(), newValue.doubleValue());});
+
     }
 
     public static void main(String[] args) {

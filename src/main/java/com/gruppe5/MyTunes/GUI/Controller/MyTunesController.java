@@ -570,6 +570,7 @@ public class MyTunesController {
         map.put(sliderVol, new ArrayList<>(){{add(sliderVol.getWidth() / orgWidth);add(sliderVol.getHeight()/orgHeight);add(sliderVol.getLayoutX()/orgWidth);add(sliderVol.getLayoutY()/orgHeight);}});
         map.put(sliderVolLabel, new ArrayList<>(){{add(sliderVolLabel.getWidth() / orgWidth);add(sliderVolLabel.getHeight()/orgHeight);add(sliderVolLabel.getLayoutX()/orgWidth);add(sliderVolLabel.getLayoutY()/orgHeight);}});
         map.put(lblCurrentSong, new ArrayList<>(){{add(lblCurrentSong.getWidth() / orgWidth);add(lblCurrentSong.getHeight()/orgHeight);add(lblCurrentSong.getLayoutX()/orgWidth);add(lblCurrentSong.getLayoutY()/orgHeight);}});
+        map.put(lblCurrentPlaylist, new ArrayList<>(){{add(lblCurrentPlaylist.getWidth() / orgWidth);add(lblCurrentPlaylist.getHeight()/orgHeight);add(lblCurrentPlaylist.getLayoutX()/orgWidth);add(lblCurrentPlaylist.getLayoutY()/orgHeight);}});
         map.put(lblFilter, new ArrayList<>(){{add(lblFilter.getWidth() / orgWidth);add(lblFilter.getHeight()/orgHeight);add(lblFilter.getLayoutX()/orgWidth);add(lblFilter.getLayoutY()/orgHeight);}});
         map.put(txtFilter, new ArrayList<>(){{add(txtFilter.getWidth() / orgWidth);add(txtFilter.getHeight()/orgHeight);add(txtFilter.getLayoutX()/orgWidth);add(txtFilter.getLayoutY()/orgHeight);}});
         map.put(btnFilter, new ArrayList<>(){{add(btnFilter.getWidth() / orgWidth);add(btnFilter.getHeight()/orgHeight);add(btnFilter.getLayoutX()/orgWidth);add(btnFilter.getLayoutY()/orgHeight);}});

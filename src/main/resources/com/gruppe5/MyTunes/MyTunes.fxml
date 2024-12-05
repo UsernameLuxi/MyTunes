@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gruppe5.MyTunes.GUI.Controller.MyTunesController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gruppe5.MyTunes.GUI.Controller.MyTunesController">
    <children>
       <Button fx:id="btnBack" layoutX="51.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#btnBackClicked" text="⏮" />
       <Button fx:id="btnPlay" layoutX="97.0" layoutY="38.0" mnemonicParsing="false" onAction="#onPlayButtonClick" prefHeight="30.0" prefWidth="37.0" text="▶" />
@@ -19,7 +19,7 @@
       <TextField fx:id="txtFilter" layoutX="657.0" layoutY="42.0" />
       <Button fx:id="btnFilter" layoutX="815.0" layoutY="41.0" mnemonicParsing="false" onAction="#searchForSong" text="🔍" />
       <Label fx:id="lblPlaylistTableviewTitle" layoutX="12.0" layoutY="130.0" text="Playlists" />
-      <TableView fx:id="tblPlaylists" layoutX="12.0" layoutY="147.6" prefHeight="450.0" prefWidth="227.0">
+      <TableView fx:id="tblPlaylists" layoutX="12.0" layoutY="147.6" prefHeight="430.0" prefWidth="227.0">
          <columns>
             <TableColumn fx:id="colPlaylistName" prefWidth="75.0" text="Name" />
             <TableColumn fx:id="colPlaylistAmtSongs" prefWidth="75.0" text="Songs" />
@@ -30,7 +30,7 @@
       <ListView fx:id="lstSongsInPlaylist" layoutX="247.0" layoutY="147.6" prefHeight="430.0" prefWidth="140.0" />
       <Button fx:id="btnTransferSongs" layoutX="395.0" layoutY="147.0" mnemonicParsing="false" onAction="#addNewSongToPlaylist" prefHeight="26.0" prefWidth="48.0" text="←" />
       <Label fx:id="lblSongsTableviewTitle" layoutX="456.0" layoutY="130.0" text="Songs" />
-      <TableView fx:id="tblSongs" layoutX="456.0" layoutY="147.6" prefHeight="426.0" prefWidth="418.0">
+      <TableView fx:id="tblSongs" layoutX="456.0" layoutY="147.6" prefHeight="430.0" prefWidth="418.0">
          <columns>
             <TableColumn fx:id="colSongTitle" prefWidth="75.0" text="Title" />
             <TableColumn fx:id="colArtist" prefWidth="75.0" text="Artist" />
