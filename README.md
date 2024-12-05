@@ -5,3 +5,4 @@ Hvis en dependency mangler så gør følgende:
 Forbinde til database:
 Alle fra EASV kan forbinde, men hvis du skal have tilladelse til at access ting fra databasen, skal Caspers login bruges
 Database navn: casfro01_lucchr01_vicjen01_MyTunesDatabase
+Hvis dette ikke virker, kan egen database laves ved at køre scriptet "Ess-Que-Ell.sql"
