@@ -31,6 +31,7 @@ public class MyTunesController {
     private MyTunesModel myTunesModel;
     private String pauseSymbol = "⏸";
     private String playSymbol = "▶";
+    private Map<Control, List<Double>> map; // lstDouble percentage - width - height - x - y
 
     @FXML
     private TableView<Playlist> tblPlaylists;
@@ -527,8 +528,6 @@ public class MyTunesController {
         lblCurrentSong.setText(text);
     }
 
-
-    Map<Control, List<Double>> map; // lstDouble percentage - width - height - x - y
     public void init(){
         map = new HashMap<>();
         int orgWidth = 880;
@@ -565,28 +564,17 @@ public class MyTunesController {
         map.put(btnSongsDel, new ArrayList<>(){{add(btnSongsDel.getWidth() / orgWidth);add(btnSongsDel.getHeight()/orgHeight);add(btnSongsDel.getLayoutX()/orgWidth);add(btnSongsDel.getLayoutY()/orgHeight);}});
         map.put(btnClose, new ArrayList<>(){{add(btnClose.getWidth() / orgWidth);add(btnClose.getHeight()/orgHeight);add(btnClose.getLayoutX()/orgWidth);add(btnClose.getLayoutY()/orgHeight);}});
 
-        /*
-        double tblPlaylistPercentage_width = 227.0d / orgWidth;
-        double tblPlaylistPercentage_height = 450.0d / orgHeight;
-        double tblPlaylistLeft = 12d / orgWidth;
-        List<Double> list = new ArrayList<Double>(){{add(tblPlaylistPercentage_width);add(tblPlaylistPercentage_height);add(tblPlaylistLeft);}};
-        map.put(tblPlaylists, list);
-
-        double tblSongsPercentage_width = 417.6d / orgWidth;
-        double tblSongsPercentage_height = 426.4d / orgHeight;
-        double tblSongsLeft = tblSongs.getLayoutX() - (btnTransferSongs.getLayoutX() + btnTransferSongs.getWidth());
-        list = new ArrayList<>();
-        double tblSongsSpacing = calculateSpaceing(tblSongs, btnTransferSongs);
-        */
-
-
     }
 
     public void resizeItems(double width, double height){
         width -= 15; // hold dig fra siden mand!
+        height -= 30;
         for (Control c : map.keySet()) {
             c.setPrefWidth(width * map.get(c).get(0));
             c.setLayoutX(width * map.get(c).get(2));
+
+            c.setPrefHeight(height * map.get(c).get(1));
+            c.setLayoutY(height * map.get(c).get(3));
         }
     }
 
